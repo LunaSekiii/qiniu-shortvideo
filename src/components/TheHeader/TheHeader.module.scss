@@ -1,0 +1,22 @@
+.header {
+	height: $header-height;
+	min-height: $header-height;
+	@include flex($direction: row, $justify: space-between, $align: center);
+}
+
+.search-box {
+	flex: 1;
+	text-align: center;
+	input {
+		width: 240px;
+		height: 40px;
+		color: var(--color);
+		font-size: 1.2rem;
+		background-color: transparent;
+		border: solid 2px #fff;
+		border-radius: 10px;
+		&:focus {
+			outline: none;
+		}
+	}
+}

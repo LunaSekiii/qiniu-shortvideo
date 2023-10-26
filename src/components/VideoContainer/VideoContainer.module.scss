@@ -1,0 +1,32 @@
+.video-container {
+	position: relative;
+	flex: 1;
+	width: 100%;
+	height: calc(100% - $main-bottom);
+	margin-bottom: $main-bottom;
+	scroll-snap-align: start;
+	@include flex($direction: row, $justify: center, $align: space-between);
+	video {
+		flex: 1;
+		width: calc(100% - $video-side);
+		height: 100%;
+		max-height: calc(calc(100vh - $main-bottom) - $header-height);
+		object-fit: contain;
+		background-size: cover;
+		border-radius: $video-radius;
+		outline: none;
+		backdrop-filter: blur(20px) saturate(180%) brightness(0.6);
+	}
+	&::after {
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: -1;
+		width: calc(100% - $video-side);
+		height: calc(100% - $main-bottom);
+		object-fit: fill;
+		background: no-repeat url("/v1.png");
+		border-radius: $video-radius;
+		content: "";
+	}
+}

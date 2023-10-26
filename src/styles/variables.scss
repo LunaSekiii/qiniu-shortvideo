@@ -1,0 +1,33 @@
+$navbar-width: 160px;
+$header-height: 68px;
+$video-side: 68px;
+$video-radius: 15px;
+$color-bg: rgba(22, 24, 35, 1);
+$menu-item-height: 40px;
+// 备选选项颜色
+$alternative-colors: rgba(255, 255, 255, 0.15);
+$main-bottom: 12px;
+
+@mixin color($mode: light) {
+	@if $mode == light {
+		:root {
+			--color: #fff;
+			--bg-color: #000;
+		}
+	} @else if $mode == dark {
+		:root {
+			--color: #fff;
+			--bg-color: #000;
+		}
+	}
+}
+
+// light mode
+@media (prefers-color-scheme: light) {
+	@include color(light);
+}
+
+// dark mode
+@media (prefers-color-scheme: dark) {
+	@include color(dark);
+}

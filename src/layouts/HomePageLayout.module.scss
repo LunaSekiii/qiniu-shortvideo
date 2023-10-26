@@ -1,0 +1,19 @@
+.home-page {
+	width: 100vw;
+	height: 100vh;
+	max-height: 100vh;
+	@include flex($direction: row, $justify: space-between);
+
+	.main {
+		@include flex($direction: column, $justify: space-between);
+		flex: 1;
+		height: 100%;
+	}
+
+	.container {
+		position: relative;
+		flex: 1;
+		padding-bottom: 12px;
+		@include flex($direction: row, $justify: center, $align: space-between);
+	}
+}

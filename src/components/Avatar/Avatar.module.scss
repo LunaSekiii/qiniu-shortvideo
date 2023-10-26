@@ -1,0 +1,13 @@
+.avatar {
+	/** tarnsform变换预留空间 */
+	margin: 2px;
+	color: #000;
+	background-color: aliceblue;
+	border-radius: 50%;
+	cursor: pointer;
+	transition: transform 0.1s ease-in-out;
+	@include flex($direction: column, $justify: center, $align: center);
+	&:hover {
+		transform: scale(1.05);
+	}
+}

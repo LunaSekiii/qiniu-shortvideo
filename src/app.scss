@@ -1,0 +1,22 @@
+// 初始化样式
+:root {
+	margin: 0;
+	padding: 0;
+	font-size: 16px;
+	font-family: "Microsoft YaHei", sans-serif;
+	background: no-repeat url(./light-bg.png) $color-bg;
+	// --color: #333;
+	// --bg-color: #fff;
+	// --primary-color: #409eff;
+	// --success-color: #67c23a;
+	// --warning-color: #e6a23c;
+	// --danger-color: #f56c6c;
+	// --info-color: #909399;
+}
+
+.app {
+	@extend .fullscreen;
+	@extend .children-center;
+	color: var(--color);
+	// background-color: var(--bg-color);
+}
