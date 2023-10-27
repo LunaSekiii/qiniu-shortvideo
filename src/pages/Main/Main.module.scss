@@ -4,6 +4,7 @@
 	height: calc(100vh - $header-height);
 	overflow-y: scroll;
 	scroll-snap-type: y mandatory;
+	scroll-snap-stop: always;
 	&::-webkit-scrollbar {
 		display: none;
 	}

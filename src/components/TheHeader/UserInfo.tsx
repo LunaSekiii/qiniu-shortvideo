@@ -1,4 +1,4 @@
-import Avatar from "../Avatar";
+import Avatar from "../GlobalAvatar";
 import style from "./UserInfo.module.scss";
 
 function UserInfo() {

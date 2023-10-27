@@ -1,5 +1,7 @@
 /** 视频资源对象 */
 export interface VideoResource {
+	/** 视频Id */
+	videoId: number;
 	/** 视频资源地址 */
 	url: string;
 	/** 视频资源格式 */
@@ -7,10 +9,11 @@ export interface VideoResource {
 	/** 视频资源清晰度 */
 	quality: string;
 }
+
 /** 视频信息对象 */
 export interface VideoInfo {
 	/** 视频Id */
-	id: string;
+	videoId: number;
 	/** 视频标题 */
 	title: string;
 	/** 视频描述 */
@@ -48,9 +51,9 @@ export interface VideoInfo {
 	/** 作者信息 */
 	author: {
 		/** 作者Id */
-		id: string;
+		userId: number;
 		/** 作者名 */
-		name: string;
+		userName: string;
 		/** 作者头像 */
 		avatar: string;
 	};

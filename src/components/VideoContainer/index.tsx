@@ -1,5 +1,11 @@
-import { useLayoutEffect, useRef } from "react";
+import {
+	forwardRef,
+	useImperativeHandle,
+	useLayoutEffect,
+	useRef,
+} from "react";
 import style from "./VideoContainer.module.scss";
+import VideoPlayer from "./VideoPlayer";
 // import { VideoInfo } from "@/types/video";
 
 // type VideoContainerProps = {
@@ -7,10 +13,12 @@ import style from "./VideoContainer.module.scss";
 // };
 
 /**
- * 视频容器单元
+ * 视频容器组件
  */
-function VideoContainer() {
+const VideoContainer = forwardRef(function VideoContainer(props, ref) {
 	const videoRef = useRef<HTMLVideoElement>(null);
+	// 暴露命令式句柄
+	useImperativeHandle(ref, () => ({}));
 	useLayoutEffect(() => {
 		const target = videoRef.current;
 		if (target == null) return;
@@ -18,23 +26,9 @@ function VideoContainer() {
 	}, [videoRef]);
 	return (
 		<div className={style["video-container"]}>
-			<video
-				playsInline
-				controls
-				ref={videoRef}
-				onEnded={(e) => {
-					// 循环播放
-					e.currentTarget.play();
-				}}
-			>
-				<source
-					type='video/mp4'
-					// src={new URL("@/assets/v1.mp4", import.meta.url).href}
-					src='/v1.mp4'
-				/>
-			</video>
+			<VideoPlayer videoSrc='/v1.mp4' cover='/v1.png' />
 		</div>
 	);
-}
+});
 
 export default VideoContainer;
