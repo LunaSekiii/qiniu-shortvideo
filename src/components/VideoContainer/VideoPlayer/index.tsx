@@ -39,7 +39,7 @@ function VideoPlayer(props: VideoPlayerProps) {
 				ref={videoRef}
 				onEnded={(e) => {
 					// 循环播放
-					e.currentTarget.play();
+					// e.currentTarget.play();
 				}}
 			>
 				<source type='video/mp4' src={videoSrc} />
@@ -60,50 +60,85 @@ function VideoController(props: VideoControllerProps) {
 	const { video } = useMemo(() => props, [props]);
 	const progressContainerRef = useRef<HTMLDivElement>(null);
 	const [playTime, setPlayTime] = useState(0);
-	const [duration] = useState(video.duration);
+	const [duration, setDuration] = useState(video.duration);
 	const [playStatus, setPlayStatus] = useState(!video.paused);
 	const [progressWidth, setProgressWidth] = useState(0);
 	const progressThumbRef = useRef<HTMLDivElement>(null);
 
-	/**
-	 * 视频进度计算方法
-	 */
-	function progressCompute(curT: number, totalT: number): number {
-		return (curT / totalT) % 1;
-	}
+	// /**
+	//  * 视频进度计算方法
+	//  */
+	// function progressCompute(curT: number, totalT: number): number {
+	// 	return (curT / totalT) % 1;
+	// }
 
-	const progressController = (
-		relativeTime: number,
-		duration: number,
-		progress: HTMLDivElement,
-		progressMaxLength: number
-	) => {
-		const startTime = new Date().getTime();
-		let stopSign = false;
-		const updatePeogress = () => {
-			if (stopSign) return;
-			const nowTime = new Date().getTime();
-			const progressWidth =
-				progressCompute(
-					(nowTime - startTime) / 1000 + relativeTime,
-					duration
-				) * progressMaxLength;
-			// progress.style.translate = `${progressWidth} 0`;
-			progress.style.transform = `translateX(${progressWidth}px)`;
-			console.log(
-				progressCompute(
-					(nowTime - startTime) / 1000 + relativeTime,
-					duration
-				)
-			);
-			requestAnimationFrame(updatePeogress);
-		};
-		updatePeogress();
-		return () => {
-			stopSign = true;
-		};
-	};
+	// const progressController = (
+	// 	relativeTime: number,
+	// 	duration: number,
+	// 	progress: HTMLDivElement,
+	// 	progressMaxLength: number
+	// ) => {
+	// 	const startTime = new Date().getTime();
+	// 	let stopSign = false;
+	// 	const updatePeogress = () => {
+	// 		if (stopSign) return;
+	// 		const nowTime = new Date().getTime();
+	// 		const progressWidth =
+	// 			progressCompute(
+	// 				// (nowTime - startTime) / 1000 + relativeTime,
+	// 				video.currentTime,
+	// 				duration
+	// 			) *
+	// 			(progressMaxLength - 12);
+	// 		// progress.style.translate = `${progressWidth} 0`;
+	// 		progress.style.transform = `translateX(${progressWidth}px)`;
+	// 		// console.log(
+	// 		// 	progressCompute(
+	// 		// 		(nowTime - startTime) / 1000 + relativeTime,
+	// 		// 		duration
+	// 		// 	)
+	// 		// );
+	// 		requestAnimationFrame(updatePeogress);
+	// 	};
+	// 	updatePeogress();
+	// 	return () => {
+	// 		stopSign = true;
+	// 	};
+	// };
 
+	// useLayoutEffect(() => {
+	// 	const progressThumb = progressThumbRef.current;
+	// 	if (!progressThumb) return;
+	// 	let a: Function | null;
+	// 	const startProgress = () => {
+	// 		setPlayStatus(true);
+	// 		a = progressController(
+	// 			video.currentTime,
+	// 			duration,
+	// 			progressThumb,
+	// 			progressWidth
+	// 		);
+	// 	};
+	// 	playStatus ? startProgress() : null;
+	// 	const stopProgress = () => {
+	// 		setPlayStatus(false);
+	// 		if (a) a();
+	// 	};
+	// 	// console.log(progressWidth);
+	// 	video.addEventListener("play", startProgress);
+	// 	video.addEventListener("pause", stopProgress);
+	// 	return () => {
+	// 		try {
+	// 			if (a) a();
+	// 		} catch (e) {
+	// 			// console.log(e);
+	// 		}
+	// 		video.removeEventListener("play", startProgress);
+	// 		video.removeEventListener("pause", stopProgress);
+	// 	};
+	// }, [video, progressThumbRef, progressWidth, duration]);
+
+	/** 进度条宽度监听 */
 	useLayoutEffect(() => {
 		const progressContainer = progressContainerRef.current;
 		if (progressContainer) {
@@ -122,32 +157,26 @@ function VideoController(props: VideoControllerProps) {
 	useEffect(() => {
 		if (playStatus) {
 			video.play();
-			const progressThumb = progressThumbRef.current;
-			if (!progressThumb) return;
-			const a = progressController(
-				video.currentTime,
-				video.duration,
-				progressThumb,
-				progressWidth
-			);
-			return () => {
-				a();
-			};
 		} else {
 			video.pause();
 		}
 	}, [playStatus, video]);
 
 	useLayoutEffect(() => {
-		const updatePeogress = () => {};
-	}, []);
-
-	useLayoutEffect(() => {
 		if (video) {
 			video.addEventListener("timeupdate", () => {
 				setPlayTime(video.currentTime);
+				console.log(video.currentTime, duration, progressWidth);
+				progressThumbRef.current!.style.transform = `translateX(${
+					(video.currentTime / duration) * progressWidth - 12
+				}px)`;
+			});
+			video.addEventListener("durationchange", () => {
+				// console.log(video.duration, "<<<<");
+				setDuration(video.duration);
 			});
 		}
+
 		return () => {
 			if (video) {
 				video.removeEventListener("timeupdate", () => {
@@ -155,7 +184,7 @@ function VideoController(props: VideoControllerProps) {
 				});
 			}
 		};
-	}, [video]);
+	}, [video, progressWidth]);
 	return (
 		<div className={style.controller}>
 			<div
