@@ -75,7 +75,7 @@ $glass: blur(20px) saturate(180%) brightness(0.6);
 
 		// transform: translateX(-50%);
 		cursor: pointer;
-		transition: transform 0.1s;
+		// transition: transform 0.1s;
 		&:hover {
 			transform: scale(1.5);
 		}

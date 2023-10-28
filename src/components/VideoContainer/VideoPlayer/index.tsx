@@ -1,4 +1,4 @@
-import { useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import style from "./VideoPlayer.module.scss";
 
 type VideoPlayerProps = {
@@ -14,6 +14,20 @@ type VideoPlayerProps = {
 function VideoPlayer(props: VideoPlayerProps) {
 	const { videoSrc, cover } = useMemo(() => props, [props]);
 	const videoRef = useRef<HTMLVideoElement>(null);
+	const [video, setVideo] = useState<HTMLVideoElement | null>(null);
+	useLayoutEffect(() => {
+		const video = videoRef.current;
+		if (video) {
+			video.addEventListener("loadeddata", () => {
+				setVideo(video);
+			});
+			return () => {
+				video.removeEventListener("loadeddata", () => {
+					setVideo(video);
+				});
+			};
+		}
+	}, [videoRef]);
 	return (
 		<div
 			className={style.player}
@@ -30,68 +44,153 @@ function VideoPlayer(props: VideoPlayerProps) {
 			>
 				<source type='video/mp4' src={videoSrc} />
 			</video>
-			<VideoController videoRef={videoRef} />
+			{video ? <VideoController video={video} /> : <div>ssdsad</div>}
 		</div>
 	);
 }
 
 type VideoControllerProps = {
-	videoRef: React.RefObject<HTMLVideoElement>;
+	video: HTMLVideoElement;
 };
 
 /**
  * 视频播放控件
  */
 function VideoController(props: VideoControllerProps) {
-	const { videoRef } = useMemo(() => props, [props]);
+	const { video } = useMemo(() => props, [props]);
+	const progressContainerRef = useRef<HTMLDivElement>(null);
 	const [playTime, setPlayTime] = useState(0);
-	const [duration, setDuration] = useState(0);
+	const [duration] = useState(video.duration);
+	const [playStatus, setPlayStatus] = useState(!video.paused);
+	const [progressWidth, setProgressWidth] = useState(0);
+	const progressThumbRef = useRef<HTMLDivElement>(null);
+
+	/**
+	 * 视频进度计算方法
+	 */
+	function progressCompute(curT: number, totalT: number): number {
+		return (curT / totalT) % 1;
+	}
+
+	const progressController = (
+		relativeTime: number,
+		duration: number,
+		progress: HTMLDivElement,
+		progressMaxLength: number
+	) => {
+		const startTime = new Date().getTime();
+		let stopSign = false;
+		const updatePeogress = () => {
+			if (stopSign) return;
+			const nowTime = new Date().getTime();
+			const progressWidth =
+				progressCompute(
+					(nowTime - startTime) / 1000 + relativeTime,
+					duration
+				) * progressMaxLength;
+			// progress.style.translate = `${progressWidth} 0`;
+			progress.style.transform = `translateX(${progressWidth}px)`;
+			console.log(
+				progressCompute(
+					(nowTime - startTime) / 1000 + relativeTime,
+					duration
+				)
+			);
+			requestAnimationFrame(updatePeogress);
+		};
+		updatePeogress();
+		return () => {
+			stopSign = true;
+		};
+	};
+
 	useLayoutEffect(() => {
-		const video = videoRef.current;
+		const progressContainer = progressContainerRef.current;
+		if (progressContainer) {
+			setProgressWidth(Number(progressContainer.clientWidth || 0));
+			window.addEventListener("resize", () => {
+				const progressContainer = progressContainerRef.current;
+				if (progressContainer)
+					setProgressWidth(
+						Number(progressContainer.clientWidth || 0)
+					);
+			});
+		}
+		[];
+	}, [progressContainerRef]);
+
+	useEffect(() => {
+		if (playStatus) {
+			video.play();
+			const progressThumb = progressThumbRef.current;
+			if (!progressThumb) return;
+			const a = progressController(
+				video.currentTime,
+				video.duration,
+				progressThumb,
+				progressWidth
+			);
+			return () => {
+				a();
+			};
+		} else {
+			video.pause();
+		}
+	}, [playStatus, video]);
+
+	useLayoutEffect(() => {
+		const updatePeogress = () => {};
+	}, []);
+
+	useLayoutEffect(() => {
 		if (video) {
 			video.addEventListener("timeupdate", () => {
-				setDuration(video.duration);
 				setPlayTime(video.currentTime);
 			});
 		}
 		return () => {
 			if (video) {
-				setDuration(0);
 				video.removeEventListener("timeupdate", () => {
 					setPlayTime(video.currentTime);
 				});
 			}
 		};
-	}, [videoRef]);
-	console.log(playTime, duration);
+	}, [video]);
 	return (
 		<div className={style.controller}>
-			<div className={style["progress-container"]}>
+			<div
+				className={style["progress-container"]}
+				ref={progressContainerRef}
+			>
 				<div
 					className={style["progress-thumb"]}
-					style={{
-						transform: `translateX(${
-							(playTime / duration) * 100
-						}px)`,
-					}}
-					data-a
+					// style={{
+					// 	transform: `translateX(${
+					// 		(playTime / duration) * progressWidth
+					// 	}px)`,
+					// }}
+					ref={progressThumbRef}
 				></div>
 				<div className={style.progress}></div>
 			</div>
-			<button
-				onClick={() => {
-					const video = videoRef.current;
-					if (video) {
-						if (video.paused) {
-							video.play();
-						} else {
-							video.pause();
+			<div style={{ display: "flex" }}>
+				<button
+					onClick={() => {
+						if (video) {
+							if (video.paused) {
+								setPlayStatus(true);
+							} else {
+								setPlayStatus(false);
+							}
 						}
-					}
-				}}
-			>
-				play/pause
-			</button>
+					}}
+				>
+					{playStatus ? "暂停" : "播放"}
+				</button>
+				<div>
+					{playTime}/{duration}
+				</div>
+			</div>
 		</div>
 	);
 }
