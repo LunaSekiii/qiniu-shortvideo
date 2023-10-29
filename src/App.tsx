@@ -1,12 +1,10 @@
 import "@/app.scss";
-import Main from "./pages/Main";
+import { useRoutes } from "react-router-dom";
+import routes from "./router/routes";
 
 function App() {
-	return (
-		<div className='app'>
-			<Main />
-		</div>
-	);
+	const router = useRoutes(routes);
+	return <div className='app'>{router}</div>;
 }
 
 export default App;
