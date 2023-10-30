@@ -1,0 +1,25 @@
+.material-icons {
+	display: inline-block;
+	font-weight: normal;
+	font-size: 24px; /* Preferred icon size */
+	font-family: "Material Icons";
+	font-style: normal;
+	line-height: 1;
+	direction: ltr;
+	letter-spacing: normal;
+	white-space: nowrap;
+	text-transform: none;
+	word-wrap: normal;
+	font-display: block;
+
+	/* Support for all WebKit browsers. */
+	-webkit-font-smoothing: antialiased;
+	/* Support for Safari and Chrome. */
+	text-rendering: optimizeLegibility;
+
+	/* Support for Firefox. */
+	-moz-osx-font-smoothing: grayscale;
+
+	/* Support for IE. */
+	font-feature-settings: "liga";
+}

@@ -1,16 +1,30 @@
+$min-navbar-width: 160px;
+$max-navbar-width: 250px;
+
 .navbar {
 	justify-content: initial;
 	width: $navbar-width;
-	min-width: $navbar-width;
+	min-width: $min-navbar-width;
+	max-width: $max-navbar-width;
+	// min-width: $navbar-width;
 	height: 100%;
 	@include flex($direction: column, $justify: start);
-	* {
-		text-align: center;
-	}
+
 	title {
+		position: relative;
 		display: block;
+		// line-height: $header-height;
+		margin-top: $main-margin-top;
+		padding: 0 calc($navbar-padding * 2);
 		font-size: x-large;
-		line-height: $header-height;
+		text-align: left;
+		img {
+			width: 80%;
+			min-width: calc($min-navbar-width - calc(4 * $navbar-padding));
+			max-width: calc($max-navbar-width - calc(4 * $navbar-padding));
+			max-height: 100%;
+			vertical-align: middle;
+		}
 	}
 
 	.main {
@@ -26,16 +40,18 @@
 		padding: 0px;
 		ul {
 			margin: inherit;
-			padding: 0 16px;
+			padding: 0 $navbar-padding;
 			list-style: none;
 			li {
+				gap: 8px;
 				margin-top: 2px;
+				padding: 0 $navbar-padding;
 				font-weight: 600;
 				font-size: smaller;
 				line-height: $menu-item-height;
-				border-radius: 10px;
+				border-radius: $menu-item-height;
 				cursor: pointer;
-				opacity: 0.6;
+				opacity: 0.72;
 				transition: color 0.1s ease-in-out,
 					background-color 0.1s ease-in-out, opacity 0.2s ease-in-out;
 				&:hover {
@@ -43,17 +59,28 @@
 					opacity: 1;
 				}
 				&[data-active="true"] {
-					background-color: $alternative-colors;
+					color: #000;
+					background-color: rgba($color: #ffffff, $alpha: 0.87);
 					opacity: 1;
+					fill: #000;
+				}
+				@include flex($direction: row, $justify: start, $align: center);
+				svg {
+					max-width: 24px;
+					overflow: hidden;
+					font-size: normal;
+					text-align: left;
+					vertical-align: middle;
+					font-display: block;
 				}
 			}
-			hr {
-				height: 1px;
-				margin: 12px 24px 10px;
-				border: 0px;
-				border-bottom: solid 0.5px;
-				opacity: 0.6;
-			}
+		}
+		hr {
+			height: 1px;
+			// margin: 12px 24px 10px;
+			border: 0px;
+			border-bottom: #ffffff solid 1px;
+			opacity: 0.15;
 		}
 	}
 }

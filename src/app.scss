@@ -4,7 +4,8 @@
 	padding: 0;
 	font-size: 16px;
 	font-family: "Microsoft YaHei", sans-serif;
-	background: no-repeat url(./light-bg.png) $color-bg;
+	background: no-repeat //  url(./light-bg.png)
+		$color-bg;
 	// --color: #333;
 	// --bg-color: #fff;
 	// --primary-color: #409eff;
@@ -12,11 +13,14 @@
 	// --warning-color: #e6a23c;
 	// --danger-color: #f56c6c;
 	// --info-color: #909399;
+	user-select: none;
+	// font-display: fallback;
 }
 
 .app {
 	@extend .fullscreen;
 	@extend .children-center;
 	color: var(--color);
+	fill: var(--color)
 	// background-color: var(--bg-color);
 }

@@ -1,12 +1,14 @@
-$navbar-width: 160px;
+$navbar-width: 13.2%;
 $header-height: 68px;
 $video-side: 68px;
 $video-radius: 15px;
-$color-bg: rgba(22, 24, 35, 1);
-$menu-item-height: 40px;
+$color-bg: #2b2d31;
+$menu-item-height: 48px;
 // 备选选项颜色
 $alternative-colors: rgba(255, 255, 255, 0.15);
 $main-bottom: 12px;
+$navbar-padding: 12px;
+$main-margin-top: 2vh;
 
 @mixin color($mode: light) {
 	@if $mode == light {

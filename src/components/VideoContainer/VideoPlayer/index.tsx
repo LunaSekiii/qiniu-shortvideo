@@ -166,7 +166,12 @@ function VideoController(props: VideoControllerProps) {
 		if (video) {
 			video.addEventListener("timeupdate", () => {
 				setPlayTime(video.currentTime);
-				console.log(video.currentTime, duration, progressWidth);
+				console.log(
+					video.currentTime,
+					duration,
+					progressWidth,
+					video.currentTime / duration
+				);
 				progressThumbRef.current!.style.transform = `translateX(${
 					(video.currentTime / duration) * progressWidth - 12
 				}px)`;
@@ -184,7 +189,7 @@ function VideoController(props: VideoControllerProps) {
 				});
 			}
 		};
-	}, [video, progressWidth]);
+	}, [video, progressWidth, duration]);
 	return (
 		<div className={style.controller}>
 			<div
