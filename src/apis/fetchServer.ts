@@ -85,8 +85,19 @@ export class FetchService {
 		if (!response.ok) {
 			throw new Error(response.statusText);
 		}
-		const data: T = await response.json();
-		return data;
+		try {
+			const data: ResponseType.Response<T> = await response.json();
+			return this._responseProcess(data);
+		} catch (e) {
+			throw new Error("数据解析错误");
+		}
+	}
+
+	/**
+	 * 响应处理
+	 */
+	_responseProcess<T>(response: ResponseType.Response<T>) {
+		return response.result;
 	}
 
 	/**
