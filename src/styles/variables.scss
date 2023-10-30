@@ -3,7 +3,7 @@ $header-height: 68px;
 $video-side: 68px;
 $video-radius: 15px;
 $color-bg: #2b2d31;
-$menu-item-height: 48px;
+$menu-item-height: calc(40px + 1vh);
 // 备选选项颜色
 $alternative-colors: rgba(255, 255, 255, 0.15);
 $main-bottom: 12px;

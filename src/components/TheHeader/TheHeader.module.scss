@@ -1,20 +1,32 @@
 .header {
-	height: $header-height;
-	min-height: $header-height;
-	@include flex($direction: row, $justify: space-between, $align: center);
+	// height: $header-height;
+	// min-height: $header-height;
+	margin-top: $main-margin-top;
+	@include flex($direction: row, $justify: center, $align: center);
 }
 
 .search-box {
-	flex: 1;
+	gap: 4px;
+	width: 40%;
+	min-width: 300px;
+	max-width: 700px;
+	padding: 0 12px;
 	text-align: center;
+	border: solid 2px #fff;
+	border-radius: 48px;
+	cursor: text;
+	@include flex($direction: row, $justify: center, $align: center);
+
 	input {
-		width: 240px;
-		height: 40px;
+		flex: 1;
+		// width: 90%;
+		// width: 240px;
+		height: 48px;
 		color: var(--color);
 		font-size: 1.2rem;
 		background-color: transparent;
-		border: solid 2px #fff;
-		border-radius: 10px;
+		border: none;
+		box-shadow: none;
 		&:focus {
 			outline: none;
 		}

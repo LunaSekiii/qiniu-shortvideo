@@ -16,7 +16,6 @@ $max-navbar-width: 250px;
 		// line-height: $header-height;
 		margin-top: $main-margin-top;
 		padding: 0 calc($navbar-padding * 2);
-		font-size: x-large;
 		text-align: left;
 		img {
 			width: 80%;
@@ -47,7 +46,7 @@ $max-navbar-width: 250px;
 				margin-top: 2px;
 				padding: 0 $navbar-padding;
 				font-weight: 600;
-				font-size: smaller;
+				font-size: normal;
 				line-height: $menu-item-height;
 				border-radius: $menu-item-height;
 				cursor: pointer;
