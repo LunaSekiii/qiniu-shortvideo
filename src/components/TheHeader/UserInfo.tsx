@@ -4,7 +4,12 @@ import style from "./UserInfo.module.scss";
 function UserInfo() {
 	return (
 		<div className={style["user-info"]}>
-			<Avatar />
+			<Avatar
+				styleConfig={{
+					width: "100%",
+					height: "100%",
+				}}
+			/>
 		</div>
 	);
 }

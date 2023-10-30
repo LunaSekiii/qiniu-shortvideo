@@ -7,7 +7,7 @@ function Main() {
 	return (
 		<HomePageLayout>
 			<VideoList />
-			<VideoSideBar />
+			{/* <VideoSideBar /> */}
 		</HomePageLayout>
 	);
 }

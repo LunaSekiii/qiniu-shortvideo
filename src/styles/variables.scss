@@ -3,12 +3,17 @@ $header-height: 68px;
 $video-side: 68px;
 $video-radius: 15px;
 $color-bg: #2b2d31;
-$menu-item-height: calc(40px + 1vh);
+$menu-item-height: calc(30px + 2vh);
 // 备选选项颜色
 $alternative-colors: rgba(255, 255, 255, 0.15);
 $main-bottom: 12px;
 $navbar-padding: 12px;
 $main-margin-top: 2vh;
+// $video-padding-top: 100px;
+
+$search-box-height: calc(30px + 1vh);
+
+$video-padding-top: calc(2 * $main-margin-top + $search-box-height);
 
 @mixin color($mode: light) {
 	@if $mode == light {

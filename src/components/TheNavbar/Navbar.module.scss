@@ -15,6 +15,7 @@ $max-navbar-width: 250px;
 		display: block;
 		// line-height: $header-height;
 		margin-top: $main-margin-top;
+		margin-bottom: $main-margin-top;
 		padding: 0 calc($navbar-padding * 2);
 		text-align: left;
 		img {

@@ -1,27 +1,39 @@
 .header {
 	// height: $header-height;
 	// min-height: $header-height;
+	position: fixed;
+	z-index: 100;
+	gap: 10px;
+	width: 100%;
 	margin-top: $main-margin-top;
 	@include flex($direction: row, $justify: center, $align: center);
 }
 
 .search-box {
 	gap: 4px;
-	width: 40%;
+	width: 30%;
 	min-width: 300px;
 	max-width: 700px;
 	padding: 0 12px;
 	text-align: center;
-	border: solid 2px #fff;
+	background-color: rgba(0, 0, 0, 0.4);
+	border: solid 2px rgba(255, 255, 255, 0.15);
 	border-radius: 48px;
 	cursor: text;
+	backdrop-filter: blur(20px);
 	@include flex($direction: row, $justify: center, $align: center);
+
+	&:focus-within {
+		border: solid 2px rgba(255, 255, 255, 0.7);
+		// 发光阴影
+		box-shadow: 0 0 15px 0 rgba(255, 255, 255, 0.5);
+	}
 
 	input {
 		flex: 1;
 		// width: 90%;
 		// width: 240px;
-		height: 48px;
+		height: $search-box-height;
 		color: var(--color);
 		font-size: 1.2rem;
 		background-color: transparent;

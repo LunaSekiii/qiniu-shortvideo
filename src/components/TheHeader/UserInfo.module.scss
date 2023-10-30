@@ -1,4 +1,6 @@
 .user-info {
-	// width: 100px;
-	padding-right: 32px;
+	width: calc($search-box-height);
+	height: $search-box-height;
+	padding-right: 10%;
+	// padding-right: 32px;
 }
