@@ -14,6 +14,7 @@ $main-margin-top: 2vh;
 $search-box-height: calc(30px + 1vh);
 
 $video-padding-top: calc(2 * $main-margin-top + $search-box-height);
+$video-container-height: calc(100% - $main-bottom - $video-padding-top);
 
 // 发光阴影
 $light-shadow: 0 0 15px 0 rgba(255, 255, 255, 0.5);

@@ -1,5 +1,6 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useLayoutEffect, useMemo, useRef, useState } from "react";
 import style from "./VideoPlayer.module.scss";
+import SVGIcon from "@/components/SVGIcon";
 
 type VideoPlayerProps = {
 	/** 视频 */
@@ -52,8 +53,8 @@ function VideoPlayer(props: VideoPlayerProps) {
 				>
 					<source type='video/mp4' src={videoSrc} />
 				</video>
+				{video ? <VideoController video={video} /> : <div>ssdsad</div>}
 			</div>
-			{video ? <VideoController video={video} /> : <div>ssdsad</div>}
 		</>
 	);
 }
@@ -70,106 +71,23 @@ function VideoController(props: VideoControllerProps) {
 	const progressContainerRef = useRef<HTMLDivElement>(null);
 	const [playTime, setPlayTime] = useState(0);
 	const [duration, setDuration] = useState(video.duration);
-	const [playStatus, setPlayStatus] = useState(!video.paused);
-	const [progressWidth, setProgressWidth] = useState(0);
-	const progressThumbRef = useRef<HTMLDivElement>(null);
-
-	// /**
-	//  * 视频进度计算方法
-	//  */
-	// function progressCompute(curT: number, totalT: number): number {
-	// 	return (curT / totalT) % 1;
-	// }
-
-	// const progressController = (
-	// 	relativeTime: number,
-	// 	duration: number,
-	// 	progress: HTMLDivElement,
-	// 	progressMaxLength: number
-	// ) => {
-	// 	const startTime = new Date().getTime();
-	// 	let stopSign = false;
-	// 	const updatePeogress = () => {
-	// 		if (stopSign) return;
-	// 		const nowTime = new Date().getTime();
-	// 		const progressWidth =
-	// 			progressCompute(
-	// 				// (nowTime - startTime) / 1000 + relativeTime,
-	// 				video.currentTime,
-	// 				duration
-	// 			) *
-	// 			(progressMaxLength - 12);
-	// 		// progress.style.translate = `${progressWidth} 0`;
-	// 		progress.style.transform = `translateX(${progressWidth}px)`;
-	// 		// console.log(
-	// 		// 	progressCompute(
-	// 		// 		(nowTime - startTime) / 1000 + relativeTime,
-	// 		// 		duration
-	// 		// 	)
-	// 		// );
-	// 		requestAnimationFrame(updatePeogress);
-	// 	};
-	// 	updatePeogress();
-	// 	return () => {
-	// 		stopSign = true;
-	// 	};
-	// };
-
-	// useLayoutEffect(() => {
-	// 	const progressThumb = progressThumbRef.current;
-	// 	if (!progressThumb) return;
-	// 	let a: Function | null;
-	// 	const startProgress = () => {
-	// 		setPlayStatus(true);
-	// 		a = progressController(
-	// 			video.currentTime,
-	// 			duration,
-	// 			progressThumb,
-	// 			progressWidth
-	// 		);
-	// 	};
-	// 	playStatus ? startProgress() : null;
-	// 	const stopProgress = () => {
-	// 		setPlayStatus(false);
-	// 		if (a) a();
-	// 	};
-	// 	// console.log(progressWidth);
-	// 	video.addEventListener("play", startProgress);
-	// 	video.addEventListener("pause", stopProgress);
-	// 	return () => {
-	// 		try {
-	// 			if (a) a();
-	// 		} catch (e) {
-	// 			// console.log(e);
-	// 		}
-	// 		video.removeEventListener("play", startProgress);
-	// 		video.removeEventListener("pause", stopProgress);
-	// 	};
-	// }, [video, progressThumbRef, progressWidth, duration]);
+	const [onPaused, setOnPaused] = useState(video.paused);
 
 	/** 进度条宽度监听 */
-	useLayoutEffect(() => {
-		const progressContainer = progressContainerRef.current;
-		if (progressContainer) {
-			setProgressWidth(Number(progressContainer.clientWidth || 0));
-			window.addEventListener("resize", () => {
-				const progressContainer = progressContainerRef.current;
-				if (progressContainer)
-					setProgressWidth(
-						Number(progressContainer.clientWidth || 0)
-					);
-			});
-		}
-		[];
-	}, [progressContainerRef]);
-
-	useEffect(() => {
-		if (playStatus) {
-			video.play();
-		} else {
-			video.pause();
-		}
-	}, [playStatus, video]);
+	// useLayoutEffect(() => {
+	// 	const progressContainer = progressContainerRef.current;
+	// 	if (progressContainer) {
+	// 		setProgressWidth(Number(progressContainer.clientWidth || 0));
+	// 		window.addEventListener("resize", () => {
+	// 			const progressContainer = progressContainerRef.current;
+	// 			if (progressContainer)
+	// 				setProgressWidth(
+	// 					Number(progressContainer.clientWidth || 0)
+	// 				);
+	// 		});
+	// 	}
+	// 	[];
+	// }, [progressContainerRef]);
 
 	useLayoutEffect(() => {
 		if (video) {
@@ -192,10 +110,42 @@ function VideoController(props: VideoControllerProps) {
 				});
 			}
 		};
-	}, [video, progressWidth, duration]);
+	}, [video, duration]);
+
+	useLayoutEffect(() => {
+		if (video) {
+			video.addEventListener("pause", () => {
+				setOnPaused(true);
+			});
+			video.addEventListener("play", () => {
+				setOnPaused(false);
+			});
+		}
+		return () => {
+			if (video) {
+				video.removeEventListener("pause", () => {
+					setOnPaused(true);
+				});
+				video.removeEventListener("play", () => {
+					setOnPaused(false);
+				});
+			}
+		};
+	}, [video]);
 
 	return (
 		<div className={style.controller}>
+			<div
+				className={style["main"]}
+				onClick={() => {
+					video.paused ? video.play() : video.pause();
+				}}
+				data-paused={onPaused}
+			>
+				<div className={style["play-btn"]} data-paused={onPaused}>
+					<SVGIcon name='play_arrow' active={onPaused} />
+				</div>
+			</div>
 			<div
 				className={style["progress-container"]}
 				ref={progressContainerRef}
@@ -212,7 +162,7 @@ function VideoController(props: VideoControllerProps) {
 							(e.clientX - left) / progressWidth;
 						video.currentTime = progressWidthPercent * duration;
 					}}
-					onMouseDown={(e) => {
+					onMouseDown={() => {
 						// console.log("down");
 					}}
 				>

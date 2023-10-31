@@ -26,10 +26,17 @@ export default ({ mode }) => {
 		server: {
 			// 代理
 			proxy: {
-				"/api": {
-					target: env.VITE_BASE_URL,
+				// 用户服务
+				"/us": {
+					target: env.VITE_USER_SERVER_URL,
 					changeOrigin: true,
-					rewrite: (path) => path.replace(/^\/api/, ""),
+					rewrite: (path) => path.replace(/^\/us/, ""),
+				},
+				// 视频服务
+				"/vs": {
+					target: env.VITE_VIDEO_SERVER_URL,
+					changeOrigin: true,
+					rewrite: (path) => path.replace(/^\/vs/, ""),
 				},
 			},
 		},

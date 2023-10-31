@@ -1,6 +1,6 @@
 import style from "./VideoContainer.module.scss";
 import Avatar from "../GlobalAvatar";
-import SVGIcon from "../SVGIcon";
+import SVGIcon, { SVGIconName } from "../SVGIcon";
 
 export function VideoInfo() {
 	return (
@@ -13,12 +13,7 @@ export function VideoInfo() {
 						<p className={style.time}>3天前</p>
 					</div>
 				</div>
-				<div className={style.interaction}>
-					<VideoInteraction />
-					<VideoInteraction />
-					<VideoInteraction />
-					<VideoInteraction />
-				</div>
+				<VideoInteraction />
 			</div>
 			<div className={style.info}>
 				<h1>Title</h1>
@@ -31,10 +26,10 @@ export function VideoInfo() {
 			</div>
 			<div className={style["video-switch"]}>
 				<div className={style["up-btn"]}>
-					<SVGIcon name='favourite' />
+					<SVGIcon name='arrow_upward' />
 				</div>
 				<div className={style["dowm-btn"]}>
-					<SVGIcon name='favourite' />
+					<SVGIcon name='arrow_downward' active />
 				</div>
 			</div>
 		</div>
@@ -43,9 +38,36 @@ export function VideoInfo() {
 
 function VideoInteraction() {
 	return (
+		<div className={style.interaction}>
+			<VideoInteractionItem name='favourite' />
+			<VideoInteractionItem name='chat' />
+			<VideoInteractionItem name='star' />
+			<VideoInteractionItem name='share_window' />
+		</div>
+	);
+}
+
+function formatNumber(num: number, decimalPlaces: number = 1): string {
+	// 判断数字的大小，进行格式化
+	const units = ["k", "m", "b"];
+	let formattedNum = "";
+	let unitIndex = 0;
+
+	while (num >= 1000) {
+		if (unitIndex >= units.length) return "999b+";
+		num /= 1000;
+		formattedNum = units[unitIndex];
+		unitIndex++;
+	}
+
+	return num.toFixed(decimalPlaces) + formattedNum;
+}
+
+function VideoInteractionItem({ name }: { name: SVGIconName }) {
+	return (
 		<div className={style["interaction-btn"]}>
-			<SVGIcon name='favourite' />
-			<p>1145</p>
+			<SVGIcon name={name} />
+			<p>{formatNumber(114514)}</p>
 		</div>
 	);
 }
