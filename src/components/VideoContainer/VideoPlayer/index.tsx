@@ -175,12 +175,6 @@ function VideoController(props: VideoControllerProps) {
 		if (video) {
 			video.addEventListener("timeupdate", () => {
 				setPlayTime(video.currentTime);
-				console.log(
-					video.currentTime,
-					duration,
-					progressWidth,
-					video.currentTime / duration
-				);
 				// progressThumbRef.current!.style.transform = `translateX(${
 				// 	(video.currentTime / duration) * progressWidth - 12
 				// }px)`;
@@ -199,6 +193,7 @@ function VideoController(props: VideoControllerProps) {
 			}
 		};
 	}, [video, progressWidth, duration]);
+
 	return (
 		<div className={style.controller}>
 			<div
@@ -207,7 +202,20 @@ function VideoController(props: VideoControllerProps) {
 			>
 				<div className={style.time}>{videoTimeFormart(playTime)}</div>
 
-				<div className={style.progress}>
+				<div
+					className={style.progress}
+					onClick={(e) => {
+						const progress = e.currentTarget;
+						const progressWidth = progress.clientWidth;
+						const left = progress.getBoundingClientRect().left;
+						const progressWidthPercent =
+							(e.clientX - left) / progressWidth;
+						video.currentTime = progressWidthPercent * duration;
+					}}
+					onMouseDown={(e) => {
+						// console.log("down");
+					}}
+				>
 					<div
 						style={{
 							transform: `translateX(-${(

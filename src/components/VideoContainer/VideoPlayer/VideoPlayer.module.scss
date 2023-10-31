@@ -73,8 +73,8 @@ $glass: blur(20px) saturate(180%) brightness(0.6);
 			}
 		}
 		&:hover .progress {
-			border-radius: 6px;
-			transform: scaleY(1.5);
+			border-radius: 8px;
+			transform: scaleY(2);
 			transition: none;
 		}
 	}

@@ -15,6 +15,9 @@ $search-box-height: calc(30px + 1vh);
 
 $video-padding-top: calc(2 * $main-margin-top + $search-box-height);
 
+// 发光阴影
+$light-shadow: 0 0 15px 0 rgba(255, 255, 255, 0.5);
+
 @mixin color($mode: light) {
 	@if $mode == light {
 		:root {

@@ -14,10 +14,7 @@
 	gap: 20px;
 	height: 15%;
 	@include flex($direction: row, $justify: left, $align: center);
-	> div {
-		height: 100%;
-		@include flex($direction: column, $justify: left, $align: start);
-	}
+
 	* {
 		width: fit-content;
 		margin: 0;
@@ -27,14 +24,19 @@
 }
 
 .interaction-box {
+	height: 100%;
+	@include flex($direction: column, $justify: left, $align: start);
+
 	gap: 20px;
 	width: fit-content;
 	white-space: nowrap;
+	overflow: visible;
 }
 
 .user {
 	@include flex($direction: row, $justify: left, $align: center);
 	gap: 10px;
+	overflow: visible;
 	width: fit-content;
 	.user-info {
 		flex: 1;
@@ -56,11 +58,27 @@
 
 .interaction {
 	width: 100%;
+	min-width: 300px;
+	gap: 10px;
+	@include flex($direction: row, $justify: space-between, $align: center);
+	.interaction-btn {
+		@include flex($direction: row, $justify: left, $align: center);
+		gap: 2px;
+		opacity: 0.72;
+		cursor: pointer;
+		&:hover {
+			opacity: 1;
+		}
+	}
 }
 
 .info {
+	height: 100%;
+	@include flex($direction: column, $justify: left, $align: start);
+
 	gap: 10px;
-	width: 50%;
+	width: 40%;
+	max-width: 50%;
 	h1 {
 		font-size: larger;
 		opacity: 0.87;
@@ -68,5 +86,45 @@
 	p {
 		font-size: small;
 		opacity: 0.72;
+	}
+}
+
+.video-switch {
+	width: 110px;
+	min-width: 100px;
+	height: 100%;
+	gap: 10px;
+	margin-left: auto;
+	$btn-width: 50px;
+	$btn-space: 10px;
+	$white: rgba(255, 255, 255);
+	$black: rgba(0, 0, 0);
+	text-align: center;
+	@include flex($direction: row, $justify: space-between, $align: start);
+	> div {
+		border-radius: $btn-width;
+		opacity: 0.87;
+		cursor: pointer;
+		transition: opacity 0.2s ease-out;
+		&:hover {
+			opacity: 1;
+		}
+	}
+	.up-btn {
+		// margin-top: $btn-space;
+		width: $btn-width;
+		height: $btn-width;
+		color: $white;
+		line-height: $btn-width;
+	}
+	.dowm-btn {
+		width: $btn-width;
+		background-color: $white;
+		color: $black;
+		fill: $black;
+		box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25), 0 0 6px rgba(0, 0, 0, 0.25);
+		height: calc(100% - $btn-space);
+		@include flex($direction: column, $justify: end, $align: center);
+		padding-bottom: $btn-space;
 	}
 }

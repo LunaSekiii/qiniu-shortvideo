@@ -18,9 +18,10 @@ function VideoList() {
 		const target = videoListRef.current;
 		if (target == null) return;
 		const scrollHandler = (e: Event) => {
-			// e.preventDefault();
-			e.stopPropagation();
-			return false;
+			e.preventDefault();
+
+			// e.stopPropagation();
+			// return false;
 		};
 		target.addEventListener("wheel", scrollHandler, { passive: false });
 		return () => {
