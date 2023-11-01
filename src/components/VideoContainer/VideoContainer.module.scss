@@ -1,9 +1,8 @@
 .video-container {
 	position: relative;
 	flex: 1;
-
-	width: 100%;
 	height: $video-container-height;
+	min-height: $min-video-container-height;
 	margin-bottom: $main-bottom;
 	padding-top: $video-padding-top;
 	scroll-snap-align: start;
@@ -12,7 +11,9 @@
 
 .video-info {
 	gap: 20px;
-	height: 15%;
+	height: 20%;
+	min-height: calc($min-video-container-height * 0.2);
+	max-height: 120px;
 	@include flex($direction: row, $justify: left, $align: center);
 
 	* {

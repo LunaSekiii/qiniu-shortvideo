@@ -1,6 +1,15 @@
-import { useLayoutEffect, useMemo, useRef, useState } from "react";
+import {
+	useCallback,
+	useContext,
+	useLayoutEffect,
+	useMemo,
+	useRef,
+	useState,
+} from "react";
 import style from "./VideoPlayer.module.scss";
 import SVGIcon from "@/components/SVGIcon";
+import { VideoContainerContext } from "..";
+import { ListHandlerContext } from "@/pages/Main";
 
 type VideoPlayerProps = {
 	/** 视频 */
@@ -53,7 +62,7 @@ function VideoPlayer(props: VideoPlayerProps) {
 				>
 					<source type='video/mp4' src={videoSrc} />
 				</video>
-				{video ? <VideoController video={video} /> : <div>ssdsad</div>}
+				{video ? <VideoController video={video} /> : <div></div>}
 			</div>
 		</>
 	);
@@ -69,6 +78,8 @@ type VideoControllerProps = {
 function VideoController(props: VideoControllerProps) {
 	const { video } = useMemo(() => props, [props]);
 	const progressContainerRef = useRef<HTMLDivElement>(null);
+	const progressPlayedRef = useRef<HTMLDivElement>(null);
+	const [onProgressDrag, setOnProgressDrag] = useState(false);
 	const [playTime, setPlayTime] = useState(0);
 	const [duration, setDuration] = useState(video.duration);
 	const [onPaused, setOnPaused] = useState(video.paused);
@@ -133,6 +144,41 @@ function VideoController(props: VideoControllerProps) {
 		};
 	}, [video]);
 
+	const [onCheck, setOnCheck] = useState(false);
+
+	/** 更新进度条 */
+	const updateProgress = useCallback(
+		(playPercent: number) => {
+			if (progressPlayedRef.current) {
+				progressPlayedRef.current.style.transform = `translateX(-${(
+					(1 - playPercent) *
+					100
+				).toFixed(2)}%)`;
+			}
+		},
+		[progressPlayedRef]
+	);
+
+	// 视频播放时使用requestAnimationFrame更新进度条
+	useLayoutEffect(() => {
+		if (video.paused) return;
+		let timer: number;
+		if (!onProgressDrag) {
+			const a = () =>
+				(timer = requestAnimationFrame(() => {
+					updateProgress(video.currentTime / video.duration);
+					a();
+				}));
+			a();
+		}
+		return () => {
+			cancelAnimationFrame(timer);
+		};
+	}, [onProgressDrag, video.currentTime, video.duration, video.paused]);
+
+	const { handlerListFullScreen } = useContext(ListHandlerContext);
+	const { currentContainerSnap } = useContext(VideoContainerContext);
+
 	return (
 		<div className={style.controller}>
 			<div
@@ -153,11 +199,25 @@ function VideoController(props: VideoControllerProps) {
 					}}
 				>
 					<div>连播</div>
+					<div
+						className={style.switch}
+						data-checked={onCheck}
+						onClick={() => {
+							setOnCheck(!onCheck);
+						}}
+					/>
 					<div>自动</div>
-					<div>1×</div>
-					<SVGIcon name='book' />
-					<SVGIcon name='book' />
-					<SVGIcon name='book' />
+					<div> 1×</div>
+					<SVGIcon name='volume_up' active />
+					<SVGIcon name='open_in_full' active />
+					<div
+						onClick={async () => {
+							await handlerListFullScreen();
+							currentContainerSnap();
+						}}
+					>
+						<SVGIcon name='fullscreen' active />
+					</div>
 				</div>
 			</div>
 			<div
@@ -176,17 +236,48 @@ function VideoController(props: VideoControllerProps) {
 							(e.clientX - left) / progressWidth;
 						video.currentTime = progressWidthPercent * duration;
 					}}
-					onMouseDown={() => {
-						// console.log("down");
+					onMouseDown={(e) => {
+						// 进度条拖拽事件
+						const progress = e.currentTarget;
+						const progressWidth = progress.clientWidth;
+						const left = progress.getBoundingClientRect().left;
+						const progressWidthPercent =
+							(e.clientX - left) / progressWidth;
+						updateProgress(progressWidthPercent);
+						video.currentTime = progressWidthPercent * duration;
+						const mouseMoveHandler = (e: MouseEvent) => {
+							const progressWidthPercent =
+								(e.clientX - left) / progressWidth;
+							updateProgress(progressWidthPercent);
+							video.currentTime = progressWidthPercent * duration;
+						};
+						const mouseUpHandler = () => {
+							document.removeEventListener(
+								"mousemove",
+								mouseMoveHandler
+							);
+							document.removeEventListener(
+								"mouseup",
+								mouseUpHandler
+							);
+							setOnProgressDrag(false);
+						};
+						document.addEventListener(
+							"mousemove",
+							mouseMoveHandler
+						);
+						document.addEventListener("mouseup", mouseUpHandler);
+						setOnProgressDrag(true);
 					}}
 				>
 					<div
-						style={{
-							transform: `translateX(-${(
-								(1 - playTime / duration) *
-								100
-							).toFixed(2)}%)`,
-						}}
+						ref={progressPlayedRef}
+						// style={{
+						// 	transform: `translateX(-${(
+						// 		(1 - playTime / duration) *
+						// 		100
+						// 	).toFixed(2)}%)`,
+						// }}
 					></div>
 					{/* <div
 						className={style["progress-thumb"]}

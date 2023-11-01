@@ -5,42 +5,11 @@
 	padding: 0 calc(5px + 2vw);
 	// height: calc(100vh - $header-height);
 	overflow-y: scroll;
-	scroll-snap-type: y mandatory;
+	outline: none;
+	// scroll-snap-type: y mandatory;
 	scroll-snap-stop: always;
+	// scroll-behavior: smooth;
 	&::-webkit-scrollbar {
 		display: none;
-	}
-}
-
-.side-bar {
-	width: $video-side;
-	min-width: $video-side;
-	margin-bottom: $main-bottom;
-	text-align: center;
-	@include flex($direction: column, $justify: center, $align: center);
-	.switch {
-		&-button {
-			// border-radius: 50%;
-			$button-length: 44px;
-			width: $button-length;
-			height: $button-length;
-			line-height: $button-length;
-			background-color: #33343f;
-			cursor: pointer;
-			opacity: 0.6;
-			transition: opacity 0.1s ease-in-out;
-			&:hover {
-				opacity: 1;
-			}
-			@for $i from 1 through 2 {
-				&:nth-child(#{$i}) {
-					@if $i == 1 {
-						border-radius: 50% 50% 0 0;
-					} @else if $i == 2 {
-						border-radius: 0 0 50% 50%;
-					}
-				}
-			}
-		}
 	}
 }

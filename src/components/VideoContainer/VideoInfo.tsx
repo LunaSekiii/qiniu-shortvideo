@@ -1,6 +1,9 @@
 import style from "./VideoContainer.module.scss";
 import Avatar from "../GlobalAvatar";
 import SVGIcon, { SVGIconName } from "../SVGIcon";
+import { formatNumber } from "../../utils/formatNumber";
+import { useContext } from "react";
+import { ListHandlerContext } from "@/pages/Main";
 
 export function VideoInfo() {
 	return (
@@ -24,13 +27,26 @@ export function VideoInfo() {
 					ksad
 				</p>
 			</div>
-			<div className={style["video-switch"]}>
-				<div className={style["up-btn"]}>
-					<SVGIcon name='arrow_upward' />
-				</div>
-				<div className={style["dowm-btn"]}>
-					<SVGIcon name='arrow_downward' active />
-				</div>
+			<VideoSwitch />
+		</div>
+	);
+}
+
+function VideoSwitch() {
+	const { handlerListScroll } = useContext(ListHandlerContext);
+	return (
+		<div className={style["video-switch"]}>
+			<div
+				className={style["up-btn"]}
+				onClick={() => handlerListScroll("up")}
+			>
+				<SVGIcon name='arrow_upward' />
+			</div>
+			<div
+				className={style["dowm-btn"]}
+				onClick={() => handlerListScroll("down")}
+			>
+				<SVGIcon name='arrow_downward' active />
 			</div>
 		</div>
 	);
@@ -45,22 +61,6 @@ function VideoInteraction() {
 			<VideoInteractionItem name='share_window' />
 		</div>
 	);
-}
-
-function formatNumber(num: number, decimalPlaces: number = 1): string {
-	// 判断数字的大小，进行格式化
-	const units = ["k", "m", "b"];
-	let formattedNum = "";
-	let unitIndex = 0;
-
-	while (num >= 1000) {
-		if (unitIndex >= units.length) return "999b+";
-		num /= 1000;
-		formattedNum = units[unitIndex];
-		unitIndex++;
-	}
-
-	return num.toFixed(decimalPlaces) + formattedNum;
 }
 
 function VideoInteractionItem({ name }: { name: SVGIconName }) {
