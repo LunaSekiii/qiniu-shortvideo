@@ -143,7 +143,21 @@ function VideoController(props: VideoControllerProps) {
 				data-paused={onPaused}
 			>
 				<div className={style["play-btn"]} data-paused={onPaused}>
-					<SVGIcon name='play_arrow' active={onPaused} />
+					<SVGIcon name='play_arrow' active={true} />
+				</div>
+				<div
+					className={style["controll-block"]}
+					onClick={(e) => {
+						e.preventDefault();
+						e.stopPropagation();
+					}}
+				>
+					<div>连播</div>
+					<div>自动</div>
+					<div>1×</div>
+					<SVGIcon name='book' />
+					<SVGIcon name='book' />
+					<SVGIcon name='book' />
 				</div>
 			</div>
 			<div
