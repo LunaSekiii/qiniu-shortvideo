@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  hls.js:
+    specifier: ^1.4.12
+    version: registry.npmmirror.com/hls.js@1.4.12
   node-sass:
     specifier: ^9.0.0
     version: registry.npmmirror.com/node-sass@9.0.0
@@ -2387,6 +2390,12 @@ packages:
     engines: {node: '>= 0.4'}
     dependencies:
       function-bind: registry.npmmirror.com/function-bind@1.1.2
+    dev: false
+
+  registry.npmmirror.com/hls.js@1.4.12:
+    resolution: {integrity: sha512-1RBpx2VihibzE3WE9kGoVCtrhhDWTzydzElk/kyRbEOLnb1WIE+3ZabM/L8BqKFTCL3pUy4QzhXgD1Q6Igr1JA==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/hls.js/-/hls.js-1.4.12.tgz}
+    name: hls.js
+    version: 1.4.12
     dev: false
 
   registry.npmmirror.com/hosted-git-info@2.8.9:

@@ -10,6 +10,7 @@ import style from "./VideoPlayer.module.scss";
 import SVGIcon from "@/components/SVGIcon";
 import { VideoContainerContext } from "..";
 import { ListHandlerContext } from "@/pages/Main";
+import Hls from "hls.js";
 
 type VideoPlayerProps = {
 	/** 视频 */
@@ -24,20 +25,45 @@ type VideoPlayerProps = {
 function VideoPlayer(props: VideoPlayerProps) {
 	const { videoSrc, cover } = useMemo(() => props, [props]);
 	const videoRef = useRef<HTMLVideoElement>(null);
-	const [video, setVideo] = useState<HTMLVideoElement | null>(null);
+	const [loadedVideo, setLoadedVideo] = useState<HTMLVideoElement | null>(
+		null
+	);
+
 	useLayoutEffect(() => {
 		const video = videoRef.current;
-		if (video) {
-			video.addEventListener("loadeddata", () => {
-				setVideo(video);
+		if (!Hls.isSupported() || !video) return;
+
+		const hls = new Hls();
+		hls.attachMedia(video);
+
+		hls.on(Hls.Events.MEDIA_ATTACHED, function () {
+			console.log("video and hls.js are now bound together !");
+			hls.loadSource(
+				"http://s34mqjagr.hn-bkt.clouddn.com/a8c549d8c1b3b5d81e55c8426460a469f97309b96b29b148de5655a13b2ccedb.mp4.m3u8"
+			);
+			hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
+				console.log(
+					"manifest loaded, found " +
+						data.levels.length +
+						" quality level"
+				);
 			});
-			return () => {
-				video.removeEventListener("loadeddata", () => {
-					setVideo(video);
-				});
-			};
-		}
+		});
 	}, [videoRef]);
+
+	// useLayoutEffect(() => {
+	// 	const video = videoRef.current;
+	// 	const listener = () => {
+	// 		setVideo(video);
+	// 	};
+	// 	if (video) {
+	// 		video.addEventListener("loadeddata", listener);
+	// 		return () => {
+	// 			video.removeEventListener("loadeddata", listener);
+	// 		};
+	// 	}
+	// }, []);
+
 	return (
 		<>
 			<div
@@ -52,6 +78,9 @@ function VideoPlayer(props: VideoPlayerProps) {
 						// 循环播放
 						e.currentTarget.play();
 					}}
+					onLoadedData={(e) => {
+						setLoadedVideo(e.currentTarget);
+					}}
 					onClick={(e) => {
 						const video = e.currentTarget;
 						if (video) {
@@ -60,9 +89,13 @@ function VideoPlayer(props: VideoPlayerProps) {
 						}
 					}}
 				>
-					<source type='video/mp4' src={videoSrc} />
+					{/* <source type='video/mp4' src={videoSrc} /> */}
 				</video>
-				{video ? <VideoController video={video} /> : <div></div>}
+				{loadedVideo ? (
+					<VideoController video={loadedVideo} />
+				) : (
+					<div></div>
+				)}
 			</div>
 		</>
 	);
