@@ -3,6 +3,8 @@ import fetchService from "./fetchServer";
 /**
  * 获取视频流
  */
-export function getVideoList(category: string) {
+export function getVideoListByCategory({
+	categoryId: category,
+}: RequestType.getVideoListByCategoryProps) {
 	return fetchService.get(`/api/video/category/${category}`);
 }

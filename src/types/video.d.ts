@@ -9,7 +9,7 @@ declare namespace Video {
 		/** 作者Id */
 		userId: number;
 		/** 视频分类Id */
-		categoryId: number;
+		categoryId: Category.CategoryId;
 		/** 视频标签 */
 		tags: TagType.Tag[];
 		/** 视频统计信息 */
