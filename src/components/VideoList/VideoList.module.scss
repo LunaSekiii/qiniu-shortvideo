@@ -1,0 +1,15 @@
+.video-list {
+	position: relative;
+	width: 100%;
+	height: 100vh;
+	padding: 0 calc(5px + 2vw);
+	// height: calc(100vh - $header-height);
+	overflow-y: scroll;
+	outline: none;
+	// scroll-snap-type: y mandatory;
+	scroll-snap-stop: always;
+	// scroll-behavior: smooth;
+	&::-webkit-scrollbar {
+		display: none;
+	}
+}

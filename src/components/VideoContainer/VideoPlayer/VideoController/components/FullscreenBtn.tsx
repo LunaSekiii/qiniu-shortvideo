@@ -1,5 +1,5 @@
 import SVGIcon from "@/components/SVGIcon";
-import { ListHandlerContext } from "@/pages/Main";
+import { ListHandlerContext } from "@/components/VideoList";
 import { useState, useContext } from "react";
 import { VideoContainerContext } from "../../..";
 import style from "../VideoController.module.scss";

@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import SVGIcon from "../SVGIcon";
 import style from "./Navbar.module.scss";
 import memuList from "./navbarList";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
 	const [activeNav, setActiveNav] = React.useState<string | number>("home");
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		navigate("/category/" + activeNav);
+	}, [activeNav]);
+
 	return (
 		<div className={style.navbar}>
 			{/* <title>Fleeting Flow</title> */}

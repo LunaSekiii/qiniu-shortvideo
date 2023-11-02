@@ -5,5 +5,9 @@ declare namespace RequestType {
 	interface getVideoListByCategoryProps {
 		/** 分类Id */
 		categoryId: Category.CategoryId;
+		/** 页数 */
+		page: number;
+		/** 页面大小 */
+		size?: number;
 	}
 }

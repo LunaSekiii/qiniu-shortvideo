@@ -3,32 +3,33 @@ import Avatar from "../GlobalAvatar";
 import SVGIcon, { SVGIconName } from "../SVGIcon";
 import { formatNumber } from "../../utils/formatNumber";
 import { useContext } from "react";
-import { ListHandlerContext } from "@/pages/Main";
+import { ListHandlerContext } from "@/components/VideoList";
 
+type VideoInfoProps = {
+	video: Video.VideoInfo;
+};
 /**
  * 视频信息
  */
-export function VideoInfo() {
+export function VideoInfo(props: VideoInfoProps) {
+	const { video } = props;
 	return (
 		<div className={style["video-info"]}>
 			<div className={style["interaction-box"]}>
 				<div className={style.user}>
 					<Avatar styleConfig={{ width: "50px", height: "50px" }} />
 					<div className={style["user-info"]}>
-						<h2 className={style["user-name"]}>发布者</h2>
+						<h2 className={style["user-name"]}>
+							{video.author.userName}
+						</h2>
 						<p className={style.time}>3天前</p>
 					</div>
 				</div>
 				<VideoInteraction />
 			</div>
 			<div className={style.info}>
-				<h1>Title</h1>
-				<p>
-					forum sssdsad sad asd asasd asd asd asd asd sssd sssss aaaaa
-					bbb ccccc ddd wew qwe qww q21321213 ewqe wdwd wdwq d qwd wqd
-					wqd wqd qd sd sad sad as d w d akd ksad aks dksad ksa dksad
-					ksad
-				</p>
+				<h1>{video.title}</h1>
+				<p>{video.thumbnail}</p>
 			</div>
 			<VideoSwitch />
 		</div>

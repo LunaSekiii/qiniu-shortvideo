@@ -9,6 +9,7 @@ declare namespace ResponseType {
 		status: Status;
 		result: T;
 	}
+	interface getVideoListByCategoryRes {}
 }
 
 /** 响应状态 */

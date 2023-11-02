@@ -6,6 +6,7 @@ import { VideoInfo } from "./VideoInfo";
 type VideoContainerProps = {
 	// handleListScroll: (dirction: "up" | "down") => void;
 	// currentContainerSnap: () => void;
+	video: Video.VideoInfo;
 };
 
 type VideoContainerContextType = {
@@ -22,6 +23,8 @@ export const VideoContainerContext = createContext<VideoContainerContextType>({
  */
 const VideoContainer = forwardRef<unknown, VideoContainerProps>(
 	function VideoContainer(props, ref) {
+		const { video } = props;
+
 		const videoContainerRef = useRef<HTMLDivElement>(null);
 		// 暴露命令式句柄
 		useImperativeHandle(ref, () => ({}));
@@ -45,10 +48,11 @@ const VideoContainer = forwardRef<unknown, VideoContainerProps>(
 				>
 					<VideoPlayer
 						// videoSrc='http://s34mqjagr.hn-bkt.clouddn.com/a8c549d8c1b3b5d81e55c8426460a469f97309b96b29b148de5655a13b2ccedb.mp4.m3u8'
-						videoSrc='http://s34mqjagr.hn-bkt.clouddn.com/8b1b4d1ee5b44e50a2e83158f815ca6c.mp4.m3u8'
-						cover='/v1.png'
+						// videoSrc='http://s34mqjagr.hn-bkt.clouddn.com/8b1b4d1ee5b44e50a2e83158f815ca6c.mp4.m3u8'
+						videoSrc={"http://" + video.url}
+						cover={"http://" + video.picture}
 					/>
-					<VideoInfo />
+					<VideoInfo video={video} />
 				</VideoContainerContext.Provider>
 			</div>
 		);
