@@ -7,6 +7,7 @@ import style from "../VideoController.module.scss";
  */
 export function VideoVolume({ video }: { video: HTMLVideoElement }) {
 	const [volume, setVolume] = useState(video.volume);
+	const [isMute, setIsMute] = useState(video.muted);
 
 	// 音量绑定
 	useLayoutEffect(() => {
@@ -19,8 +20,14 @@ export function VideoVolume({ video }: { video: HTMLVideoElement }) {
 		};
 	}, [video, volume]);
 
+	// 静音状态绑定
+	useLayoutEffect(() => {
+		video.muted = isMute;
+	}, [isMute, video]);
+
 	/** 音量条拖拽事件 */
 	const volumeBarDrag = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+		if (isMute) return;
 		e.stopPropagation();
 		e.preventDefault();
 		const volumeBar = e.currentTarget;
@@ -54,8 +61,24 @@ export function VideoVolume({ video }: { video: HTMLVideoElement }) {
 
 	return (
 		<div className={style.volume}>
-			<div className={style.current}>
-				<SVGIcon name='volume_up' active />
+			<div
+				className={style.current}
+				onClick={() => {
+					setIsMute((isMute) => !isMute);
+				}}
+			>
+				<SVGIcon
+					name={
+						isMute
+							? "volume_off"
+							: volume == 0
+							? "volume_mute"
+							: volume >= 0.5
+							? "volume_up"
+							: "volume_down_alt"
+					}
+					active
+				/>
 			</div>
 			<div className={style.list}>
 				<div
@@ -67,12 +90,7 @@ export function VideoVolume({ video }: { video: HTMLVideoElement }) {
 						style={{
 							transform: `translateY(${(1 - volume) * 100}%)`,
 						}}
-					/>
-					<div
-						className={style["volume-bar-btn"]}
-						style={{
-							left: `${video.volume * 100}%`,
-						}}
+						data-mute={isMute}
 					/>
 				</div>
 			</div>

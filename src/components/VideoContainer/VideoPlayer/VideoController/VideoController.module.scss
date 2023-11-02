@@ -255,6 +255,7 @@ $controll-height: 42px;
 				visibility: visible;
 				opacity: 1;
 			}
+
 			.volume-bar-inner {
 				position: absolute;
 				bottom: 0;
@@ -264,6 +265,9 @@ $controll-height: 42px;
 				background-color: #fff;
 				border-radius: 1px;
 				transform: translateY(100%);
+				&[data-mute="true"] {
+					background-color: #a0a0a0;
+				}
 			}
 		}
 		&:hover {
