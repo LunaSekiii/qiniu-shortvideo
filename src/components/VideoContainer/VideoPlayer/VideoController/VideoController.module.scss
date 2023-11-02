@@ -1,3 +1,5 @@
+$controll-height: 42px;
+
 // 视频控制器
 .controller {
 	position: absolute;
@@ -69,18 +71,20 @@
 			position: absolute;
 			right: 12px;
 			bottom: 12px;
-			gap: 18px;
 			width: fit-content;
-			height: 42px;
-			padding: 0 18px;
+			height: $controll-height;
+			padding: 0 10px;
 			color: rgb(255, 255, 255, 0.87);
-			background: rgba(0, 0, 0, 0.2);
+			font-weight: 600;
+			background: rgba(0, 0, 0, 0.4);
 			border: solid 1px rgba(255, 255, 255, 0.15);
 			border-radius: 8px;
 			visibility: hidden;
+			cursor: initial;
 			opacity: 0.1;
 			backdrop-filter: blur(24px);
 			transition: border 0.1s ease-out, opacity 0.2s ease-out;
+			fill: rgb(255, 255, 255, 0.87);
 			@include flex(
 				$direction: row,
 				$align: center,
@@ -88,6 +92,69 @@
 			);
 			&:hover {
 				border: solid 1px rgba(255, 255, 255, 0.3);
+			}
+			> * {
+				@include flex($direction: row, $align: center);
+				transition: color 0.1s ease-in, fill 0.1s ease-in;
+				&:hover {
+					color: rgb(255, 255, 255, 0.97);
+					fill: rgb(255, 255, 255, 0.97);
+				}
+			}
+
+			// 控制列表
+			> div {
+				white-space: nowrap;
+				.current {
+					width: 2em;
+					padding: 8px;
+					cursor: pointer;
+					@include flex(
+						$direction: row,
+						$align: center,
+						$justify: center
+					);
+				}
+				&.btn {
+					gap: 2px;
+					// width: 2em;
+					padding: 6px;
+					cursor: pointer;
+					@include flex($direction: row, $align: center);
+				}
+				.list {
+					position: absolute;
+					bottom: 110%;
+					gap: 6px;
+					padding: 6px 2px;
+					// min-width: fit-content;
+					color: rgb(255, 255, 255, 0.87);
+					background: rgba(0, 0, 0, 0.4);
+					border: solid 1px rgba(255, 255, 255, 0.15);
+					border-radius: 8px;
+					visibility: hidden;
+					backdrop-filter: blur(24px);
+					transition: visibility 0.4s ease-out, border 0.1s ease-out;
+					@include flex($direction: column, $align: center);
+					&:hover {
+						background: rgba(0, 0, 0, 0.6);
+						border: solid 1px rgba(255, 255, 255, 0.3);
+					}
+					.item {
+						width: 2em;
+						padding: 4px 6px;
+						text-align: center;
+						border-radius: 8px;
+						cursor: pointer;
+						&:hover {
+							color: #000;
+							background-color: #fff;
+						}
+					}
+				}
+				&:hover .list {
+					visibility: initial;
+				}
 			}
 		}
 	}
@@ -165,6 +232,44 @@
 		&::after {
 			background-color: #000;
 			transform: translateX(12px);
+		}
+	}
+}
+
+.volume {
+	div.current:nth-child(1):nth-child(1):nth-child(1) {
+		width: 24px;
+	}
+	.list {
+		min-width: 34px;
+		.volume-bar {
+			position: relative;
+			min-width: 4px;
+			height: 100px;
+			overflow: hidden;
+			background-color: #666666;
+			border-radius: 1px;
+			cursor: pointer;
+			transition: transform 0.1s ease-in;
+			&[data-drag="true"] {
+				visibility: visible;
+				opacity: 1;
+			}
+			.volume-bar-inner {
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background-color: #fff;
+				border-radius: 1px;
+				transform: translateY(100%);
+			}
+		}
+		&:hover {
+			.volume-bar {
+				transform: scaleX(2);
+			}
 		}
 	}
 }

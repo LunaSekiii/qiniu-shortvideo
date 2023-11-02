@@ -18,12 +18,12 @@ type ListHandlerContextType = {
 	/** 列表滚动处理器 */
 	handleListScroll: (dirction: "up" | "down") => void;
 	/** 列表全屏切换处理器 */
-	handleListFullScreen: () => void;
+	handleListFullScreen: () => Promise<boolean>;
 };
 
 export const ListHandlerContext = createContext<ListHandlerContextType>({
 	handleListScroll: () => {},
-	handleListFullScreen: () => Promise<void>,
+	handleListFullScreen: async () => false,
 });
 
 function VideoList() {
@@ -45,12 +45,13 @@ function VideoList() {
 	/** 列表全屏事件 */
 	const handlerListFullScreen = async () => {
 		const videoList = videoListRef.current;
-		if (!videoList) return;
-		const fullscreenPromise = document.fullscreenElement
+		if (!videoList) return false;
+		const isCurrentFullscreen = !!document.fullscreenElement;
+		const fullscreenPromise = isCurrentFullscreen
 			? document.exitFullscreen()
 			: videoList.requestFullscreen();
 		await fullscreenPromise;
-		return;
+		return !isCurrentFullscreen;
 	};
 
 	useLayoutEffect(() => {

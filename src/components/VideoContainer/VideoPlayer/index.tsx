@@ -9,7 +9,6 @@ type VideoPlayerProps = {
 	/** 封面 */
 	cover: string;
 };
-
 /**
  * 视频播放器组件
  */
@@ -19,6 +18,7 @@ function VideoPlayer(props: VideoPlayerProps) {
 	const [loadedVideo, setLoadedVideo] = useState<HTMLVideoElement | null>(
 		null
 	);
+	const [hls, setHls] = useState<Hls | null>(null);
 
 	// 绑定Hls并加载视频
 	useLayoutEffect(() => {
@@ -26,6 +26,7 @@ function VideoPlayer(props: VideoPlayerProps) {
 		if (!Hls.isSupported() || !video) return;
 
 		const hls = new Hls();
+		setHls(hls);
 		hls.attachMedia(video);
 
 		hls.on(Hls.Events.MEDIA_ATTACHED, function () {
@@ -39,18 +40,16 @@ function VideoPlayer(props: VideoPlayerProps) {
 					data.levels,
 					hls.currentLevel
 				);
-				setTimeout(() => {
-					hls.currentLevel = data.levels.length - 1;
-					console.log("currentLevel", hls.currentLevel, data.levels);
-				}, 1000);
 			});
 		});
 
-		hls.on(Hls.Events.LEVELS_UPDATED, () => {
-			console.log("LEVELS_UPDATED", hls.levels);
-		});
+		// // hls更新画质事件
+		// hls.on(Hls.Events.LEVEL_SWITCHED, function (event, data) {
+		// 	console.log("LEVEL_SWITCHED", data, "更新了");
+		// });
 
 		return () => {
+			setHls(null);
 			hls.destroy();
 		};
 	}, [videoRef, videoSrc]);
@@ -80,8 +79,8 @@ function VideoPlayer(props: VideoPlayerProps) {
 						}
 					}}
 				/>
-				{loadedVideo ? (
-					<VideoController video={loadedVideo} />
+				{loadedVideo && hls ? (
+					<VideoController video={loadedVideo} hls={hls} />
 				) : (
 					<div></div>
 				)}

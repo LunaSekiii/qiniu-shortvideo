@@ -1,0 +1,30 @@
+// 开关
+.switch {
+	position: relative;
+	width: 28px;
+	height: 16px;
+	background-color: rgb(255, 255, 255, 0.2);
+	border-radius: 8px;
+	// mix-blend-mode: overlay;
+	transition: background-color 0.2s ease-out, transform 0.2s ease-out;
+
+	&::after {
+		position: absolute;
+		top: 2px;
+		left: 2px;
+		width: 12px;
+		height: 12px;
+		background-color: #fff;
+		border-radius: 6px;
+		transition: background-color 0.2s ease-out, transform 0.2s ease-out;
+		content: " ";
+	}
+
+	&[data-checked="true"] {
+		background-color: rgb(255, 255, 255, 1);
+		&::after {
+			background-color: #000;
+			transform: translateX(12px);
+		}
+	}
+}

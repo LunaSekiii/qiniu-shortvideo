@@ -44,7 +44,8 @@ const VideoContainer = forwardRef<unknown, VideoContainerProps>(
 					}}
 				>
 					<VideoPlayer
-						videoSrc='http://s34mqjagr.hn-bkt.clouddn.com/a8c549d8c1b3b5d81e55c8426460a469f97309b96b29b148de5655a13b2ccedb.mp4.m3u8'
+						// videoSrc='http://s34mqjagr.hn-bkt.clouddn.com/a8c549d8c1b3b5d81e55c8426460a469f97309b96b29b148de5655a13b2ccedb.mp4.m3u8'
+						videoSrc='http://s34mqjagr.hn-bkt.clouddn.com/8b1b4d1ee5b44e50a2e83158f815ca6c.mp4.m3u8'
 						cover='/v1.png'
 					/>
 					<VideoInfo />

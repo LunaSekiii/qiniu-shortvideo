@@ -1,6 +1,5 @@
 import { useRef, useState, useCallback, useLayoutEffect } from "react";
-import style from "./VideoController.module.scss";
-import { videoTimeFormart } from "./VideoController";
+import style from "../VideoController.module.scss";
 
 /** 视频进度条参数 */
 type VideoProgressProps = {
@@ -145,5 +144,22 @@ function VideoProgress({
 		</div>
 	);
 }
+
+/**
+ * 视频时间格式化
+ */
+const videoTimeFormart = (videoTime: number) => {
+	function autoSupplement(val: number) {
+		return val.toString().padStart(2, "0");
+	}
+	const seconds = Math.floor(videoTime);
+	const min = Math.floor(seconds / 60);
+	const hour = Math.floor(min / 60);
+	return (
+		(hour > 0 ? hour + ":" : "") +
+		(autoSupplement(min % 60) + ":") +
+		autoSupplement(seconds % 60)
+	);
+};
 
 export default VideoProgress;
