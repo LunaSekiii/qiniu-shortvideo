@@ -1,24 +1,31 @@
-$navbar-width: 13.2%;
-$header-height: 68px;
-$video-side: 68px;
-$video-radius: 15px;
-$color-bg: #2b2d31;
-$menu-item-height: calc(30px + 2vh);
-// 备选选项颜色
-$alternative-colors: rgba(255, 255, 255, 0.15);
-$main-bottom: 12px;
-$navbar-padding: 12px;
-$main-margin-top: 2vh;
-// $video-padding-top: 100px;
+// 全局通用变量
+$color-bg: #2b2d31; // 背景色
+$alternative-colors: rgba(255, 255, 255, 0.15); // 备选选项颜色
+$main-bottom: 12px; // 主要内容下边距
+$main-margin-top: 2vh; // 主要内容上边距
 
-$search-box-height: calc(30px + 1vh);
+// 头部相关变量
+$header-height: 68px; // 头部高度
+$search-box-height: calc(30px + 1vh); // 搜索框高度
 
-$video-padding-top: calc(calc(2 * $main-margin-top) + $search-box-height);
-$video-container-height: calc(100vh - $main-bottom - $video-padding-top);
+// 导航栏相关变量
+$navbar-width: 13.2%; // 导航栏宽度
+$menu-item-height: calc(30px + 2vh); // 菜单项高度
+$navbar-padding: 12px; // 导航栏内边距
 
-$min-video-container-height: 500px;
-// 发光阴影
-$light-shadow: 0 0 15px 0 rgba(255, 255, 255, 0.5);
+// 视频相关变量
+$video-radius: 15px; // 视频圆角
+$video-padding-top: calc(
+	calc(2 * $main-margin-top) + $search-box-height
+); // 视频容器上边距
+$video-container-height: calc(
+	100vh - $main-bottom - $video-padding-top
+); // 视频容器高度
+$min-video-container-height: 500px; // 最小视频容器高度
+$progress-height: 50px; //视频进度条高度
+
+// 样式效果
+$light-shadow: 0 0 15px 0 rgba(255, 255, 255, 0.5); // 发光阴影
 
 @mixin color($mode: light) {
 	@if $mode == light {

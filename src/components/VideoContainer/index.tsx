@@ -1,10 +1,4 @@
-import {
-	createContext,
-	forwardRef,
-	useImperativeHandle,
-	useLayoutEffect,
-	useRef,
-} from "react";
+import { createContext, forwardRef, useImperativeHandle, useRef } from "react";
 import style from "./VideoContainer.module.scss";
 import VideoPlayer from "./VideoPlayer";
 import { VideoInfo } from "./VideoInfo";
@@ -15,13 +9,12 @@ type VideoContainerProps = {
 };
 
 type VideoContainerContextType = {
-	// handleListScroll: (dirction: "up" | "down") => void;
-	currentContainerSnap: () => void;
+	/** 当前容器滚动到视图方法 */
+	currentContainerScrollIntoView: () => void;
 };
 
 export const VideoContainerContext = createContext<VideoContainerContextType>({
-	// handleListScroll: () => {},
-	currentContainerSnap: () => {},
+	currentContainerScrollIntoView: () => {},
 });
 
 /**
@@ -29,28 +22,25 @@ export const VideoContainerContext = createContext<VideoContainerContextType>({
  */
 const VideoContainer = forwardRef<unknown, VideoContainerProps>(
 	function VideoContainer(props, ref) {
-		const videoRef = useRef<HTMLVideoElement>(null);
 		const videoContainerRef = useRef<HTMLDivElement>(null);
 		// 暴露命令式句柄
 		useImperativeHandle(ref, () => ({}));
 
-		useLayoutEffect(() => {
-			const target = videoRef.current;
-			if (target == null) return;
-			target.addEventListener("canplay", () => {});
-		}, [videoRef]);
+		/** 当前容器滚动定位方法 */
+		const currentContainerScrollIntoView = () => {
+			const videoContainer = videoContainerRef.current;
+			if (!videoContainer) return;
+			videoContainer.scrollIntoView({
+				block: "center",
+				inline: "center",
+			});
+		};
+
 		return (
 			<div className={style["video-container"]} ref={videoContainerRef}>
 				<VideoContainerContext.Provider
 					value={{
-						currentContainerSnap: () => {
-							const videoContainer = videoContainerRef.current;
-							if (!videoContainer) return;
-							videoContainer.scrollIntoView({
-								block: "center",
-								inline: "center",
-							});
-						},
+						currentContainerScrollIntoView,
 					}}
 				>
 					<VideoPlayer

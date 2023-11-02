@@ -1,0 +1,170 @@
+// 视频控制器
+.controller {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	@include flex($direction: column, $justify: center, $align: center);
+
+	// 控制器主体
+	.main {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		border-radius: $video-radius;
+		cursor: pointer;
+		// 播放按钮
+		.play-btn {
+			// 停止播放时的样式
+			&[data-paused="true"] {
+				border: solid 2px rgba(255, 255, 255, 0.15);
+				transform: translate(-50%, -50%) scale(1);
+				transform-origin: center;
+				opacity: 1;
+				transition: opacity 0.1s ease-in, transform 0.1s ease-in,
+					border 0.1s ease-in;
+				// 悬浮时的样式
+				&:hover {
+					border: solid 2px rgba(255, 255, 255, 0.3);
+					svg {
+						transform: scale(2.2);
+						opacity: 1;
+					}
+				}
+			}
+			$btn-length: 100px;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			width: $btn-length;
+			height: $btn-length;
+			line-height: $btn-length;
+			text-align: center;
+			background-color: rgb(0, 0, 0, 0.2);
+			border: solid 20px rgba(255, 255, 255, 0);
+			border-radius: 50%;
+			transform: translate(-50%, -50%) scale(1.5);
+			opacity: 0;
+			backdrop-filter: blur(24px) brightness(0.8);
+			transition: opacity 0.2s ease-out, transform 0.2s ease-in,
+				border 0.1s ease-in;
+			// Icon处理
+			svg {
+				vertical-align: middle;
+				transform: scale(2);
+				opacity: 0.9;
+				transition: all 0.1s ease-out;
+			}
+		}
+
+		// 浮动控制框显示效果
+		&:hover {
+			.controll-block {
+				visibility: initial;
+				opacity: 1;
+			}
+		}
+
+		// 浮动控制框
+		.controll-block {
+			position: absolute;
+			right: 12px;
+			bottom: 12px;
+			gap: 18px;
+			width: fit-content;
+			height: 42px;
+			padding: 0 18px;
+			color: rgb(255, 255, 255, 0.87);
+			background: rgba(0, 0, 0, 0.2);
+			border: solid 1px rgba(255, 255, 255, 0.15);
+			border-radius: 8px;
+			visibility: hidden;
+			opacity: 0.1;
+			backdrop-filter: blur(24px);
+			transition: border 0.1s ease-out, opacity 0.2s ease-out;
+			@include flex(
+				$direction: row,
+				$align: center,
+				$justify: space-between
+			);
+			&:hover {
+				border: solid 1px rgba(255, 255, 255, 0.3);
+			}
+		}
+	}
+
+	// 进度条区
+	.progress-container {
+		gap: 12px;
+		width: 100%;
+		height: $progress-height;
+		min-height: $progress-height;
+		line-height: $progress-height;
+		@include flex($direction: row, $align: center, $justify: space-between);
+		.time {
+			font-size: small;
+		}
+
+		.progress {
+			position: relative;
+			flex: 1;
+			height: 4px;
+			overflow: hidden;
+			background: #666666;
+			border-radius: 4px;
+			cursor: pointer;
+			opacity: 0.6;
+			transition: transform 0.1s ease-out;
+			> div {
+				width: 100%;
+				height: 100%;
+				transform: translateX(-100%);
+				&.played {
+					background-color: #fff;
+				}
+				&.buffered {
+					position: absolute;
+					top: 0;
+					left: 0;
+					background-color: #a0a0a0;
+				}
+			}
+		}
+		&:hover .progress {
+			border-radius: 8px;
+			transform: scaleY(2);
+			transition: none;
+			transition: transform 0.2s ease-in;
+		}
+	}
+}
+
+// 开关
+.switch {
+	position: relative;
+	width: 28px;
+	height: 16px;
+	background-color: rgb(255, 255, 255, 0.2);
+	border-radius: 8px;
+	// mix-blend-mode: overlay;
+	transition: background-color 0.2s ease-out, transform 0.2s ease-out;
+
+	&::after {
+		position: absolute;
+		top: 2px;
+		left: 2px;
+		width: 12px;
+		height: 12px;
+		background-color: #fff;
+		border-radius: 6px;
+		transition: background-color 0.2s ease-out, transform 0.2s ease-out;
+		content: " ";
+	}
+
+	&[data-checked="true"] {
+		background-color: rgb(255, 255, 255, 1);
+		&::after {
+			background-color: #000;
+			transform: translateX(12px);
+		}
+	}
+}

@@ -15,13 +15,15 @@ function Main() {
 }
 
 type ListHandlerContextType = {
-	handlerListScroll: (dirction: "up" | "down") => void;
-	handlerListFullScreen: () => void;
+	/** 列表滚动处理器 */
+	handleListScroll: (dirction: "up" | "down") => void;
+	/** 列表全屏切换处理器 */
+	handleListFullScreen: () => void;
 };
 
 export const ListHandlerContext = createContext<ListHandlerContextType>({
-	handlerListScroll: () => {},
-	handlerListFullScreen: () => Promise<void>,
+	handleListScroll: () => {},
+	handleListFullScreen: () => Promise<void>,
 });
 
 function VideoList() {
@@ -91,7 +93,10 @@ function VideoList() {
 			}}
 		>
 			<ListHandlerContext.Provider
-				value={{ handlerListScroll, handlerListFullScreen }}
+				value={{
+					handleListScroll: handlerListScroll,
+					handleListFullScreen: handlerListFullScreen,
+				}}
 			>
 				<VideoContainer />
 				<VideoContainer />

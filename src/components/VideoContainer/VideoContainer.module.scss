@@ -1,3 +1,4 @@
+// 视频容器
 .video-container {
 	position: relative;
 	flex: 1;
@@ -7,8 +8,10 @@
 	padding-top: $video-padding-top;
 	scroll-snap-align: start;
 	@include flex($direction: column, $justify: center, $align: space-between);
+	user-select: none;
 }
 
+// 视频信息框
 .video-info {
 	gap: 20px;
 	height: 20%;
@@ -24,6 +27,7 @@
 	}
 }
 
+// 主要交互区
 .interaction-box {
 	gap: 20px;
 	width: fit-content;
@@ -33,6 +37,7 @@
 	@include flex($direction: column, $justify: left, $align: start);
 }
 
+// 用户信息
 .user {
 	@include flex($direction: row, $justify: left, $align: center);
 	gap: 10px;
@@ -56,6 +61,7 @@
 	}
 }
 
+// 交互区
 .interaction {
 	gap: 10px;
 	width: 100%;
@@ -75,6 +81,7 @@
 	}
 }
 
+// 视频信息区
 .info {
 	gap: 10px;
 	width: 40%;
@@ -91,6 +98,7 @@
 	}
 }
 
+// 视频切换区
 .video-switch {
 	gap: 10px;
 	width: 110px;

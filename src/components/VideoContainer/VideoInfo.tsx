@@ -5,6 +5,9 @@ import { formatNumber } from "../../utils/formatNumber";
 import { useContext } from "react";
 import { ListHandlerContext } from "@/pages/Main";
 
+/**
+ * 视频信息
+ */
 export function VideoInfo() {
 	return (
 		<div className={style["video-info"]}>
@@ -32,8 +35,12 @@ export function VideoInfo() {
 	);
 }
 
+/**
+ * 视频切换按钮
+ */
 function VideoSwitch() {
-	const { handlerListScroll } = useContext(ListHandlerContext);
+	const { handleListScroll: handlerListScroll } =
+		useContext(ListHandlerContext);
 	return (
 		<div className={style["video-switch"]}>
 			<div
@@ -52,6 +59,9 @@ function VideoSwitch() {
 	);
 }
 
+/**
+ * 视频交互组件
+ */
 function VideoInteraction() {
 	return (
 		<div className={style.interaction}>
@@ -63,6 +73,9 @@ function VideoInteraction() {
 	);
 }
 
+/**
+ * 视频交互组件子组件
+ */
 function VideoInteractionItem({ name }: { name: SVGIconName }) {
 	return (
 		<div className={style["interaction-btn"]}>
