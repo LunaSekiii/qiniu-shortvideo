@@ -77,7 +77,12 @@ function VideoList() {
 			onKeyDown={(e) => {
 				if (e.key === "ArrowDown") handlerListScroll("down");
 				else if (e.key === "ArrowUp") handlerListScroll("up");
-				if (e.key === "ArrowDown" || e.key === "ArrowUp")
+				// 阻止浏览器默认列表滚动
+				if (
+					e.key === "ArrowDown" ||
+					e.key === "ArrowUp" ||
+					e.key === " "
+				)
 					e.preventDefault();
 			}}
 			onMouseDown={(e) => {

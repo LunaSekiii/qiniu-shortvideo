@@ -142,19 +142,28 @@ $glass: blur(20px) saturate(180%) brightness(0.6);
 		}
 
 		.progress {
+			position: relative;
 			flex: 1;
 			height: 4px;
 			overflow: hidden;
-			background: #808080;
+			background: #666666;
 			border-radius: 4px;
 			cursor: pointer;
 			opacity: 0.6;
 			transition: transform 0.1s ease-out;
-			div {
+			> div {
 				width: 100%;
 				height: 100%;
-				background-color: #fff;
 				transform: translateX(-100%);
+				&.played {
+					background-color: #fff;
+				}
+				&.buffered {
+					position: absolute;
+					top: 0;
+					left: 0;
+					background-color: #a0a0a0;
+				}
 			}
 		}
 		&:hover .progress {
@@ -162,23 +171,6 @@ $glass: blur(20px) saturate(180%) brightness(0.6);
 			transform: scaleY(2);
 			transition: none;
 			transition: transform 0.2s ease-in;
-		}
-	}
-
-	.progress-thumb {
-		// position: absolute;
-		z-index: 1;
-		width: 12px;
-		height: 12px;
-		background: #fff;
-		border-radius: 50%;
-		// 预变换性能优化
-
-		// transform: translateX(-50%);
-		cursor: pointer;
-		// transition: transform 0.1s;
-		&:hover {
-			transform: scale(1.5);
 		}
 	}
 }

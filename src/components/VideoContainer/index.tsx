@@ -53,7 +53,10 @@ const VideoContainer = forwardRef<unknown, VideoContainerProps>(
 						},
 					}}
 				>
-					<VideoPlayer videoSrc='/v1.mp4' cover='/v1.png' />
+					<VideoPlayer
+						videoSrc='http://s34mqjagr.hn-bkt.clouddn.com/a8c549d8c1b3b5d81e55c8426460a469f97309b96b29b148de5655a13b2ccedb.mp4.m3u8'
+						cover='/v1.png'
+					/>
 					<VideoInfo />
 				</VideoContainerContext.Provider>
 			</div>

@@ -29,6 +29,7 @@ function VideoPlayer(props: VideoPlayerProps) {
 		null
 	);
 
+	// 绑定Hls并加载视频
 	useLayoutEffect(() => {
 		const video = videoRef.current;
 		if (!Hls.isSupported() || !video) return;
@@ -38,31 +39,30 @@ function VideoPlayer(props: VideoPlayerProps) {
 
 		hls.on(Hls.Events.MEDIA_ATTACHED, function () {
 			console.log("video and hls.js are now bound together !");
-			hls.loadSource(
-				"http://s34mqjagr.hn-bkt.clouddn.com/a8c549d8c1b3b5d81e55c8426460a469f97309b96b29b148de5655a13b2ccedb.mp4.m3u8"
-			);
+			hls.loadSource(videoSrc);
 			hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
 				console.log(
 					"manifest loaded, found " +
 						data.levels.length +
-						" quality level"
+						" quality level",
+					data.levels,
+					hls.currentLevel
 				);
+				setTimeout(() => {
+					hls.currentLevel = data.levels.length - 1;
+					console.log("currentLevel", hls.currentLevel, data.levels);
+				}, 1000);
 			});
 		});
-	}, [videoRef]);
 
-	// useLayoutEffect(() => {
-	// 	const video = videoRef.current;
-	// 	const listener = () => {
-	// 		setVideo(video);
-	// 	};
-	// 	if (video) {
-	// 		video.addEventListener("loadeddata", listener);
-	// 		return () => {
-	// 			video.removeEventListener("loadeddata", listener);
-	// 		};
-	// 	}
-	// }, []);
+		hls.on(Hls.Events.LEVELS_UPDATED, (e) => {
+			console.log("LEVELS_UPDATED", hls.levels);
+		});
+
+		return () => {
+			hls.destroy();
+		};
+	}, [videoRef, videoSrc]);
 
 	return (
 		<>
@@ -80,6 +80,13 @@ function VideoPlayer(props: VideoPlayerProps) {
 					}}
 					onLoadedData={(e) => {
 						setLoadedVideo(e.currentTarget);
+						// 输出视频已缓存的时间长度
+						console.log(
+							e.currentTarget.buffered.end(
+								e.currentTarget.buffered.length - 1
+							),
+							e.currentTarget.duration
+						);
 					}}
 					onClick={(e) => {
 						const video = e.currentTarget;
@@ -88,9 +95,7 @@ function VideoPlayer(props: VideoPlayerProps) {
 							video.pause();
 						}
 					}}
-				>
-					{/* <source type='video/mp4' src={videoSrc} /> */}
-				</video>
+				/>
 				{loadedVideo ? (
 					<VideoController video={loadedVideo} />
 				) : (
@@ -112,10 +117,37 @@ function VideoController(props: VideoControllerProps) {
 	const { video } = useMemo(() => props, [props]);
 	const progressContainerRef = useRef<HTMLDivElement>(null);
 	const progressPlayedRef = useRef<HTMLDivElement>(null);
+	const progressBufferedRef = useRef<HTMLDivElement>(null);
 	const [onProgressDrag, setOnProgressDrag] = useState(false);
 	const [playTime, setPlayTime] = useState(0);
 	const [duration, setDuration] = useState(video.duration);
 	const [onPaused, setOnPaused] = useState(video.paused);
+
+	/** 更新进度条方法 */
+	const updateProgress = useCallback(
+		(playPercent: number) => {
+			if (progressPlayedRef.current) {
+				progressPlayedRef.current.style.transform = `translateX(-${(
+					(1 - playPercent) *
+					100
+				).toFixed(2)}%)`;
+			}
+		},
+		[progressPlayedRef]
+	);
+
+	/** 更新缓冲条方法 */
+	const updateBuffered = useCallback(
+		(bufferedPercent: number) => {
+			if (progressBufferedRef.current) {
+				progressBufferedRef.current.style.transform = `translateX(-${(
+					(1 - bufferedPercent) *
+					100
+				).toFixed(2)}%)`;
+			}
+		},
+		[progressBufferedRef]
+	);
 
 	/** 进度条宽度监听 */
 	// useLayoutEffect(() => {
@@ -137,13 +169,17 @@ function VideoController(props: VideoControllerProps) {
 		if (video) {
 			video.addEventListener("timeupdate", () => {
 				setPlayTime(video.currentTime);
-				// progressThumbRef.current!.style.transform = `translateX(${
-				// 	(video.currentTime / duration) * progressWidth - 12
-				// }px)`;
 			});
 			video.addEventListener("durationchange", () => {
-				// console.log(video.duration, "<<<<");
 				setDuration(video.duration);
+			});
+			video.addEventListener("progress", () => {
+				if (video.buffered.length > 0) {
+					updateBuffered(
+						video.buffered.end(video.buffered.length - 1) /
+							video.duration
+					);
+				}
 			});
 		}
 
@@ -178,20 +214,6 @@ function VideoController(props: VideoControllerProps) {
 	}, [video]);
 
 	const [onCheck, setOnCheck] = useState(false);
-
-	/** 更新进度条 */
-	const updateProgress = useCallback(
-		(playPercent: number) => {
-			if (progressPlayedRef.current) {
-				progressPlayedRef.current.style.transform = `translateX(-${(
-					(1 - playPercent) *
-					100
-				).toFixed(2)}%)`;
-			}
-		},
-		[progressPlayedRef]
-	);
-
 	// 视频播放时使用requestAnimationFrame更新进度条
 	useLayoutEffect(() => {
 		if (video.paused) return;
@@ -304,6 +326,11 @@ function VideoController(props: VideoControllerProps) {
 					}}
 				>
 					<div
+						className={style["buffered"]}
+						ref={progressBufferedRef}
+					/>
+					<div
+						className={style["played"]}
 						ref={progressPlayedRef}
 						// style={{
 						// 	transform: `translateX(-${(
@@ -311,7 +338,7 @@ function VideoController(props: VideoControllerProps) {
 						// 		100
 						// 	).toFixed(2)}%)`,
 						// }}
-					></div>
+					/>
 					{/* <div
 						className={style["progress-thumb"]}
 						// style={{
