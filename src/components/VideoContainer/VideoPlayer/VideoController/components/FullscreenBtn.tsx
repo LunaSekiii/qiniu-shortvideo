@@ -20,6 +20,8 @@ export function FullscreenBtn() {
 		<div
 			onClick={async () => {
 				setOnCheck(await handleListFullScreen());
+				// 延迟100ms
+				await new Promise((resolve) => setTimeout(resolve, 50));
 				currentContainerScrollIntoView();
 			}}
 			className={style.btn}

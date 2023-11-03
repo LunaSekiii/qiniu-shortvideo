@@ -1,14 +1,10 @@
-import {
-	createContext,
-	useEffect,
-	useLayoutEffect,
-	useRef,
-	useState,
-} from "react";
+import { createContext, useLayoutEffect, useMemo, useRef } from "react";
 import style from "./VideoList.module.scss";
 import VideoContainer from "@/components/VideoContainer";
 import throttle from "@/utils/throttle";
 import scrollSmooth from "@/utils/scrollSmooth";
+import useDataFlowShow from "./useDataFlowShow";
+import useEventCallback from "../../utils/useEventCallback";
 
 type ListHandlerContextType = {
 	/** 列表滚动处理器 */
@@ -23,48 +19,88 @@ export const ListHandlerContext = createContext<ListHandlerContextType>({
 });
 
 type VideoListProps = {
-	list: Video.VideoInfo[];
-	hasMore: boolean;
+	data: Video.VideoInfo[];
+	getData: () => Promise<Video.VideoInfo[]>;
+	resetData: () => Promise<Video.VideoInfo[]>;
 };
 
 /**
  * 视频列表组件
  */
 export function VideoList(props: VideoListProps) {
+	const { data, getData } = props;
 	const videoListRef = useRef<HTMLDivElement>(null);
 
-	const [list, setList] = useState(props.list);
-	const [hasMore, setHasMore] = useState(props.hasMore);
-
-	useEffect(() => {
-		setList(props.list);
-		setHasMore(props.hasMore);
-	}, [props]);
+	// 数据流处理
+	const { showDataList, switchData, hasNext, hasPrev } = useDataFlowShow({
+		data,
+		getData,
+	});
 
 	// TODO: 分页加载
 
+	/** 翻页方法(600ms节流) */
+	const handlerPageChange = useMemo(
+		() =>
+			throttle((dirction: "up" | "down" = "down") => {
+				const videoList = videoListRef.current;
+				if (!videoList) return false;
+				scrollSmooth(
+					videoList,
+					0,
+					(dirction === "down" ? 1 : -1) * window.innerHeight,
+					500
+				);
+			}, 550),
+		[]
+	);
+
 	/** 列表滚动事件 */
-	const handlerListScroll = throttle((dirction: "up" | "down" = "down") => {
-		const videoList = videoListRef.current;
-		if (!videoList) return;
-		scrollSmooth(
-			videoList,
-			0,
-			(dirction === "down" ? 1 : -1) * window.innerHeight,
-			500
-		);
-		// videoList.onscrollend = (e) => console.log("<<<<", e);
-	}, 600);
+	const handlerListScrollImpl = useEventCallback(
+		async (dirction: "up" | "down" = "down") => {
+			if (dirction === "down" && !hasNext) return;
+			if (dirction === "up" && !hasPrev) return;
+			// 触发翻页
+			handlerPageChange(dirction);
+			// 延时500ms加载下一页
+			await new Promise((resolve) => setTimeout(resolve, 500));
+			// 切换数据
+			switchData(dirction === "down" ? "next" : "prev");
+		}
+	);
+
+	const handlerListScroll = useMemo(
+		() => throttle(handlerListScrollImpl, 600),
+		[handlerListScrollImpl]
+	);
+
+	const middleScrollIntoView = useRef<() => void>();
 
 	/** 列表全屏事件 */
 	const handlerListFullScreen = async () => {
 		const videoList = videoListRef.current;
 		if (!videoList) return false;
 		const isCurrentFullscreen = !!document.fullscreenElement;
+
 		const fullscreenPromise = isCurrentFullscreen
 			? document.exitFullscreen()
 			: videoList.requestFullscreen();
 		await fullscreenPromise;
+		if (!isCurrentFullscreen) {
+			let fullScreenSignal = false;
+			const fullScreenListener = () => {
+				if (!fullScreenSignal) return (fullScreenSignal = true);
+				videoList.removeEventListener(
+					"fullscreenchange",
+					fullScreenListener
+				);
+				console.log("aa");
+				setTimeout(() => {
+					middleScrollIntoView.current?.();
+				}, 0);
+			};
+			videoList.addEventListener("fullscreenchange", fullScreenListener);
+		}
 		return !isCurrentFullscreen;
 	};
 
@@ -113,11 +149,32 @@ export function VideoList(props: VideoListProps) {
 					handleListFullScreen: handlerListFullScreen,
 				}}
 			>
-				{list.map((video) => (
-					<VideoContainer key={video.videoId} video={video} />
+				{showDataList.map((video, index) => (
+					<VideoContainer
+						key={video.videoId}
+						video={video}
+						nextVideo={() => handlerListScroll("down")}
+						ref={(ref) => {
+							if (
+								(showDataList.length === 3 && index === 1) ||
+								(!hasNext && index === 1) ||
+								(!hasPrev && index === 0)
+							) {
+								middleScrollIntoView.current =
+									ref?.scrollIntoView;
+								// 延迟50ms
+								setTimeout(() => {
+									ref?.scrollIntoView();
+									ref?.onAutoPlay();
+								}, 20);
+							} else {
+								setTimeout(() => {
+									ref?.onBlur();
+								}, 20);
+							}
+						}}
+					/>
 				))}
-				{/* <VideoContainer />
-				<VideoContainer /> */}
 			</ListHandlerContext.Provider>
 		</div>
 	);

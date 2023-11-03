@@ -1,8 +1,9 @@
-import { VideoListType, getVideoListByCategory } from "@/apis/video";
+import { getVideoListByCategory } from "@/apis/video";
 import { VideoList } from "@/components/VideoList";
 import HomePageLayout from "@/layouts/HomePageLayout";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import useLoadPerPage from "./useLoadPerPage";
 
 /**
  * 分类视频
@@ -12,7 +13,19 @@ function Category() {
 
 	const navigate = useNavigate();
 
-	const [theList, setTheList] = useState<VideoListType | null>(null);
+	const loadData = useCallback(
+		(page: number, pageSize: number) =>
+			getVideoListByCategory({
+				categoryId: Number(categoryId),
+				page,
+				size: pageSize,
+			}),
+		[categoryId]
+	);
+
+	const { data, getData, reset } = useLoadPerPage<Video.VideoInfo>({
+		loadData,
+	});
 
 	useEffect(() => {
 		const category = Number(categoryId);
@@ -20,16 +33,14 @@ function Category() {
 		if (isNaN(category)) {
 			return navigate("/category/1");
 		}
-		getVideoListByCategory({ categoryId: category, page: 1 }).then((res) =>
-			setTheList(res)
-		);
+		reset();
 	}, [categoryId, navigate]);
 
-	if (!theList) return <div></div>;
+	if (!data) return <div></div>;
 
 	return (
 		<HomePageLayout>
-			<VideoList {...theList} />
+			<VideoList data={data} getData={getData} resetData={reset} />
 		</HomePageLayout>
 	);
 }

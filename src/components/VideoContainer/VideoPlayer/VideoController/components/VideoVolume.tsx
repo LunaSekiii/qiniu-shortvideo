@@ -1,29 +1,40 @@
 import SVGIcon from "@/components/SVGIcon";
 import { useState, useLayoutEffect } from "react";
 import style from "../VideoController.module.scss";
+import usePlayOptionStore from "@/stores/usePlayOptionStore";
 
 /**
  * 视频音量控制
  */
 export function VideoVolume({ video }: { video: HTMLVideoElement }) {
-	const [volume, setVolume] = useState(video.volume);
-	const [isMute, setIsMute] = useState(video.muted);
+	const setPlayOption = usePlayOptionStore((state) => state.setPlayOption);
+	const playOption = usePlayOptionStore((state) => state.playOption);
+
+	const [volume, setVolume] = useState(playOption.playVolume);
+	const [isMute, setIsMute] = useState(playOption.playMute == 1);
 
 	// 音量绑定
 	useLayoutEffect(() => {
 		const volumeListener = () => {
 			setVolume(video.volume);
+			setPlayOption({ playVolume: video.volume });
 		};
 		video.addEventListener("volumechange", volumeListener);
 		return () => {
 			video.removeEventListener("volumechange", volumeListener);
 		};
-	}, [video, volume]);
+	}, [setPlayOption, video, volume]);
+
+	useLayoutEffect(() => {
+		setVolume(playOption.playVolume);
+		video.volume = playOption.playVolume;
+	}, [playOption.playVolume, video]);
 
 	// 静音状态绑定
 	useLayoutEffect(() => {
-		video.muted = isMute;
-	}, [isMute, video]);
+		video.muted = playOption.playMute == 1;
+		setIsMute(playOption.playMute == 1);
+	}, [isMute, playOption.playMute, video]);
 
 	/** 音量条拖拽事件 */
 	const volumeBarDrag = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -65,6 +76,7 @@ export function VideoVolume({ video }: { video: HTMLVideoElement }) {
 				className={style.current}
 				onClick={() => {
 					setIsMute((isMute) => !isMute);
+					setPlayOption({ playMute: !isMute ? 1 : 0 });
 				}}
 			>
 				<SVGIcon

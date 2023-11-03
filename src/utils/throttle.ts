@@ -9,7 +9,7 @@ function throttle<T extends Array<unknown>, R>(
 
 	return (...args: T) => {
 		if (timer) {
-			return;
+			return false;
 		}
 		fn(...args);
 		timer = setTimeout(() => {

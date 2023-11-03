@@ -1,5 +1,5 @@
 import SVGIcon from "@/components/SVGIcon";
-import { useMemo } from "react";
+import { useLayoutEffect, useMemo } from "react";
 import style from "./VideoController.module.scss";
 import useVideoListened from "./useVideoListened";
 import VideoProgress from "./components/VideoProgress";
@@ -9,6 +9,7 @@ import { VideoVolume } from "./components/VideoVolume";
 import { VideoSpeed } from "./components/VideoSpeed";
 import { VideoQuality } from "./components/VideoQuality";
 import { VideoStreaming } from "./components/VideoStreaming";
+import usePlayOptionStore from "@/stores/usePlayOptionStore";
 
 type VideoControllerProps = {
 	video: HTMLVideoElement;
@@ -24,6 +25,14 @@ function VideoController(props: VideoControllerProps) {
 	// 视频监听绑定Hook
 	const { playTime, bufferedTime, duration, onPaused } =
 		useVideoListened(video);
+
+	const playOption = usePlayOptionStore((state) => state.playOption);
+
+	useLayoutEffect(() => {
+		video.volume = playOption.playVolume;
+		video.playbackRate = playOption.playSpeed;
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
 		<div className={style.controller}>
