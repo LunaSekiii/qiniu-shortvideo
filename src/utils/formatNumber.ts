@@ -4,6 +4,8 @@ export function formatNumber(num: number, decimalPlaces: number = 1): string {
 	let formattedNum = "";
 	let unitIndex = 0;
 
+	if (num < 1000) return num.toString();
+
 	while (num >= 1000) {
 		if (unitIndex >= units.length) return "999b+";
 		num /= 1000;

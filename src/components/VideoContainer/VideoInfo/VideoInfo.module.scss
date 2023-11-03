@@ -1,0 +1,129 @@
+// 视频信息框
+.video-info {
+	gap: 20px;
+	height: 20%;
+	min-height: calc($min-video-container-height * 0.2);
+	max-height: 120px;
+	@include flex($direction: row, $justify: left, $align: center);
+
+	* {
+		width: fit-content;
+		margin: 0;
+		padding: 0;
+		overflow: hidden;
+	}
+}
+
+// 主要交互区
+.interaction-box {
+	gap: 20px;
+	width: fit-content;
+	height: 100%;
+	overflow: visible;
+	white-space: nowrap;
+	@include flex($direction: column, $justify: left, $align: start);
+}
+
+// 用户信息
+.user {
+	@include flex($direction: row, $justify: left, $align: center);
+	gap: 10px;
+	width: fit-content;
+	overflow: visible;
+	.user-info {
+		flex: 1;
+		cursor: pointer;
+		.user-name {
+			font-size: x-large;
+			opacity: 0.87;
+			transition: opacity 0.2s ease-out;
+			&:hover {
+				opacity: 1;
+			}
+		}
+		.time {
+			font-size: medium;
+			opacity: 0.72;
+		}
+	}
+}
+
+// 交互区
+.interaction {
+	gap: 10px;
+	width: 100%;
+	min-width: 300px;
+	@include flex($direction: row, $justify: space-between, $align: center);
+	.interaction-btn {
+		@include flex($direction: row, $justify: left, $align: center);
+		gap: 2px;
+		cursor: pointer;
+		opacity: 0.72;
+		&:hover {
+			opacity: 1;
+		}
+		* {
+			vertical-align: bottom;
+		}
+	}
+}
+
+// 视频信息区
+.info {
+	gap: 10px;
+	width: 40%;
+	max-width: 50%;
+	height: 100%;
+	@include flex($direction: column, $justify: left, $align: start);
+	h1 {
+		font-size: larger;
+		opacity: 0.87;
+	}
+	p {
+		font-size: small;
+		opacity: 0.72;
+	}
+}
+
+// 视频切换区
+.video-switch {
+	gap: 10px;
+	width: 110px;
+	min-width: 100px;
+	height: 100%;
+	margin-left: auto;
+	text-align: center;
+	$btn-width: 50px;
+	$btn-space: 15px;
+	$white: rgba(255, 255, 255);
+	$black: rgba(0, 0, 0);
+	@include flex($direction: row, $justify: space-between, $align: start);
+	> div {
+		border-radius: $btn-width;
+		cursor: pointer;
+		opacity: 0.87;
+		transition: opacity 0.2s ease-out;
+		&:hover {
+			opacity: 1;
+		}
+		svg {
+			transform: scale(1.56);
+		}
+	}
+	.up-btn {
+		width: $btn-width;
+		height: $btn-width;
+		color: $white;
+		line-height: $btn-width;
+	}
+	.dowm-btn {
+		width: $btn-width;
+		height: calc(100% - $btn-space);
+		padding-bottom: $btn-space;
+		color: $black;
+		background-color: $white;
+		box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25), 0 0 6px rgba(0, 0, 0, 0.25);
+		fill: $black;
+		@include flex($direction: column, $justify: end, $align: center);
+	}
+}
