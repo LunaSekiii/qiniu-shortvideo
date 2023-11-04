@@ -7,7 +7,7 @@ import useLoadPerPage from "./useLoadPerPage";
 import ParamsChecker from "@/components/ParamsCheck";
 
 /**
- * 分类视频
+ * 分类视频页面
  */
 function Category() {
 	const { categoryId } = useParams();

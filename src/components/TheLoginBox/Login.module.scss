@@ -1,0 +1,162 @@
+.login-box {
+	background-color: #ffffff;
+	border-radius: 5px;
+	&::backdrop {
+		backdrop-filter: blur(2px);
+	}
+	text-align: center;
+	outline: none;
+}
+
+.login {
+	width: 50vw;
+	min-width: 500px;
+	max-width: 500px;
+	// outline: solid 1px #ccc;
+}
+
+// 表单
+.form {
+	@include flex($direction: column, $justify: center, $align: center);
+	gap: 2rem;
+	&[data-register="true"] {
+		gap: 1rem;
+	}
+	.title {
+		font-size: larger;
+	}
+
+	.input {
+		width: 70%;
+		height: 3rem;
+		border: #000 solid 2px;
+		border-radius: 5px;
+		padding: 0 10px;
+		line-height: 3rem;
+		font-size: 1.5rem;
+		outline: none;
+		> input {
+			margin: 0;
+			width: 100%;
+			height: 100%;
+			font-size: 1.5rem;
+			background-color: transparent;
+			border: none;
+			outline: none;
+			line-height: 3rem;
+		}
+	}
+	.input-content {
+		@include flex($direction: row, $justify: center, $align: center);
+		.label {
+			text-align: center;
+			white-space: nowrap;
+			height: 100%;
+			font-size: 1.1rem;
+			padding: 0 5px;
+			cursor: pointer;
+		}
+	}
+}
+
+// 关闭按钮
+.close-btn {
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 2rem;
+	height: 2rem;
+	background-color: transparent;
+	border: none;
+	outline: none;
+	fill: #000;
+	@extend .children-center;
+	transform-origin: right top;
+	cursor: pointer;
+	transform: scale(1.5);
+	opacity: 0.72;
+	&:hover {
+		opacity: 1;
+	}
+}
+
+.btn {
+	position: relative;
+	height: fit-content;
+	width: fit-content;
+	margin: 2rem auto 5px auto;
+	border: #000 solid 2px;
+	border-radius: 30px;
+	width: fit-content;
+	font-size: 20px;
+	font-weight: 600;
+	user-select: none;
+	cursor: pointer;
+	padding: 10px 20px;
+	&:hover {
+		background-color: #fff;
+	}
+}
+
+// 切换器
+.switch {
+	position: relative;
+	height: fit-content;
+	width: fit-content;
+	margin: 3rem auto;
+	border: #000 solid 2px;
+	border-radius: 30px;
+	@include flex($direction: row, $justify: center, $align: center);
+	gap: 1rem;
+	.option {
+		width: fit-content;
+		font-size: 20px;
+		font-weight: 600;
+		user-select: none;
+		cursor: pointer;
+		&:nth-child(1) {
+			color: #ffffff;
+			padding: 10px 10px 10px 20px;
+		}
+		&:nth-child(2) {
+			color: #000;
+			padding: 10px 20px 10px 10px;
+		}
+	}
+	&::before {
+		content: "";
+		z-index: -1;
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: calc(50% + 15px);
+		// 别问，奇妙的数学计算
+		// transform: translateX(calc(100% - 30px));
+		height: 100%;
+		background-color: #4a4a4a;
+		border-radius: 30px;
+		transition: left 0.2s ease-in-out;
+		transition: transform 0.2s ease-out;
+	}
+	&[data-checked="true"] {
+		&::before {
+			content: "";
+			z-index: -1;
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: calc(50% + 10px);
+			// 别问，奇妙的数学计算
+			transform: translateX(calc(100% - 20px));
+			height: 100%;
+			background-color: #4a4a4a;
+			border-radius: 30px;
+		}
+		.option:nth-child(1) {
+			color: #000;
+		}
+		.option:nth-child(2) {
+			color: #ffffff;
+		}
+	}
+}

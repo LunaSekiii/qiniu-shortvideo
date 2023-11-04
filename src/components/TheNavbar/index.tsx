@@ -1,16 +1,22 @@
 import React, { useEffect } from "react";
 import SVGIcon from "../SVGIcon";
 import style from "./Navbar.module.scss";
-import memuList from "./navbarList";
+import memuList, { MenuType } from "./navbarList";
 import { useNavigate } from "react-router-dom";
 
 function Navbar() {
-	const [activeNav, setActiveNav] = React.useState<string | number>("home");
+	const [activeNav, setActiveNav] = React.useState<string>("");
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		// navigate("/category/" + activeNav);
-	}, [activeNav]);
+		// 通过 window.location.pathname 获取当前路径
+		const path = window.location.pathname;
+		setActiveNav(path);
+	}, []);
+
+	useEffect(() => {
+		navigate(activeNav);
+	}, [activeNav, navigate]);
 
 	return (
 		<div className={style.navbar}>
@@ -24,17 +30,19 @@ function Navbar() {
 			</title>
 			<div className={style.main}>
 				<menu>
-					{memuList.map((memu, index) => (
-						// <>
+					{Object.keys(memuList).map((menu, index) => (
 						<ul key={index}>
-							{memu.map((item) => {
-								const isActive = item.key === activeNav;
+							{memuList[menu as MenuType].map((item) => {
+								const nav = `${menu !== "" ? "/" : ""}${menu}/${
+									item.key
+								}`;
+								const isActive = nav === activeNav;
 								return (
 									<li
 										key={item.key}
 										data-active={isActive}
 										onClick={() => {
-											setActiveNav(item.key);
+											setActiveNav(nav);
 										}}
 									>
 										<SVGIcon

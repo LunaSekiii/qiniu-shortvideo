@@ -1,0 +1,31 @@
+.user-page {
+	padding: 0 calc(5vw + 10%);
+	padding-top: $header-height;
+	width: 100%;
+}
+
+.tabs {
+	width: 100%;
+	height: fit-content;
+	gap: 20px;
+	@include flex($direction: row, $justify: start, $align: center);
+	// outline: solid 1px #ccc;
+	border-bottom: solid 1px rgba($color: #ffffff, $alpha: 0.15);
+	.tab {
+		cursor: pointer;
+		font-weight: 600;
+		width: 100px;
+		padding: 15px 10px 10px 0px;
+		opacity: 0.72;
+		&:hover,
+		&[data-active="true"] {
+			opacity: 1;
+		}
+	}
+	dialog {
+		&::backdrop {
+			// background-color: $alternative-colors;
+			background-color: transparent;
+		}
+	}
+}

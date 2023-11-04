@@ -6,8 +6,10 @@ export type MemuItem = {
 	icon: SVGIconName;
 };
 
-const memuList: MemuItem[][] = [
-	[
+export type MenuType = "category" | "";
+
+const memuList: Record<MenuType, MemuItem[]> = {
+	"": [
 		{
 			name: "首页",
 			key: "home",
@@ -30,11 +32,11 @@ const memuList: MemuItem[][] = [
 		},
 		{
 			name: "我的",
-			key: "person",
+			key: "user/self",
 			icon: "person",
 		},
 	],
-	[
+	category: [
 		// {
 		// 	name: "直播",
 		// 	key: "live_tv",
@@ -96,6 +98,6 @@ const memuList: MemuItem[][] = [
 			icon: "diamond",
 		},
 	],
-];
+};
 
 export default memuList;

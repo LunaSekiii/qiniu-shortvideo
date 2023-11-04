@@ -2,7 +2,7 @@
 	// height: $header-height;
 	// min-height: $header-height;
 	position: fixed;
-	z-index: 100;
+	z-index: 1;
 	gap: 10px;
 	width: 100%;
 	margin-top: $main-margin-top;
@@ -21,6 +21,7 @@
 	border-radius: 48px;
 	cursor: text;
 	backdrop-filter: blur(20px);
+	transition: box-shadow 0.1s ease-out, border 0.1s ease-out;
 	@include flex($direction: row, $justify: center, $align: center);
 
 	&:focus-within {
@@ -36,11 +37,20 @@
 		height: $search-box-height;
 		color: var(--color);
 		font-size: 1.2rem;
+		font-weight: 600;
 		background-color: transparent;
 		border: none;
 		box-shadow: none;
 		&:focus {
 			outline: none;
+			&::placeholder {
+				color: transparent;
+			}
+		}
+		&::placeholder {
+			color: #fff;
+			font-size: 1.2rem;
+			opacity: 0.6;
 		}
 	}
 }

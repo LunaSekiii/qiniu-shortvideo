@@ -21,6 +21,11 @@
 	@extend .fullscreen;
 	@extend .children-center;
 	color: var(--color);
-	fill: var(--color)
+	fill: var(--color);
 	// background-color: var(--bg-color);
+}
+
+dialog {
+	border: none;
+	background-color: transparent;
 }
