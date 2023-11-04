@@ -9,7 +9,7 @@ function Navbar() {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		navigate("/category/" + activeNav);
+		// navigate("/category/" + activeNav);
 	}, [activeNav]);
 
 	return (

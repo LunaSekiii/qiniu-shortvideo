@@ -35,6 +35,10 @@ const VideoContainer = forwardRef<
 		scrollIntoView: currentContainerScrollIntoView,
 		onAutoPlay: () => {
 			videoPlayerRef.current?.onAutoPlay();
+			videoContainerRef.current?.scrollIntoView({
+				block: "center",
+				inline: "center",
+			});
 		},
 		onBlur: () => {
 			videoPlayerRef.current?.onBlur();

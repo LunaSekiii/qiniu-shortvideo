@@ -39,7 +39,7 @@ export function VideoList(props: VideoListProps) {
 
 	// TODO: 分页加载
 
-	/** 翻页方法(600ms节流) */
+	/** 翻页方法(550ms节流) */
 	const handlerPageChange = useMemo(
 		() =>
 			throttle((dirction: "up" | "down" = "down") => {
@@ -63,14 +63,15 @@ export function VideoList(props: VideoListProps) {
 			// 触发翻页
 			handlerPageChange(dirction);
 			// 延时500ms加载下一页
-			await new Promise((resolve) => setTimeout(resolve, 500));
+			await new Promise((resolve) => setTimeout(resolve, 600));
+
 			// 切换数据
 			switchData(dirction === "down" ? "next" : "prev");
 		}
 	);
 
 	const handlerListScroll = useMemo(
-		() => throttle(handlerListScrollImpl, 600),
+		() => throttle(handlerListScrollImpl, 700),
 		[handlerListScrollImpl]
 	);
 
@@ -160,17 +161,13 @@ export function VideoList(props: VideoListProps) {
 								(!hasNext && index === 1) ||
 								(!hasPrev && index === 0)
 							) {
+								// 锚定中间元素
 								middleScrollIntoView.current =
 									ref?.scrollIntoView;
-								// 延迟50ms
-								setTimeout(() => {
-									ref?.scrollIntoView();
-									ref?.onAutoPlay();
-								}, 20);
+								ref?.onAutoPlay();
 							} else {
-								setTimeout(() => {
-									ref?.onBlur();
-								}, 20);
+								// 非中间元素处理
+								ref?.onBlur();
 							}
 						}}
 					/>
