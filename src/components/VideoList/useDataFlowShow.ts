@@ -79,6 +79,7 @@ function useDataFlowShow<T>(props: UseDataFlowShowProps<T>) {
 
 	return {
 		switchData,
+		setCurrentIndex,
 		showDataList,
 		hasNext,
 		hasPrev,

@@ -1,4 +1,10 @@
-import { createContext, useLayoutEffect, useMemo, useRef } from "react";
+import {
+	createContext,
+	useEffect,
+	useLayoutEffect,
+	useMemo,
+	useRef,
+} from "react";
 import style from "./VideoList.module.scss";
 import VideoContainer from "@/components/VideoContainer";
 import throttle from "@/utils/throttle";
@@ -21,15 +27,25 @@ export const ListHandlerContext = createContext<ListHandlerContextType>({
 /**
  * 视频列表组件
  */
-export function VideoList(props: VideoType.VideoFlowProps) {
-	const { data, getData } = props;
+export function VideoList(
+	props: VideoType.VideoFlowProps & {
+		isFullScreen?: boolean;
+		initIndex?: number;
+	}
+) {
+	const { data, getData, isFullScreen = false, initIndex = 0 } = props;
 	const videoListRef = useRef<HTMLDivElement>(null);
 
 	// 数据流处理
-	const { showDataList, switchData, hasNext, hasPrev } = useDataFlowShow({
-		data,
-		getData,
-	});
+	const { showDataList, switchData, setCurrentIndex, hasNext, hasPrev } =
+		useDataFlowShow({
+			data,
+			getData,
+		});
+
+	useEffect(() => {
+		setCurrentIndex(initIndex);
+	}, [initIndex, setCurrentIndex]);
 
 	// TODO: 分页加载
 
@@ -137,6 +153,7 @@ export function VideoList(props: VideoType.VideoFlowProps) {
 				// 阻止鼠标中键滚动
 				if (e.button == 1) e.preventDefault();
 			}}
+			data-fullscreen={isFullScreen}
 		>
 			<ListHandlerContext.Provider
 				value={{
@@ -149,6 +166,7 @@ export function VideoList(props: VideoType.VideoFlowProps) {
 						key={video.videoId}
 						video={video}
 						nextVideo={() => handlerListScroll("down")}
+						isFullScreen={isFullScreen}
 						ref={(ref) => {
 							if (
 								(showDataList.length === 3 && index === 1) ||

@@ -1,10 +1,10 @@
 import { getVideoListByCategory } from "@/apis/video";
-import { VideoList } from "@/components/VideoList";
 import HomePageLayout from "@/layouts/HomePageLayout";
 import { useCallback } from "react";
 import { useParams } from "react-router-dom";
 import useLoadPerPage from "../../hooks/useLoadPerPage";
 import ParamsChecker from "@/components/ParamsCheck";
+import VideoTile from "@/components/VideoTile";
 
 /**
  * 分类视频页面
@@ -30,7 +30,7 @@ function Category() {
 
 	return (
 		<HomePageLayout>
-			<VideoList data={data} getData={getData} resetData={reset} />
+			<VideoTile data={data} getData={getData} resetData={reset} />
 		</HomePageLayout>
 	);
 }

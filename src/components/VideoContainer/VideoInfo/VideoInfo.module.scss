@@ -127,3 +127,15 @@
 		@include flex($direction: column, $justify: end, $align: center);
 	}
 }
+
+.video-info[data-fullscreen="true"] {
+	height: calc($min-video-container-height * 0.2);
+	padding: 0 30px;
+	.video-switch {
+		height: 100px;
+	}
+	.info {
+		width: 100%;
+		max-width: 100%;
+	}
+}

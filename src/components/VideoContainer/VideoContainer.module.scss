@@ -10,3 +10,10 @@
 	scroll-snap-align: start;
 	@include flex($direction: column, $justify: center, $align: space-between);
 }
+
+.video-container[data-fullscreen="true"] {
+	height: 100vh;
+	min-height: 100vh;
+	margin-bottom: 0;
+	padding-top: 0;
+}

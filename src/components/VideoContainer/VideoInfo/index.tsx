@@ -7,14 +7,15 @@ import { useState } from "react";
 
 type VideoInfoProps = {
 	video: VideoType.VideoInfo;
+	isFullscreen: boolean;
 };
 /**
  * 视频信息
  */
 export function VideoInfo(props: VideoInfoProps) {
-	const { video } = props;
+	const { video, isFullscreen } = props;
 	return (
-		<div className={style["video-info"]}>
+		<div className={style["video-info"]} data-fullscreen={isFullscreen}>
 			<div className={style["interaction-box"]}>
 				<div className={style.user}>
 					<Avatar

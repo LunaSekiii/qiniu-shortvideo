@@ -6,6 +6,7 @@ import { VideoInfo } from "./VideoInfo";
 type VideoContainerProps = {
 	video: VideoType.VideoInfo;
 	nextVideo: () => void;
+	isFullScreen: boolean;
 };
 
 type VideoContainerContextType = {
@@ -24,7 +25,7 @@ const VideoContainer = forwardRef<
 	{ scrollIntoView: () => void; onAutoPlay: () => void; onBlur: () => void },
 	VideoContainerProps
 >(function VideoContainer(props, ref) {
-	const { video, nextVideo } = props;
+	const { video, nextVideo, isFullScreen } = props;
 
 	const videoContainerRef = useRef<HTMLDivElement>(null);
 
@@ -56,7 +57,11 @@ const VideoContainer = forwardRef<
 	};
 
 	return (
-		<div className={style["video-container"]} ref={videoContainerRef}>
+		<div
+			className={style["video-container"]}
+			ref={videoContainerRef}
+			data-fullscreen={isFullScreen}
+		>
 			<VideoContainerContext.Provider
 				value={{
 					currentContainerScrollIntoView,
@@ -69,8 +74,9 @@ const VideoContainer = forwardRef<
 					videoSrc={"http://" + video.url}
 					cover={"http://" + video.picture}
 					nextVideo={nextVideo}
+					isFullscreen={isFullScreen}
 				/>
-				<VideoInfo video={video} />
+				<VideoInfo video={video} isFullscreen={isFullScreen} />
 			</VideoContainerContext.Provider>
 		</div>
 	);

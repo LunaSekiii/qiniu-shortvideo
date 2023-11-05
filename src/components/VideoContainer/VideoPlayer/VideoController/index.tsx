@@ -14,13 +14,14 @@ import usePlayOptionStore from "@/stores/usePlayOptionStore";
 type VideoControllerProps = {
 	video: HTMLVideoElement;
 	hls: Hls;
+	isFullscreen: boolean;
 };
 
 /**
  * 视频播放控件
  */
 function VideoController(props: VideoControllerProps) {
-	const { video, hls } = useMemo(() => props, [props]);
+	const { video, hls, isFullscreen } = useMemo(() => props, [props]);
 
 	// 视频监听绑定Hook
 	const { playTime, bufferedTime, duration, onPaused } =
@@ -35,7 +36,7 @@ function VideoController(props: VideoControllerProps) {
 	}, []);
 
 	return (
-		<div className={style.controller}>
+		<div className={style.controller} data-fullscreen={isFullscreen}>
 			<div
 				className={style["main"]}
 				onClick={() => {

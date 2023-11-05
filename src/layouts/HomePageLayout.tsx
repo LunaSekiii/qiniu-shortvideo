@@ -12,7 +12,10 @@ function HomePageLayout({ children }: { children: React.ReactNode }) {
 			<Navbar />
 			<div className={style.main}>
 				<TheHeader />
-				<div className={style.container}>{children}</div>
+				<div className={style.container}>
+					<div className={style["size-seat"]} />
+					{children}
+				</div>
 			</div>
 		</div>
 	);

@@ -277,3 +277,10 @@ $controll-height: 42px;
 		}
 	}
 }
+
+.controller[data-fullscreen="true"] {
+	.progress-container {
+		width: calc(100% - 40px);
+		padding: 20px;
+	}
+}

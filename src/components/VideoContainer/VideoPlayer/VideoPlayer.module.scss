@@ -42,3 +42,18 @@ $glass: blur(20px) saturate(180%) brightness(0.6);
 		content: "";
 	}
 }
+
+.player[data-fullscreen="true"] {
+	height: 100vh;
+	// min-height: 0;
+	// min-height: 100vh;
+	// min-height: calc(100vh - 120px);
+	// max-height: calc(
+	// 	100vh - calc($min-video-container-height * 0.2) + $progress-height
+	// );
+	margin: 0;
+	video {
+		height: calc(100% + calc($progress-height * 0.5));
+		border-radius: 0;
+	}
+}

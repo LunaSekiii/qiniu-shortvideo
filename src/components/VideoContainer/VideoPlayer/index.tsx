@@ -19,6 +19,8 @@ type VideoPlayerProps = {
 	cover: string;
 	/** 连播 */
 	nextVideo: () => void;
+	/** 是否全屏 */
+	isFullscreen: boolean;
 };
 
 export type VideoPlayerRef = {
@@ -33,7 +35,10 @@ export type VideoPlayerRef = {
  */
 const VideoPlayer = forwardRef<VideoPlayerRef, VideoPlayerProps>(
 	function VideoPlayer(props, ref) {
-		const { videoSrc, cover, nextVideo } = useMemo(() => props, [props]);
+		const { videoSrc, cover, nextVideo, isFullscreen } = useMemo(
+			() => props,
+			[props]
+		);
 		const videoRef = useRef<HTMLVideoElement>(null);
 		const [loadedVideo, setLoadedVideo] = useState<HTMLVideoElement | null>(
 			null
@@ -101,40 +106,41 @@ const VideoPlayer = forwardRef<VideoPlayerRef, VideoPlayerProps>(
 		}, [videoRef, videoSrc]);
 
 		return (
-			<>
-				<div
-					className={style.player}
-					style={
-						{ "--video-bg": `url(${cover})` } as React.CSSProperties
-					}
-				>
-					<video
-						playsInline
-						ref={videoRef}
-						onEnded={(e) => {
-							// 连播模式下，播放结束后结束播放
-							if (playMode) return nextVideo();
-							// 循环播放
-							e.currentTarget.play();
-						}}
-						onLoadedData={(e) => {
-							setLoadedVideo(e.currentTarget);
-						}}
-						onClick={(e) => {
-							const video = e.currentTarget;
-							if (video) {
-								if (video.paused) return video.play();
-								video.pause();
-							}
-						}}
+			<div
+				className={style.player}
+				style={{ "--video-bg": `url(${cover})` } as React.CSSProperties}
+				data-fullscreen={isFullscreen}
+			>
+				<video
+					playsInline
+					ref={videoRef}
+					onEnded={(e) => {
+						// 连播模式下，播放结束后结束播放
+						if (playMode) return nextVideo();
+						// 循环播放
+						e.currentTarget.play();
+					}}
+					onLoadedData={(e) => {
+						setLoadedVideo(e.currentTarget);
+					}}
+					onClick={(e) => {
+						const video = e.currentTarget;
+						if (video) {
+							if (video.paused) return video.play();
+							video.pause();
+						}
+					}}
+				/>
+				{loadedVideo && hls ? (
+					<VideoController
+						video={loadedVideo}
+						hls={hls}
+						isFullscreen={isFullscreen}
 					/>
-					{loadedVideo && hls ? (
-						<VideoController video={loadedVideo} hls={hls} />
-					) : (
-						<div></div>
-					)}
-				</div>
-			</>
+				) : (
+					<div></div>
+				)}
+			</div>
 		);
 	}
 );
