@@ -1,5 +1,6 @@
 import { getUserInfo, getUserLogout, postUserLogin } from "@/apis/user";
 import { create } from "zustand";
+import { toast } from "react-toastify";
 
 type UserLoginStore = {
 	/** 当前登录用户信息 */
@@ -42,10 +43,20 @@ const useLoginStore = create<UserLoginStore>((set, get) => ({
 		}
 	},
 	login: async (params) => {
+		toast.info("正在登录...", {
+			isLoading: true,
+			toastId: "login",
+		});
 		try {
 			const res = await postUserLogin(params);
 			set({ userInfo: res });
+			toast.success("登录成功", {
+				toastId: "login",
+			});
 		} catch (e) {
+			toast.error("登录失败", {
+				toastId: "login",
+			});
 			return;
 		}
 		// location.reload();

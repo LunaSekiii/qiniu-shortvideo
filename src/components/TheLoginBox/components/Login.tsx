@@ -5,25 +5,26 @@ import useLoginStore from "@/stores/useLoginStore";
 export function Login() {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
-	const [errorItem, setErrorItem] = useState<string[]>([]); // 错误项 [username, password]
 	const login = useLoginStore((state) => state.login);
 	const submit = () => {
-		// 表单校验
-		if (!username || !password) {
-			return;
-		}
 		login({ username, password });
 	};
 
 	return (
-		<div className={style.form}>
+		<form
+			className={style.form}
+			onSubmit={(e) => {
+				e.preventDefault();
+				submit();
+			}}
+		>
 			<input
 				type='text'
 				className={style.input}
 				value={username}
 				onChange={(e) => setUsername(e.currentTarget.value)}
 				placeholder='用户名'
-				data-onerror={errorItem.includes("username")}
+				required
 			/>
 			<input
 				type='password'
@@ -31,17 +32,9 @@ export function Login() {
 				value={password}
 				onChange={(e) => setPassword(e.currentTarget.value)}
 				placeholder='密码'
-				data-onerror={errorItem.includes("password")}
+				required
 			/>
-			<button
-				onClick={(e) => {
-					e.preventDefault();
-					submit();
-				}}
-				className={style.btn}
-			>
-				登录
-			</button>
-		</div>
+			<button className={style.btn}>登录</button>
+		</form>
 	);
 }

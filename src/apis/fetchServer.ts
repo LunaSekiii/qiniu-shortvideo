@@ -1,3 +1,6 @@
+import useLoginStore from "@/stores/useLoginStore";
+import { toast } from "react-toastify";
+
 /** 请求Body参数 */
 type RequestBody = RequestInit["body"];
 
@@ -143,6 +146,19 @@ fetchService.addResponseInterceptor((response) => {
 
 	if (response.status in errorMessages) {
 		console.error(errorMessages[response.status]);
+		if (response.status === 403) {
+			toast.info("未登录 点击登录", {
+				toastId: "login",
+				onClick: () => {
+					useLoginStore.getState().showLoginBox();
+				},
+			});
+		}
+		if (response.status >= 500 && response.status <= 504) {
+			toast.error("服务器错误 请稍后重试 ", {
+				toastId: "服务器错误",
+			});
+		}
 	}
 });
 
