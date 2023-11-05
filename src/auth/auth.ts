@@ -6,11 +6,15 @@ import useLoginStore from "@/stores/useLoginStore";
  */
 async function auth(fn: () => void) {
 	const userInfo = await useLoginStore.getState().getUserInfo();
-	console.log("鉴权", userInfo);
-	// 如果正在请求用户信息，直接返回
-	if (userInfo === "loading") return console.log("正在请求用户信息");
+	const userInfo2 = useLoginStore.getState().userInfo;
+	console.log("鉴权", userInfo, userInfo2);
+	if (!userInfo2) {
+		// 重试
+		setTimeout(() => auth(fn), 1000);
+		return console.log("正在请求用户信息");
+	}
 	// 如果已经登录，直接执行
-	else if (userInfo) fn();
+	else if (userInfo2) fn();
 	// 否则显示登录框
 	else useLoginStore.getState().showLoginBox();
 }

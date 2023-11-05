@@ -1,6 +1,6 @@
 import SVGIcon from "@/components/SVGIcon";
 import { ListHandlerContext } from "@/components/VideoList";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { VideoContainerContext } from "../../..";
 import style from "../VideoController.module.scss";
 
@@ -14,7 +14,22 @@ export function FullscreenBtn() {
 		VideoContainerContext
 	);
 
-	const [onCheck, setOnCheck] = useState(false);
+	const [onCheck, setOnCheck] = useState(
+		document.fullscreenElement ? true : false
+	);
+
+	useEffect(() => {
+		const handleFullscreenChange = () => {
+			setOnCheck(document.fullscreenElement ? true : false);
+		};
+		document.addEventListener("fullscreenchange", handleFullscreenChange);
+		return () => {
+			document.removeEventListener(
+				"fullscreenchange",
+				handleFullscreenChange
+			);
+		};
+	}, []);
 
 	return (
 		<div

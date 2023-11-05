@@ -19,7 +19,8 @@ export const VideoSpeed = memo(function VideoSpeed({
 
 	useLayoutEffect(() => {
 		setSpeed(playOption.playSpeed);
-	}, [playOption.playSpeed]);
+		video.playbackRate = playOption.playSpeed;
+	}, [playOption.playSpeed, video]);
 
 	return (
 		<div>

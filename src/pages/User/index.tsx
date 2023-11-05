@@ -1,10 +1,17 @@
 import HomePageLayout from "@/layouts/HomePageLayout";
 import style from "./User.module.scss";
 import ParamsChecker from "@/components/ParamsCheck";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import useLoginStore from "@/stores/useLoginStore";
 import auth from "@/auth/auth";
+import {
+	getUserInfo,
+	getUserInfoById,
+	getUserInfoByIdPerPage,
+} from "@/apis/user";
+import VideoTile from "@/components/VideoTile";
+import useLoadPerPage from "@/hooks/useLoadPerPage";
 
 /**
  * 用户主页
@@ -19,12 +26,29 @@ function User() {
 		return Number(userId) === LoginUserInfo?.userId;
 	}, [userId, LoginUserInfo]);
 
+	const [userInfo, updateUserInfo] =
+		useState<UserType.UserStatisticsInfoDTO>();
+
 	// 用户信息处理
 	useEffect(() => {
 		if (userId === "self") {
 			// 登录鉴权
-			auth(() => {
-				// TODO:获取用户信息
+			// auth(async () => {
+			if (!LoginUserInfo?.userId) {
+				getUserInfo().then((res) => {
+					console.log("asd");
+					getUserInfoById(res.userId).then((res) => {
+						updateUserInfo(res.userHome);
+					});
+				});
+			}
+			getUserInfoById(LoginUserInfo?.userId as number).then((res) => {
+				updateUserInfo(res.userHome);
+			});
+			// });
+		} else {
+			getUserInfoById(Number(userId)).then((res) => {
+				updateUserInfo(res.userHome);
 			});
 		}
 	}, [userId]);
@@ -54,15 +78,37 @@ function User() {
 		window.history.replaceState({}, "", path);
 	}, [activeTab, isSelf, tab, userId]);
 
+	const loadData = useCallback(
+		async (page: number, pageSize: number) => {
+			const homeData = await getUserInfoByIdPerPage(
+				userId === "self"
+					? (LoginUserInfo?.userId as number)
+					: Number(userId),
+				page,
+				pageSize,
+				activeTab
+			);
+			return homeData.homeSelectList;
+		},
+		[LoginUserInfo?.userId, activeTab, userId]
+	);
+
+	const { data, getData, reset } = useLoadPerPage({
+		loadData,
+	});
+
+	console.log(userInfo);
+
 	return (
 		<HomePageLayout>
 			<div className={style["user-page"]}>
-				<h1>用户主页</h1>
+				<h1>{userInfo?.userName}</h1>
 				<UserInfoTab
 					activeTab={activeTab}
 					setAvtiveTab={setActiveTab}
 					isSelf={isSelf}
 				/>
+				<VideoTile data={data} getData={getData} resetData={reset} />
 			</div>
 		</HomePageLayout>
 	);

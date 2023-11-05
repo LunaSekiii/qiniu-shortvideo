@@ -30,6 +30,7 @@ const useLoginStore = create<UserLoginStore>((set, get) => ({
 	getUserInfo: async () => {
 		if (get().loading) return "loading";
 		set({ loading: true });
+		// 如果已经获取过用户信息，直接返回
 		if (get().userInfo !== null) return get().userInfo;
 		try {
 			const res = await getUserInfo();

@@ -1,4 +1,5 @@
 import fetchService from "./fetchServer";
+import { VideoListType } from "./video";
 
 /**
  * 用户登录
@@ -10,10 +11,6 @@ export function postUserLogin(params: RequestType.loginParams) {
 	return fetchService.post<UserType.BaseUserInfoDTO>(
 		"/api/us/login" + "?" + urlencoded,
 		null
-		// urlencoded,
-		// {
-		// 	headers: { "Content-Type": "x-www-form-urlencoded;charset=UTF-8" },
-		// }
 	);
 }
 
@@ -31,9 +28,41 @@ export function getUserInfo() {
 	return fetchService.get<UserType.BaseUserInfoDTO>("/api/us/user/info");
 }
 
+export type UserHomeType = {
+	/** 选中的类型 */
+	homeSelectType: string;
+	/** 选中的类型列表 */
+	homeSelectList: VideoListType;
+	/** 用户信息 */
+	userHome: UserType.UserStatisticsInfoDTO;
+	/** 用户关注列表 */
+	// followList: UserType.BaseUserInfoDTO[];
+};
+
 /**
- * 获取指定用户信息
+ * 获取指定用户主页信息
  */
 export function getUserInfoById(id: number) {
-	return fetchService.get<UserType.BaseUserInfoDTO>("/api/us/user/" + id);
+	return fetchService.get<UserHomeType>("/api/us/user/" + id);
+}
+
+/**
+ * 获取指定用户主页分页视频信息
+ */
+export function getUserInfoByIdPerPage(
+	id: number,
+	page: number,
+	size: number,
+	homeSelectType: string
+) {
+	return fetchService.get<UserHomeType>(
+		"/api/us/user/page?userId=" +
+			id +
+			"&page=" +
+			page +
+			"&pageSize=" +
+			size +
+			"&homeSelectType=" +
+			homeSelectType
+	);
 }
