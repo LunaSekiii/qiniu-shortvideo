@@ -12,9 +12,13 @@ export function SearchBox() {
 	const currentPath = window.location.pathname;
 	// 对currentPath进行url解码
 	const decodedCurrentPath = decodeURIComponent(currentPath);
-
 	const [searchWord, setSearchWord] = useState(
-		decodedCurrentPath.slice("/search/".length)
+		// 检验 decodedCurrentPath 是否以 /search/ 开头
+		decodedCurrentPath.startsWith("/search/")
+			? // 如果是，就截取 /search/ 后面的内容作为搜索词
+			  decodedCurrentPath.slice("/search/".length)
+			: // 如果不是，就返回空字符串
+			  ""
 	);
 
 	const navigate = useNavigate();
