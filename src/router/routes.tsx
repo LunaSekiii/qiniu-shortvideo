@@ -20,7 +20,7 @@ const routers: RouteObject[] = [
 	},
 	// 用户页面
 	{
-		path: "/user/:userId",
+		path: "/user/:userId/*",
 		element: <User />,
 	},
 	{

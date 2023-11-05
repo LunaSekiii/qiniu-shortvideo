@@ -23,7 +23,7 @@ export function Login() {
 				value={username}
 				onChange={(e) => setUsername(e.currentTarget.value)}
 				placeholder='用户名'
-				data-onError={errorItem.includes("username")}
+				data-onerror={errorItem.includes("username")}
 			/>
 			<input
 				type='password'
@@ -31,7 +31,7 @@ export function Login() {
 				value={password}
 				onChange={(e) => setPassword(e.currentTarget.value)}
 				placeholder='密码'
-				data-onError={errorItem.includes("password")}
+				data-onerror={errorItem.includes("password")}
 			/>
 			<button
 				onClick={(e) => {

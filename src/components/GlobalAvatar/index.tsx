@@ -1,10 +1,12 @@
 import useLoginStore from "@/stores/useLoginStore";
 import style from "./Avatar.module.scss";
+import { useNavigate } from "react-router-dom";
 
 type AvatarProps = {
 	avatarSrc?: string;
 	styleConfig?: React.CSSProperties;
 	children?: React.ReactNode;
+	userId?: number;
 };
 const defaultStyleConfig: React.CSSProperties = {
 	width: "40px",
@@ -18,14 +20,17 @@ function Avatar({
 	styleConfig = defaultStyleConfig,
 	children,
 	avatarSrc = "/account.svg",
+	userId,
 }: AvatarProps) {
 	const openUserCenter = useLoginStore((state) => state.openUserCenter);
+	const navigate = useNavigate();
 	return (
 		<div
 			className={style.avatar}
 			style={styleConfig}
 			onClick={() => {
-				openUserCenter();
+				if (!userId) openUserCenter();
+				else navigate(`/user/${userId}`);
 			}}
 		>
 			{/* User */}

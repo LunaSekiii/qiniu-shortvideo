@@ -17,7 +17,11 @@ export function VideoInfo(props: VideoInfoProps) {
 		<div className={style["video-info"]}>
 			<div className={style["interaction-box"]}>
 				<div className={style.user}>
-					<Avatar styleConfig={{ width: "50px", height: "50px" }} />
+					<Avatar
+						styleConfig={{ width: "50px", height: "50px" }}
+						userId={video.author.userId}
+						avatarSrc={video.author.picture}
+					/>
 					<div className={style["user-info"]}>
 						<h2 className={style["user-name"]}>
 							{video.author.userName}
@@ -28,8 +32,7 @@ export function VideoInfo(props: VideoInfoProps) {
 				<VideoInteraction video={video} />
 			</div>
 			<div className={style.info}>
-				<h1>{video.title}</h1>
-				<p>{video.thumbnail}</p>
+				<h1>{video.thumbnail}</h1>
 			</div>
 			<VideoSwitch />
 		</div>

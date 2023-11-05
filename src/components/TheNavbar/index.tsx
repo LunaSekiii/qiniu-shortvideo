@@ -14,10 +14,6 @@ function Navbar() {
 		setActiveNav(path);
 	}, []);
 
-	useEffect(() => {
-		navigate(activeNav);
-	}, [activeNav, navigate]);
-
 	return (
 		<div className={style.navbar}>
 			{/* <title>Fleeting Flow</title> */}
@@ -43,6 +39,7 @@ function Navbar() {
 										data-active={isActive}
 										onClick={() => {
 											setActiveNav(nav);
+											navigate(nav);
 										}}
 									>
 										<SVGIcon
