@@ -2,7 +2,7 @@ import { useState } from "react";
 import style from "../Login.module.scss";
 import useLoginStore from "@/stores/useLoginStore";
 
-export function Login() {
+export function Login({ submitCallback }: { submitCallback?: () => void }) {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const login = useLoginStore((state) => state.login);
@@ -16,6 +16,7 @@ export function Login() {
 			onSubmit={(e) => {
 				e.preventDefault();
 				submit();
+				submitCallback?.();
 			}}
 		>
 			<input

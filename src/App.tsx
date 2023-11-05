@@ -12,7 +12,7 @@ function App() {
 		<div className='app'>
 			{router}
 			<TheLoginBox />
-			<ToastContainer />
+			<ToastContainer theme='dark' />
 		</div>
 	);
 }

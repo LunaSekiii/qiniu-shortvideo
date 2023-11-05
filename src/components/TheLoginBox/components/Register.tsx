@@ -2,7 +2,7 @@ import { useState } from "react";
 import style from "../Login.module.scss";
 import { toast } from "react-toastify";
 
-export function Register() {
+export function Register({ submitCallback }: { submitCallback?: () => void }) {
 	// 表单信息
 	const [username, setUsername] = useState("");
 	const [email, setEmail] = useState("");
@@ -25,6 +25,7 @@ export function Register() {
 		) {
 			return;
 		}
+		submitCallback?.();
 	};
 
 	const sendVerifyCode = () => {
@@ -56,6 +57,7 @@ export function Register() {
 			data-register
 			onSubmit={(e) => {
 				e.preventDefault();
+				console.log("register");
 				submit();
 			}}
 		>

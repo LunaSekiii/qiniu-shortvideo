@@ -43,19 +43,27 @@ const useLoginStore = create<UserLoginStore>((set, get) => ({
 		}
 	},
 	login: async (params) => {
-		toast.info("正在登录...", {
+		const toastId = toast.info("正在登录...", {
 			isLoading: true,
 			toastId: "login",
 		});
 		try {
 			const res = await postUserLogin(params);
 			set({ userInfo: res });
-			toast.success("登录成功", {
+			toast.update(toastId, {
+				render: "登录成功",
+				type: "success",
 				toastId: "login",
+				isLoading: false,
+				autoClose: 2000,
 			});
 		} catch (e) {
-			toast.error("登录失败", {
+			toast.update(toastId, {
+				render: "登录失败",
+				type: "error",
 				toastId: "login",
+				isLoading: false,
+				autoClose: 2000,
 			});
 			return;
 		}

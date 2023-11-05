@@ -3,7 +3,7 @@ import { VideoList } from "@/components/VideoList";
 import HomePageLayout from "@/layouts/HomePageLayout";
 import { useCallback } from "react";
 import { useParams } from "react-router-dom";
-import useLoadPerPage from "./useLoadPerPage";
+import useLoadPerPage from "../../hooks/useLoadPerPage";
 import ParamsChecker from "@/components/ParamsCheck";
 
 /**
@@ -22,7 +22,7 @@ function Category() {
 		[categoryId]
 	);
 
-	const { data, getData, reset } = useLoadPerPage<Video.VideoInfo>({
+	const { data, getData, reset } = useLoadPerPage<VideoType.VideoInfo>({
 		loadData,
 	});
 

@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 type UseDataFlowShowProps<T> = {
 	data: T[];
-	getData: () => Promise<Video.VideoInfo[]>;
+	getData: () => Promise<VideoType.VideoInfo[]>;
 };
 
 /**

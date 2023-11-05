@@ -1,6 +1,6 @@
 import { Navigate, RouteObject } from "react-router-dom";
 // import LazyLoad from "./LazyLoad";
-import Main from "@/pages/Main";
+import Home from "@/pages/Home";
 import Category from "@/pages/Category";
 import User from "@/pages/User";
 
@@ -10,7 +10,7 @@ import User from "@/pages/User";
 const routers: RouteObject[] = [
 	{
 		path: "/",
-		element: <Main />,
+		element: <Home />,
 		children: [],
 	},
 	// 分类页面

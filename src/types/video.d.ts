@@ -1,7 +1,7 @@
 /**
  * 视频类型
  */
-declare namespace Video {
+declare namespace VideoType {
 	/**
 	 * 视频信息
 	 */
@@ -33,6 +33,15 @@ declare namespace Video {
 		/** 视频分享数 */
 		// share: number;
 		forwardCount: number;
+	}
+
+	/**
+	 * 视频流参数
+	 */
+	interface VideoFlowProps {
+		data: VideoType.VideoInfo[];
+		getData: () => Promise<VideoType.VideoInfo[]>;
+		resetData: () => Promise<VideoType.VideoInfo[]>;
 	}
 }
 

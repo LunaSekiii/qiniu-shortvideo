@@ -1,6 +1,6 @@
 import fetchService from "./fetchServer";
 
-export type VideoListType = List<Video.VideoInfo>;
+export type VideoListType = List<VideoType.VideoInfo>;
 
 /**
  * 获取视频流

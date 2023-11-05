@@ -28,8 +28,11 @@ function LoginBox() {
 				closeLoginBox();
 			}}
 		>
-			<form method='dialog'>
-				<button className={style["close-btn"]}>
+			<div>
+				<button
+					className={style["close-btn"]}
+					onClick={() => closeLoginBox()}
+				>
 					<SVGIcon name='close' />
 				</button>
 				<div className={style.login}>
@@ -39,9 +42,13 @@ function LoginBox() {
 						checkeds={isRegister}
 						setCheckeds={setIsRegister}
 					/>
-					{isRegister ? <Register /> : <Login />}
+					{isRegister ? (
+						<Register submitCallback={() => closeLoginBox()} />
+					) : (
+						<Login submitCallback={() => closeLoginBox()} />
+					)}
 				</div>
-			</form>
+			</div>
 		</dialog>
 	);
 }

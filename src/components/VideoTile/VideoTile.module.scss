@@ -1,0 +1,67 @@
+$video-item-height: calc(250px + 5vh);
+$video-item-width: calc(200px + 5vw);
+
+// 视频平铺容器
+.video-tile {
+	display: grid;
+	grid-gap: calc(0.5rem + 0.5vw);
+	grid-template-columns: repeat(auto-fill, $video-item-width);
+	justify-content: space-around;
+	width: calc(100% - 2rem);
+	height: 100%;
+	// max-height: 100%;
+	padding: 0 1rem;
+}
+
+// 视频块
+.video-tile-item {
+	flex: 1;
+	width: $video-item-width;
+	height: $video-item-height;
+	overflow: hidden;
+	border-radius: 10px;
+	// outline: solid 2px #bbb;
+	cursor: pointer;
+	// 主要展示框
+	.show {
+		width: 100%;
+		height: 70%;
+		overflow: hidden;
+		img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			transition: transform 0.2s ease-out;
+		}
+	}
+	// 信息框
+	.info {
+		// width: 100%;
+		height: calc(30% - 10px);
+		padding: 5px;
+		background-color: darken($color-bg, 4);
+		@include flex($direction: column, $justify: space-between);
+		// 标题部分（限两行）
+		.title {
+			display: -webkit-box;
+			overflow: hidden;
+			-webkit-box-orient: vertical;
+			-webkit-line-clamp: 2;
+		}
+		.else {
+			width: 100%;
+			color: #666;
+			.author {
+				transition: color 0.1s ease-out;
+				&:hover {
+					color: #fff;
+				}
+			}
+		}
+	}
+	&:hover {
+		.show img {
+			transform: scale(1.1);
+		}
+	}
+}

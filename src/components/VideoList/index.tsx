@@ -4,7 +4,7 @@ import VideoContainer from "@/components/VideoContainer";
 import throttle from "@/utils/throttle";
 import scrollSmooth from "@/utils/scrollSmooth";
 import useDataFlowShow from "./useDataFlowShow";
-import useEventCallback from "../../utils/useEventCallback";
+import useEventCallback from "../../hooks/useEventCallback";
 
 type ListHandlerContextType = {
 	/** 列表滚动处理器 */
@@ -18,16 +18,10 @@ export const ListHandlerContext = createContext<ListHandlerContextType>({
 	handleListFullScreen: async () => false,
 });
 
-type VideoListProps = {
-	data: Video.VideoInfo[];
-	getData: () => Promise<Video.VideoInfo[]>;
-	resetData: () => Promise<Video.VideoInfo[]>;
-};
-
 /**
  * 视频列表组件
  */
-export function VideoList(props: VideoListProps) {
+export function VideoList(props: VideoType.VideoFlowProps) {
 	const { data, getData } = props;
 	const videoListRef = useRef<HTMLDivElement>(null);
 

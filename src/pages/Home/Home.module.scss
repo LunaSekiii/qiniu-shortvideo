@@ -1,0 +1,12 @@
+.home {
+	position: relative;
+	width: 100%;
+	max-height: 100vh;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+.size-seat {
+	width: 100%;
+	min-height: $video-padding-top;
+}

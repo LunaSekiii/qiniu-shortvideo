@@ -6,7 +6,7 @@ import { VideoSwitch } from "./components/VideoSwitch";
 import { useState } from "react";
 
 type VideoInfoProps = {
-	video: Video.VideoInfo;
+	video: VideoType.VideoInfo;
 };
 /**
  * 视频信息
@@ -42,7 +42,7 @@ export function VideoInfo(props: VideoInfoProps) {
 /**
  * 视频交互组件
  */
-function VideoInteraction(props: { video: Video.VideoInfo }) {
+function VideoInteraction(props: { video: VideoType.VideoInfo }) {
 	const { video } = props;
 	return (
 		<div className={style.interaction}>

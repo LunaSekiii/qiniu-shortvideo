@@ -51,7 +51,7 @@ function User() {
 		const path = isSelf
 			? `/user/self/${activeTab}`
 			: `/user/${userId}/${activeTab}`;
-		window.history.pushState({}, "", path);
+		window.history.replaceState({}, "", path);
 	}, [activeTab, isSelf, tab, userId]);
 
 	return (

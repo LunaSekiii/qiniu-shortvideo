@@ -28,7 +28,7 @@ export function getUserLogout() {
  * 获取当前用户信息
  */
 export function getUserInfo() {
-	return fetchService.get<UserType.BaseUserInfoDTO>("/api/us/info");
+	return fetchService.get<UserType.BaseUserInfoDTO>("/api/us/user/info");
 }
 
 /**

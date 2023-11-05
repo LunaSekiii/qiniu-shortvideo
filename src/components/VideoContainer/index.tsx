@@ -4,7 +4,7 @@ import VideoPlayer, { VideoPlayerRef } from "./VideoPlayer";
 import { VideoInfo } from "./VideoInfo";
 
 type VideoContainerProps = {
-	video: Video.VideoInfo;
+	video: VideoType.VideoInfo;
 	nextVideo: () => void;
 };
 
