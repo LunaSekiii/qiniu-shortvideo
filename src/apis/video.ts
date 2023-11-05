@@ -14,3 +14,16 @@ export function getVideoListByCategory({
 		`/api/vs/video/category/${category}?page=${page}&size=${size}`
 	);
 }
+
+/**
+ * 使用关键词搜索视频流
+ */
+export function getVideoListByKeyword({
+	keyword,
+	page,
+	size = 10,
+}: RequestType.getVideoListByKeywordParams) {
+	return fetchService.get<VideoListType>(
+		`/api/vs/search?key=${keyword}&page=${page}&size=${size}`
+	);
+}

@@ -22,4 +22,15 @@ declare namespace RequestType {
 		/** 密码 */
 		password: string;
 	}
+	/**
+	 * 视频搜索参数
+	 */
+	interface getVideoListByKeywordParams {
+		/** 关键词 */
+		keyword: string;
+		/** 页数 */
+		page: number;
+		/** 页面大小 */
+		size?: number;
+	}
 }
