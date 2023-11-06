@@ -7,6 +7,8 @@ type UseLoadPerPageProps<T> = {
 	page?: number;
 	/** 页面大小 */
 	pageSize?: number;
+	/** 初始数据（兼容分页接口） */
+	initialData?: T[];
 };
 
 /**
@@ -17,9 +19,10 @@ function useLoadPerPage<T>(props: UseLoadPerPageProps<T>) {
 		loadData,
 		page: initialPage = 1,
 		pageSize: initialPageSize = 10,
+		initialData,
 	} = props;
 
-	const [dataList, setDataList] = useState<T[]>([]);
+	const [dataList, setDataList] = useState<T[]>(initialData || []);
 
 	/** 加载数据 */
 	const getData = useMemo(() => {
@@ -29,7 +32,7 @@ function useLoadPerPage<T>(props: UseLoadPerPageProps<T>) {
 		let page = initialPage;
 		let hasMore = true;
 		const pageSize = initialPageSize;
-		setDataList([]);
+		setDataList(initialData || []);
 
 		/**
 		 * 获取数据方法
@@ -57,11 +60,11 @@ function useLoadPerPage<T>(props: UseLoadPerPageProps<T>) {
 			}
 		};
 		return getData;
-	}, [initialPage, initialPageSize, loadData]);
+	}, [initialData, initialPage, initialPageSize, loadData]);
 
 	/** 重置 */
 	const reset = useCallback(() => {
-		setDataList([]);
+		setDataList(initialData || []);
 		return getData();
 	}, [getData]);
 

@@ -4,8 +4,9 @@ import ParamsChecker from "@/components/ParamsCheck";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import useLoginStore from "@/stores/useLoginStore";
-import auth from "@/auth/auth";
+
 import {
+	UserHomeType,
 	getUserInfo,
 	getUserInfoById,
 	getUserInfoByIdPerPage,
@@ -26,8 +27,7 @@ function User() {
 		return Number(userId) === LoginUserInfo?.userId;
 	}, [userId, LoginUserInfo]);
 
-	const [userInfo, updateUserInfo] =
-		useState<UserType.UserStatisticsInfoDTO>();
+	const [userHomeInfo, updateUserHomeInfo] = useState<UserHomeType>();
 
 	// 用户信息处理
 	useEffect(() => {
@@ -38,17 +38,17 @@ function User() {
 				getUserInfo().then((res) => {
 					console.log("asd");
 					getUserInfoById(res.userId).then((res) => {
-						updateUserInfo(res.userHome);
+						updateUserHomeInfo(res);
 					});
 				});
 			}
 			getUserInfoById(LoginUserInfo?.userId as number).then((res) => {
-				updateUserInfo(res.userHome);
+				updateUserHomeInfo(res);
 			});
 			// });
 		} else {
 			getUserInfoById(Number(userId)).then((res) => {
-				updateUserInfo(res.userHome);
+				updateUserHomeInfo(res);
 			});
 		}
 	}, [userId]);
@@ -95,19 +95,22 @@ function User() {
 
 	const { data, getData, reset } = useLoadPerPage({
 		loadData,
+		initialData: userHomeInfo?.homeSelectList.list,
 	});
 
-	console.log(userInfo);
+	console.log(userHomeInfo);
 
 	return (
 		<HomePageLayout>
 			<div className={style["user-page"]}>
-				<h1>{userInfo?.userName}</h1>
-				<UserInfoTab
-					activeTab={activeTab}
-					setAvtiveTab={setActiveTab}
-					isSelf={isSelf}
-				/>
+				<div className={style.head}>
+					<h1>{userHomeInfo?.userHome.userName}</h1>
+					<UserInfoTab
+						activeTab={activeTab}
+						setAvtiveTab={setActiveTab}
+						isSelf={isSelf}
+					/>
+				</div>
 				<VideoTile data={data} getData={getData} resetData={reset} />
 			</div>
 		</HomePageLayout>

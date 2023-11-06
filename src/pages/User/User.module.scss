@@ -1,7 +1,12 @@
 .user-page {
 	// padding-top: $header-height;
+	// width: calc(100% - calc(5vw + 10%));
+	// padding: 0 calc(5vw + 10%);
 	width: 100%;
-	padding: 0 calc(5vw + 10%);
+	.head {
+		// width: 100%;
+		padding: 0 20px 50px 0;
+	}
 }
 
 .tabs {
