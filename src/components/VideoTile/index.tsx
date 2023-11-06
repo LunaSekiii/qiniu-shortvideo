@@ -14,7 +14,7 @@ import SVGIcon from "../SVGIcon";
  * 视频平铺组件
  */
 function VideoTile(props: VideoType.VideoFlowProps) {
-	const { data, getData, resetData } = props;
+	const { data, getData, resetData, updateData } = props;
 	const hasMore = useRef(true);
 
 	useEffect(() => {
@@ -68,6 +68,7 @@ function VideoTile(props: VideoType.VideoFlowProps) {
 						data={data}
 						getData={getNextData}
 						resetData={resetData}
+						updateData={updateData}
 						initIndex={listCurrentIndex}
 					/>
 				</div>

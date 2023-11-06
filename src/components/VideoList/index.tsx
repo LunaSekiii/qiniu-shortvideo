@@ -33,7 +33,13 @@ export function VideoList(
 		initIndex?: number;
 	}
 ) {
-	const { data, getData, isFullScreen = false, initIndex = 0 } = props;
+	const {
+		data,
+		getData,
+		isFullScreen = false,
+		initIndex = 0,
+		updateData,
+	} = props;
 	const videoListRef = useRef<HTMLDivElement>(null);
 
 	// 数据流处理
@@ -167,6 +173,9 @@ export function VideoList(
 						video={video}
 						nextVideo={() => handlerListScroll("down")}
 						isFullScreen={isFullScreen}
+						updateVideo={(video: VideoType.VideoInfo) =>
+							updateData(index, video)
+						}
 						ref={(ref) => {
 							if (
 								(showDataList.length === 3 && index === 1) ||

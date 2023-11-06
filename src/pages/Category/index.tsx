@@ -22,15 +22,21 @@ function Category() {
 		[categoryId]
 	);
 
-	const { data, getData, reset } = useLoadPerPage<VideoType.VideoInfo>({
-		loadData,
-	});
+	const { data, getData, reset, updateData } =
+		useLoadPerPage<VideoType.VideoInfo>({
+			loadData,
+		});
 
 	if (!data) return <div></div>;
 
 	return (
 		<HomePageLayout>
-			<VideoTile data={data} getData={getData} resetData={reset} />
+			<VideoTile
+				data={data}
+				getData={getData}
+				resetData={reset}
+				updateData={updateData}
+			/>
 		</HomePageLayout>
 	);
 }

@@ -7,6 +7,7 @@ type VideoContainerProps = {
 	video: VideoType.VideoInfo;
 	nextVideo: () => void;
 	isFullScreen: boolean;
+	updateVideo: (video: VideoType.VideoInfo) => boolean;
 };
 
 type VideoContainerContextType = {

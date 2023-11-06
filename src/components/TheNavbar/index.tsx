@@ -32,7 +32,13 @@ function Navbar() {
 								const nav = `${menu !== "" ? "/" : ""}${menu}/${
 									item.key
 								}`;
-								const isActive = nav === activeNav;
+								// 当nav和当前路径前面匹配时，设置为激活状态
+
+								const isActive =
+									menu === ""
+										? activeNav.startsWith(nav)
+										: nav === activeNav;
+								// const isActive = nav === activeNav;
 								return (
 									<li
 										key={item.key}

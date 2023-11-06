@@ -10,9 +10,13 @@ import Search from "@/pages/Search";
  */
 const routers: RouteObject[] = [
 	{
-		path: "/",
+		path: "/home",
 		element: <Home />,
 		children: [],
+	},
+	{
+		path: "/",
+		element: <Navigate to='/home' />,
 	},
 	// 分类页面
 	{

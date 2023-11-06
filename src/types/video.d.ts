@@ -42,6 +42,7 @@ declare namespace VideoType {
 		data: VideoType.VideoInfo[];
 		getData: () => Promise<VideoType.VideoInfo[]>;
 		resetData: () => Promise<VideoType.VideoInfo[]>;
+		updateData: (index: number, data: VideoType.VideoInfo) => boolean;
 	}
 }
 

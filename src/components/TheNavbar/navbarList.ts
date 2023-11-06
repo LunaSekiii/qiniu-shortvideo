@@ -12,7 +12,7 @@ const memuList: Record<MenuType, MemuItem[]> = {
 	"": [
 		{
 			name: "首页",
-			key: "",
+			key: "home",
 			icon: "home",
 		},
 		{

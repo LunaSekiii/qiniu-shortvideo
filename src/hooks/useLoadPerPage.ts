@@ -66,12 +66,31 @@ function useLoadPerPage<T>(props: UseLoadPerPageProps<T>) {
 	const reset = useCallback(() => {
 		setDataList(initialData || []);
 		return getData();
-	}, [getData]);
+	}, [getData, initialData]);
+
+	/**
+	 * 修改数据（用户对视频的交交互需要修改）
+	 */
+	const updateData = useCallback(
+		(index: number, data: T) => {
+			// 如果index超出范围，返回false
+			if (index < 0 || index >= dataList.length) return false;
+			// 为了降低耦合,这里对data做直接修改
+			setDataList((preDataList) => {
+				const newDataList = [...preDataList];
+				newDataList[index] = data;
+				return newDataList;
+			});
+			return true;
+		},
+		[dataList.length]
+	);
 
 	return {
 		data: dataList,
 		getData,
 		reset,
+		updateData,
 	};
 }
 
