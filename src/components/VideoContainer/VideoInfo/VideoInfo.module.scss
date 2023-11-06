@@ -48,26 +48,6 @@
 	}
 }
 
-// 交互区
-.interaction {
-	gap: 10px;
-	width: 100%;
-	min-width: 300px;
-	@include flex($direction: row, $justify: space-between, $align: center);
-	.interaction-btn {
-		@include flex($direction: row, $justify: left, $align: center);
-		gap: 2px;
-		cursor: pointer;
-		opacity: 0.72;
-		&:hover {
-			opacity: 1;
-		}
-		* {
-			vertical-align: bottom;
-		}
-	}
-}
-
 // 视频信息区
 .info {
 	gap: 10px;

@@ -22,6 +22,7 @@ declare namespace RequestType {
 		/** 密码 */
 		password: string;
 	}
+
 	/**
 	 * 视频搜索参数
 	 */
@@ -32,5 +33,15 @@ declare namespace RequestType {
 		page: number;
 		/** 页面大小 */
 		size?: number;
+	}
+
+	/**
+	 * 视频交互参数
+	 */
+	interface getVideoInteractionParams {
+		/** 视频Id */
+		videoId: Video.VideoId;
+		/** 交互类型 */
+		operate: VideoInteractionEnum;
 	}
 }

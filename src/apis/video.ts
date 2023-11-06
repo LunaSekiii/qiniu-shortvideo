@@ -27,3 +27,15 @@ export function getVideoListByKeyword({
 		`/api/vs/search?key=${keyword}&page=${page}&size=${size}`
 	);
 }
+
+/**
+ * 视频交互(点赞\收藏)
+ */
+export function getVideoInteraction({
+	videoId,
+	operate,
+}: RequestType.getVideoInteractionParams) {
+	return fetchService.get<boolean>(
+		`/api/vs/foot/favor/?videoId=${videoId}&operate=${operate}`
+	);
+}

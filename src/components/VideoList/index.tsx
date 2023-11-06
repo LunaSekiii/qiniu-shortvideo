@@ -174,7 +174,13 @@ export function VideoList(
 						nextVideo={() => handlerListScroll("down")}
 						isFullScreen={isFullScreen}
 						updateVideo={(video: VideoType.VideoInfo) =>
-							updateData(index, video)
+							updateData(
+								// 当前video与data中的video比较,videoId相同的index
+								data.findIndex(
+									(v) => v.videoId === video.videoId
+								),
+								video
+							)
 						}
 						ref={(ref) => {
 							if (
