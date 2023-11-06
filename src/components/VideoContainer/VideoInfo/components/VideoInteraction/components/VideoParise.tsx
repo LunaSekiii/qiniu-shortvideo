@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { VideoInteractionItem } from "./VideoInteractionItem";
 import useInteraction from "../useInteraction";
-import { VideoInteractionEnum } from "@/types/enums";
+import { InteractionEnum } from "@/types/enums";
 import useEventCallback from "@/hooks/useEventCallback";
 import throttle from "@/utils/throttle";
 
@@ -19,8 +19,8 @@ export function VideoParise({
 	const [isParised, setIsParised] = useState(parised);
 	const interaction = useInteraction();
 	const onClickImpl = useEventCallback(() => {
-		if (isParised) interaction(VideoInteractionEnum.unpraise);
-		else interaction(VideoInteractionEnum.praise);
+		if (isParised) interaction(InteractionEnum.unpraise);
+		else interaction(InteractionEnum.praise);
 		setIsParised(!isParised);
 		setCount((count) => count + (isParised ? -1 : 1));
 	});

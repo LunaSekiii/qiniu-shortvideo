@@ -1,4 +1,4 @@
-import {
+import React, {
 	createContext,
 	forwardRef,
 	useCallback,
@@ -41,11 +41,20 @@ type VideoContainerContextType = {
 			updateVideo: (video: VideoType.VideoInfo) => boolean
 		) => boolean
 	) => void;
+	/** 视频Id */
+	videoId: VideoType.VideoInfo["videoId"];
+	/** 评论区开启状态 */
+	isCommentOpen?: boolean;
+	/** 切换评论区开启状态 */
+	setIsCommentOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const VideoContainerContext = createContext<VideoContainerContextType>({
 	currentContainerScrollIntoView: () => {},
 	updateVideo: () => {},
+	videoId: -1,
+	isCommentOpen: false,
+	setIsCommentOpen: () => {},
 });
 
 /**
@@ -58,6 +67,8 @@ const VideoContainer = forwardRef<VideoContainerHandle, VideoContainerProps>(
 		const videoContainerRef = useRef<HTMLDivElement>(null);
 
 		const videoPlayerRef = useRef<VideoPlayerRef>(null);
+
+		const [isCommentOpen, setIsCommentOpen] = React.useState(false);
 
 		// 暴露命令式句柄
 		useImperativeHandle(ref, () => ({
@@ -107,6 +118,9 @@ const VideoContainer = forwardRef<VideoContainerHandle, VideoContainerProps>(
 					value={{
 						currentContainerScrollIntoView,
 						updateVideo: updateCurVideo,
+						videoId: video.videoId,
+						isCommentOpen,
+						setIsCommentOpen,
 					}}
 				>
 					<VideoPlayer

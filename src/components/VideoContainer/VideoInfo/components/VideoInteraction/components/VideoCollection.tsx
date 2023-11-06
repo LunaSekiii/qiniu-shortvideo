@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { VideoInteractionItem } from "./VideoInteractionItem";
 import useEventCallback from "@/hooks/useEventCallback";
 import useInteraction from "../useInteraction";
-import { VideoInteractionEnum } from "@/types/enums";
+import { InteractionEnum } from "@/types/enums";
 import throttle from "@/utils/throttle";
 
 /**
@@ -21,8 +21,8 @@ export function VideoCollection({
 	const interaction = useInteraction();
 
 	const onClickImpl = useEventCallback(() => {
-		if (isCollected) interaction(VideoInteractionEnum.uncollection);
-		else interaction(VideoInteractionEnum.collection);
+		if (isCollected) interaction(InteractionEnum.uncollection);
+		else interaction(InteractionEnum.collection);
 		setIsCollected(!isCollected);
 		setCount(count + (isCollected ? -1 : 1));
 	});

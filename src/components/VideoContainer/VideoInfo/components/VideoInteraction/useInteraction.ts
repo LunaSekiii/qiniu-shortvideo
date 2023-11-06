@@ -1,6 +1,6 @@
 import { getVideoInteraction } from "@/apis/video";
 import { VideoContainerContext } from "@/components/VideoContainer";
-import { VideoInteractionEnum } from "@/types/enums";
+import { InteractionEnum } from "@/types/enums";
 import { useCallback, useContext } from "react";
 
 /**
@@ -12,7 +12,7 @@ const useInteraction = () => {
 	// 暴露出一个方法，用于在视频交互时调用，根据传入的type，先请求接口，
 	// 再更新视频信息，请求失败则不更新视频信息，并直接返回false
 	const interaction = useCallback(
-		(type: VideoInteractionEnum) => {
+		(type: InteractionEnum) => {
 			updateVideo((video, updateVideo) => {
 				getVideoInteraction({
 					operate: type,
@@ -22,15 +22,15 @@ const useInteraction = () => {
 				return updateVideo({
 					...video,
 					parised:
-						type === VideoInteractionEnum.praise
+						type === InteractionEnum.praise
 							? true
-							: type === VideoInteractionEnum.unpraise
+							: type === InteractionEnum.unpraise
 							? false
 							: video.parised,
 					collected:
-						type === VideoInteractionEnum.collection
+						type === InteractionEnum.collection
 							? true
-							: type === VideoInteractionEnum.uncollection
+							: type === InteractionEnum.uncollection
 							? false
 							: video.collected,
 
@@ -38,16 +38,16 @@ const useInteraction = () => {
 						...video.count,
 						praiseCount:
 							video.count.praiseCount +
-							(type === VideoInteractionEnum.praise
+							(type === InteractionEnum.praise
 								? 1
-								: type === VideoInteractionEnum.unpraise
+								: type === InteractionEnum.unpraise
 								? -1
 								: 0),
 						collectionCount:
 							video.count.collectionCount +
-							(type === VideoInteractionEnum.collection
+							(type === InteractionEnum.collection
 								? 1
-								: type === VideoInteractionEnum.uncollection
+								: type === InteractionEnum.uncollection
 								? -1
 								: 0),
 					},

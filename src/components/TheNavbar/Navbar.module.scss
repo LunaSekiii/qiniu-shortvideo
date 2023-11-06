@@ -43,39 +43,7 @@ $max-navbar-width: 250px;
 			padding: 0 $navbar-padding;
 			list-style: none;
 			li {
-				position: relative;
-				gap: 8px;
-				margin-top: 2px;
-				padding: 0 $navbar-padding;
-				font-weight: 600;
-				font-size: normal;
-				line-height: $menu-item-height;
-				border-radius: $menu-item-height;
-				cursor: pointer;
-				opacity: 0.72;
-				transition: color 0.1s ease-in-out,
-					background-color 0.1s ease-in-out, opacity 0.2s ease-in-out;
-				&:hover {
-					background-color: $alternative-colors;
-					opacity: 1;
-				}
-				&[data-active="true"] {
-					color: #000;
-					background-color: rgba($color: #ffffff, $alpha: 0.87);
-					box-shadow: 0 2px 10px rgba($color: #000000, $alpha: 0.25),
-						0 0 6px rgba($color: #000000, $alpha: 0.25);
-					opacity: 1;
-					fill: #000;
-				}
-				@include flex($direction: row, $justify: start, $align: center);
-				svg {
-					max-width: 24px;
-					overflow: hidden;
-					font-size: normal;
-					text-align: left;
-					vertical-align: middle;
-					font-display: block;
-				}
+				@extend .the-btn;
 			}
 		}
 		hr {

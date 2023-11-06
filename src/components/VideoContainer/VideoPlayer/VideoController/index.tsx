@@ -10,6 +10,7 @@ import { VideoSpeed } from "./components/VideoSpeed";
 import { VideoQuality } from "./components/VideoQuality";
 import { VideoStreaming } from "./components/VideoStreaming";
 import usePlayOptionStore from "@/stores/usePlayOptionStore";
+import VideoComment from "./VideoComment";
 
 type VideoControllerProps = {
 	video: HTMLVideoElement;
@@ -42,7 +43,6 @@ function VideoController(props: VideoControllerProps) {
 				onClick={() => {
 					video.paused ? video.play() : video.pause();
 				}}
-				onMouseDown={(e) => console.log(e, "down")}
 				data-paused={onPaused}
 			>
 				<div className={style["play-btn"]} data-paused={onPaused}>
@@ -64,6 +64,7 @@ function VideoController(props: VideoControllerProps) {
 					</div>
 					<FullscreenBtn />
 				</div>
+				<VideoComment />
 			</div>
 			<VideoProgress
 				{...{

@@ -24,10 +24,14 @@ function useLoadPerPage<T>(props: UseLoadPerPageProps<T>) {
 
 	const [dataList, setDataList] = useState<T[]>(initialData || []);
 
+	const [resetFlag, setResetFlag] = useState(0);
+
 	/** 加载数据 */
 	const getData = useMemo(() => {
 		// 这里的isLoading是为了防止重复加载
 		let isLoading = false;
+
+		console.log(`第${resetFlag}次重置，初始页码${initialPage}`);
 
 		let page = initialPage;
 		let hasMore = true;
@@ -60,11 +64,12 @@ function useLoadPerPage<T>(props: UseLoadPerPageProps<T>) {
 			}
 		};
 		return getData;
-	}, [initialData, initialPage, initialPageSize, loadData]);
+	}, [initialData, initialPage, initialPageSize, loadData, resetFlag]);
 
 	/** 重置 */
 	const reset = useCallback(() => {
 		setDataList(initialData || []);
+		setResetFlag((preResetFlag) => preResetFlag + 1);
 		return getData();
 	}, [getData, initialData]);
 

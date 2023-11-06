@@ -21,18 +21,7 @@
 		overflow-y: auto;
 		// @include flex($direction: row, $justify: center, $align: space-between);
 		// 简约滚动条样式
-		&::-webkit-scrollbar {
-			width: 6px;
-			height: 6px;
-		}
-		&::-webkit-scrollbar-thumb {
-			background-color: rgba($color: #ffffff, $alpha: 0.3);
-			border-radius: 3px;
-		}
-		&::-webkit-scrollbar-track {
-			background-color: rgba($color: #ffffff, $alpha: 0.15);
-			border-radius: 3px;
-		}
+		@extend .the-scroll-bar;
 	}
 }
 

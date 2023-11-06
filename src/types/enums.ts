@@ -1,8 +1,8 @@
 /**
- * 视频交互枚举
+ * 交互枚举
  */
 
-export enum VideoInteractionEnum {
+export enum InteractionEnum {
 	/** 点赞 */
 	praise = 2,
 	/** 收藏 */

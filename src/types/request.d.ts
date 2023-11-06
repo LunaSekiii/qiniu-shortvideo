@@ -44,4 +44,40 @@ declare namespace RequestType {
 		/** 交互类型 */
 		operate: VideoInteractionEnum;
 	}
+
+	/**
+	 * 获取视频评论列表参数
+	 */
+	interface getVideoCommentListParams {
+		/** 视频Id */
+		videoId: Video.VideoId;
+		/** 页数 */
+		page: number;
+		/** 页面大小 */
+		size?: number;
+	}
+
+	/**
+	 * 评论参数
+	 */
+	interface postVideoCommentParams {
+		/** 视频Id */
+		videoId: Video.VideoId;
+		/** 评论内容 */
+		commentContent: string;
+		/** 父评论Id */
+		parentCommentId?: Comment.CommentId;
+		/** 顶级评论Id */
+		topCommentId?: Comment.CommentId;
+	}
+
+	/**
+	 * 评论交互参数
+	 */
+	interface getVideoCommentInteractionParams {
+		/** 评论Id */
+		commentId: Comment.CommentId;
+		/** 交互类型 */
+		interactionType: InteractionEnum;
+	}
 }

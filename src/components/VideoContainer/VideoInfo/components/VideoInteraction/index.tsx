@@ -2,22 +2,31 @@ import style from "./VideoInteraction.module.scss";
 import { VideoParise } from "./components/VideoParise";
 import { VideoCollection } from "./components/VideoCollection";
 import { VideoInteractionItem } from "./components/VideoInteractionItem";
+import { useContext } from "react";
+import { VideoContainerContext } from "@/components/VideoContainer";
 
 /**
  * 视频交互组件
  */
 export function VideoInteraction(props: { video: VideoType.VideoInfo }) {
 	const { video } = props;
+	const { setIsCommentOpen } = useContext(VideoContainerContext);
 	return (
 		<div className={style.interaction}>
 			<VideoParise
 				parised={video.parised}
 				pariseCount={video.count.praiseCount}
 			/>
-			<VideoInteractionItem
-				name='chat'
-				count={video.count.commentCount}
-			/>
+			<div
+				onClick={() => {
+					setIsCommentOpen((s) => !s);
+				}}
+			>
+				<VideoInteractionItem
+					name='chat'
+					count={video.count.commentCount}
+				/>
+			</div>
 			<VideoCollection
 				collected={video.collected}
 				collectionCount={video.count.collectionCount}
