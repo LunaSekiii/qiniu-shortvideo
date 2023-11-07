@@ -10,7 +10,7 @@ Fleeting Flow 对应的[后端仓库](https://github.com/qing-wq/FleetingFlow)
 
 网盘链接: https://pan.baidu.com/s/1-WBUI5S3ctbFOYWPo2WuVg?pwd=w4h3 提取码: w4h3
 
-同时在项目的根目录中也存有 demo 视频
+同时在项目的根目录中也存有 demo 视频，项目文档在 /docs/ 目录中
 
 ![项目截图——首页](https://s2.loli.net/2023/11/07/XnW4V1elDYtJyL2.png)
 
