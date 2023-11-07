@@ -20,16 +20,16 @@ const memuList: Record<MenuType, MemuItem[]> = {
 			key: "recommend",
 			icon: "favourite",
 		},
-		{
-			name: "关注",
-			key: "person_add",
-			icon: "person_add",
-		},
-		{
-			name: "朋友",
-			key: "group",
-			icon: "group",
-		},
+		// {
+		// 	name: "关注",
+		// 	key: "person_add",
+		// 	icon: "person_add",
+		// },
+		// {
+		// 	name: "朋友",
+		// 	key: "group",
+		// 	icon: "group",
+		// },
 		{
 			name: "我的",
 			key: "user/self",
