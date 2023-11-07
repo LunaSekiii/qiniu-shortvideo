@@ -1,5 +1,4 @@
 import { getVideoListByCategory } from "@/apis/video";
-import HomePageLayout from "@/layouts/HomePageLayout";
 import { useCallback } from "react";
 import { useParams } from "react-router-dom";
 import useLoadPerPage from "../../hooks/useLoadPerPage";
@@ -30,14 +29,12 @@ function Category() {
 	if (!data) return <div></div>;
 
 	return (
-		<HomePageLayout>
-			<VideoTile
-				data={data}
-				getData={getData}
-				resetData={reset}
-				updateData={updateData}
-			/>
-		</HomePageLayout>
+		<VideoTile
+			data={data}
+			getData={getData}
+			resetData={reset}
+			updateData={updateData}
+		/>
 	);
 }
 

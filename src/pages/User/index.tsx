@@ -1,4 +1,3 @@
-import HomePageLayout from "@/layouts/HomePageLayout";
 import style from "./User.module.scss";
 import ParamsChecker from "@/components/ParamsCheck";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -103,24 +102,22 @@ function User() {
 	console.log(userHomeInfo);
 
 	return (
-		<HomePageLayout>
-			<div className={style["user-page"]}>
-				<div className={style.head}>
-					<h1>{userHomeInfo?.userHome.userName}</h1>
-					<UserInfoTab
-						activeTab={activeTab}
-						setAvtiveTab={setActiveTab}
-						isSelf={isSelf}
-					/>
-				</div>
-				<VideoTile
-					data={data}
-					getData={getData}
-					resetData={reset}
-					updateData={updateData}
+		<div className={style["user-page"]}>
+			<div className={style.head}>
+				<h1>{userHomeInfo?.userHome.userName}</h1>
+				<UserInfoTab
+					activeTab={activeTab}
+					setAvtiveTab={setActiveTab}
+					isSelf={isSelf}
 				/>
 			</div>
-		</HomePageLayout>
+			<VideoTile
+				data={data}
+				getData={getData}
+				resetData={reset}
+				updateData={updateData}
+			/>
+		</div>
 	);
 }
 

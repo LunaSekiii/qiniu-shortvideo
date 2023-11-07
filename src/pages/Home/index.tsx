@@ -1,7 +1,6 @@
 import { getVideoListByCategory } from "@/apis/video";
 import VideoTile from "@/components/VideoTile";
 import useLoadPerPage from "@/hooks/useLoadPerPage";
-import HomePageLayout from "@/layouts/HomePageLayout";
 import { useCallback } from "react";
 
 function Home() {
@@ -24,14 +23,12 @@ function Home() {
 	if (!data) return <div></div>;
 
 	return (
-		<HomePageLayout>
-			<VideoTile
-				data={data}
-				getData={getData}
-				resetData={reset}
-				updateData={updateData}
-			/>
-		</HomePageLayout>
+		<VideoTile
+			data={data}
+			getData={getData}
+			resetData={reset}
+			updateData={updateData}
+		/>
 	);
 }
 
