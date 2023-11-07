@@ -2,6 +2,8 @@
 
 —— Web 短视频项目（前端）
 
+> Create By 不想起名 —— [2023 七牛云 1024 校园编程马拉松](https://www.qiniu.com/activity/detail/651297ed0d50912d3d53307b) 参赛作品
+
 Fleeting Flow 对应的[后端仓库](https://github.com/qing-wq/FleetingFlow)
 
 ![项目截图——首页](https://s2.loli.net/2023/11/07/XnW4V1elDYtJyL2.png)
@@ -81,7 +83,7 @@ pnpm run build
 -   流畅切换过程  
     项目对视频的切换事件进行了重写，实现了键盘切换、鼠标滚轮切换、以及点击切换多种流畅切换方式
 
-### 主要结构
+### 项目结构及说明
 
 ```
 ./src/
