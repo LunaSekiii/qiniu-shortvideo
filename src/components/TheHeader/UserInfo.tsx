@@ -3,13 +3,20 @@ import Avatar from "../GlobalAvatar";
 import style from "./UserInfo.module.scss";
 import SVGIcon from "../SVGIcon";
 import { MessageTypeEnum } from "@/types/enums";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import {
+	useCallback,
+	useEffect,
+	useLayoutEffect,
+	useRef,
+	useState,
+} from "react";
 import {
 	NotificationVO,
 	getNotifications,
 	getNotificationsPage,
 } from "@/apis/notification";
 import useLoadPerPage from "@/hooks/useLoadPerPage";
+import { NotificationType } from "@/types/notification";
 
 function UserInfo() {
 	const userInfo = useLoginStore((state) => state.userInfo);
@@ -77,12 +84,49 @@ function UserNotification() {
 			</div>
 			<hr />
 			<div>
-				{data.map((msg) => (
-					<div key={msg.msgId}>{msg.msg}</div>
+				{data.map((msg, index) => (
+					<UserNotificationItem
+						key={msg.msgId}
+						msg={msg}
+						isLast={index === data.length - 1}
+						loadMore={getData}
+					/>
 				))}
 			</div>
 		</div>
 	);
+}
+
+type UserNotificationProps = {
+	msg: NotificationType.Notification;
+	loadMore: () => void;
+	isLast?: boolean;
+};
+
+/**
+ * 消息子组件
+ */
+function UserNotificationItem(props: UserNotificationProps) {
+	const { msg, isLast = false, loadMore } = props;
+	const msgRef = useRef<HTMLDivElement>(null);
+
+	// 如果当前消息是最后一条，并且出现在视口中，则加载更多
+	useLayoutEffect(() => {
+		if (!isLast) return;
+		const observer = new IntersectionObserver((entries) => {
+			if (entries[0].isIntersecting) {
+				loadMore();
+			}
+		});
+		if (msgRef.current) {
+			observer.observe(msgRef.current);
+		}
+		return () => {
+			observer.disconnect();
+		};
+	}, [isLast, loadMore]);
+
+	return <div ref={msgRef}>{msg.msg}</div>;
 }
 
 export default UserInfo;

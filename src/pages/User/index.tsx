@@ -51,7 +51,7 @@ function User() {
 				updateUserHomeInfo(res);
 			});
 		}
-	}, [userId]);
+	}, [LoginUserInfo?.userId, userId]);
 
 	// 初始化 activeTab
 	useEffect(() => {
@@ -93,7 +93,7 @@ function User() {
 		[LoginUserInfo?.userId, activeTab, userId]
 	);
 
-	const { data, getData, reset } = useLoadPerPage({
+	const { data, getData, reset, updateData } = useLoadPerPage({
 		loadData,
 		initialData: userHomeInfo?.homeSelectList.list,
 	});
@@ -111,7 +111,12 @@ function User() {
 						isSelf={isSelf}
 					/>
 				</div>
-				<VideoTile data={data} getData={getData} resetData={reset} />
+				<VideoTile
+					data={data}
+					getData={getData}
+					resetData={reset}
+					updateData={updateData}
+				/>
 			</div>
 		</HomePageLayout>
 	);
