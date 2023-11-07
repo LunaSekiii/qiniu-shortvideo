@@ -55,3 +55,12 @@ export function postVideoInteraction(params: {
 		JSON.stringify(params)
 	);
 }
+
+/**
+ * 获取视频详情
+ */
+export function getVideoDetail(videoId: number) {
+	return fetchService.get<{
+		video: VideoType.VideoInfo;
+	}>(`/video/detail/${videoId}`);
+}

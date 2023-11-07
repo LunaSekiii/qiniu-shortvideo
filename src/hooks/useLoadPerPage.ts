@@ -9,6 +9,8 @@ type UseLoadPerPageProps<T> = {
 	pageSize?: number;
 	/** 初始数据（兼容分页接口） */
 	initialData?: T[];
+	/** 唯一key */
+	uniqueKey?: keyof T;
 };
 
 /**
@@ -20,6 +22,7 @@ function useLoadPerPage<T>(props: UseLoadPerPageProps<T>) {
 		page: initialPage = 1,
 		pageSize: initialPageSize = 10,
 		initialData,
+		uniqueKey,
 	} = props;
 
 	const [dataList, setDataList] = useState<T[]>(initialData || []);
@@ -30,7 +33,7 @@ function useLoadPerPage<T>(props: UseLoadPerPageProps<T>) {
 	const getData = useMemo(() => {
 		// 这里的isLoading是为了防止重复加载
 		let isLoading = false;
-
+		console.log(initialData, "initialData");
 		console.log(`第${resetFlag}次重置，初始页码${initialPage}`);
 
 		let page = initialPage;
@@ -50,7 +53,19 @@ function useLoadPerPage<T>(props: UseLoadPerPageProps<T>) {
 			try {
 				const list = await loadData(page, pageSize);
 				// 这里避免state统一更新造成的首页重复问题
-				if (page === initialPage) setDataList(list.list);
+				if (page === initialPage)
+					setDataList(
+						initialData && uniqueKey
+							? initialData.concat(
+									list.list.filter(
+										(i) =>
+											i[uniqueKey] !=
+											initialData[0][uniqueKey]
+									)
+									// eslint-disable-next-line no-mixed-spaces-and-tabs
+							  )
+							: list.list
+					);
 				else
 					setDataList((preDataList) => preDataList.concat(list.list));
 				console.log(`加载第${page}页，每页${pageSize}条`, list.list);

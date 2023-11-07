@@ -13,8 +13,12 @@ import SVGIcon from "../SVGIcon";
 /**
  * 视频平铺组件
  */
-function VideoTile(props: VideoType.VideoFlowProps) {
-	const { data, getData, resetData, updateData } = props;
+function VideoTile(
+	props: VideoType.VideoFlowProps & {
+		isShare?: boolean;
+	}
+) {
+	const { data, getData, resetData, updateData, isShare = false } = props;
 	const hasMore = useRef(true);
 
 	useEffect(() => {
@@ -31,6 +35,10 @@ function VideoTile(props: VideoType.VideoFlowProps) {
 	}, [getData]);
 
 	const [listCurrentIndex, setListCurrentIndex] = useState(-1);
+
+	useEffect(() => {
+		if (isShare) setListCurrentIndex(0);
+	}, []);
 
 	return (
 		<>

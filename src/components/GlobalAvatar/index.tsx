@@ -36,11 +36,13 @@ function Avatar({
 			{/* User */}
 			<img
 				src={
-					avatarSrc.startsWith("http://")
-						? avatarSrc
-						: avatarSrc.startsWith("https://")
-						? avatarSrc
-						: "http://" + avatarSrc
+					avatarSrc
+						? avatarSrc.startsWith("http://")
+							? avatarSrc
+							: avatarSrc.startsWith("https://")
+							? avatarSrc
+							: "http://" + avatarSrc
+						: ""
 				}
 				alt='avatar'
 			/>

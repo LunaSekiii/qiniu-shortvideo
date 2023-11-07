@@ -7,6 +7,7 @@ import {
 	useContext,
 } from "react";
 import { VideoContainerContext } from "../..";
+import { useSearchParams } from "react-router-dom";
 
 /**
  * 视频监听绑定Hook
@@ -17,6 +18,10 @@ const useVideoListened = (video: HTMLVideoElement) => {
 	const [duration, setDuration] = useState(video.duration);
 	const [onPaused, setOnPaused] = useState(video.paused);
 	const { videoId } = useContext(VideoContainerContext);
+
+	// 获取search参数
+	const [searchParams, setSearchParams] = useSearchParams();
+
 	// video监听器
 	/** 视频播放时间监听 */
 	const videoTimeupdateListener = useCallback((e: Event) => {
@@ -55,8 +60,13 @@ const useVideoListened = (video: HTMLVideoElement) => {
 			type: 1,
 			data: 1,
 		});
+
+		// 修改其中的vid参数
+		searchParams.set("vid", videoId.toString());
+		setSearchParams(searchParams);
+
 		setOnPaused(false);
-	}, [videoId]);
+	}, [searchParams, setSearchParams, videoId]);
 
 	type VideoListenerMap = Partial<
 		Record<keyof HTMLVideoElementEventMap, (e: Event) => unknown>

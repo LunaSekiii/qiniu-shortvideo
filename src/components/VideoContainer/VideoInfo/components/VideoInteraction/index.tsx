@@ -46,13 +46,21 @@ export function VideoInteraction(props: { video: VideoType.VideoInfo }) {
 						type: 5,
 						data: 1,
 					});
-					// 复制当前页面的url
+					// 以当前页面的url域名为基础，拼接视频id
+					const url = window.location.origin + "/video/" + videoId;
+					// 创建一个input标签
 					const input = document.createElement("input");
-					input.value = window.location.href;
+					// 将input标签的value设置为url
+					input.value = url;
+					// 将input标签添加到页面中
 					document.body.appendChild(input);
+					// 选中input标签的内容
 					input.select();
+					// 复制选中的内容
 					document.execCommand("copy");
+					// 删除input标签
 					document.body.removeChild(input);
+					// 弹出提示
 					toast.success("复制视频链接成功", {
 						toastId: "copy_success",
 					});

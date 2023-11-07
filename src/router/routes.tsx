@@ -8,6 +8,7 @@ import Setting from "@/pages/Setting";
 import Main from "@/pages/Main";
 import Upload from "@/pages/Upload";
 import Recommend from "@/pages/Recommend";
+import Video from "@/pages/Video";
 
 /**
  * 路由配置
@@ -56,6 +57,11 @@ const routers: RouteObject[] = [
 			{
 				path: "/upload",
 				element: <Upload />,
+			},
+			// 视频详情页面
+			{
+				path: "/video/:vid",
+				element: <Video />,
 			},
 		],
 	},
