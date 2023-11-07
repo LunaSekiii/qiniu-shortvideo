@@ -56,11 +56,11 @@ function VideoTile(
 							/>
 						);
 					})}
-					{hasMore ? (
+					{/* {hasMore ? (
 						<div className={style["loading"]}>加载中...</div>
 					) : (
 						<div className={style["loading"]}>没有更多了</div>
-					)}
+					)} */}
 				</div>
 			) : (
 				<div className={style["list-view"]}>

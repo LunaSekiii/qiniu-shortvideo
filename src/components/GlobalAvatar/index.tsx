@@ -36,7 +36,9 @@ function Avatar({
 			{/* User */}
 			<img
 				src={
-					avatarSrc
+					avatarSrc === "/account.svg"
+						? avatarSrc
+						: avatarSrc
 						? avatarSrc.startsWith("http://")
 							? avatarSrc
 							: avatarSrc.startsWith("https://")
