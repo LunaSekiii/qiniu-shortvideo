@@ -1,10 +1,14 @@
 # Fleeting Flow
 
-![Alt text](<public/Fleeting Flow.svg>)
-
 —— Web 短视频项目（前端）
 
 Fleeting Flow 对应的[后端仓库](https://github.com/qing-wq/FleetingFlow)
+
+![项目截图——首页](https://s2.loli.net/2023/11/07/XnW4V1elDYtJyL2.png)
+
+![项目截图——推荐](https://s2.loli.net/2023/11/07/6TX3PxSQfYWC5ul.png)
+
+![项目截图——评论](https://s2.loli.net/2023/11/07/CPGi5DgFftJARBb.png)
 
 ---
 

@@ -59,9 +59,9 @@ function VideoController(props: VideoControllerProps) {
 					<VideoQuality hls={hls} />
 					<VideoSpeed video={video} />
 					<VideoVolume video={video} />
-					<div className={style.btn}>
+					{/* <div className={style.btn}>
 						<SVGIcon name='open_in_full' active />
-					</div>
+					</div> */}
 					<FullscreenBtn />
 				</div>
 				<VideoComment />
