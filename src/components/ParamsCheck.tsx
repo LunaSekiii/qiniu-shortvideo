@@ -34,9 +34,9 @@ function ParamsChecker<T extends string>({
 	}, [checkOption, navigate, params, redirect]);
 
 	if (checkOption(params)) {
-		return children;
+		return <>{children}</>;
 	} else {
-		return null;
+		return <>{null}</>;
 	}
 }
 
