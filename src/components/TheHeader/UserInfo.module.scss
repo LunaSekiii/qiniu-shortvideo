@@ -1,6 +1,59 @@
 .user-info {
+	position: relative;
+	position: relative;
+	gap: 20px;
 	width: calc($search-box-height);
 	height: $search-box-height;
 	padding-right: 10%;
 	// padding-right: 32px;
+	@include flex($direction: row, $justify: space-between, $align: center);
+	.item {
+		height: 100%;
+		aspect-ratio: 1 / 1;
+		@extend .children-center;
+		> svg {
+			transform: scale(1.5);
+		}
+		> .main {
+			// width: fit-content;
+			padding: 10px;
+			color: #000;
+			background-color: #fff;
+			border-radius: 6px;
+		}
+	}
+}
+
+.dropdown {
+	// position: relative;
+	.main {
+		position: absolute;
+		top: 120%;
+		right: 0px;
+		visibility: hidden;
+		transition: visibility 0.3s ease-in-out;
+	}
+	&:hover {
+		.main {
+			visibility: visible;
+		}
+	}
+}
+
+.notification {
+	width: 20vw;
+	min-width: 200px;
+	height: 40vh;
+	.select {
+		position: relative;
+		width: 80px;
+		height: 20px;
+		// border: 1px solid #cccccc;
+		select {
+			width: 100%;
+			height: 20px;
+			border: none;
+			outline: none;
+		}
+	}
 }

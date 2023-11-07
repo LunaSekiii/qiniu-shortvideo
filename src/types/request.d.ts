@@ -80,4 +80,16 @@ declare namespace RequestType {
 		/** 交互类型 */
 		interactionType: InteractionEnum;
 	}
+
+	/**
+	 * 获取视频评论回复列表参数
+	 */
+	interface getNotificationsPageParams {
+		/** 消息类型 */
+		type: MessageTypeEnum;
+		/** 页数 */
+		page: number;
+		/** 页面大小 */
+		size?: number;
+	}
 }

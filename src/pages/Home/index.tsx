@@ -15,16 +15,22 @@ function Home() {
 		[]
 	);
 
-	const { data, getData, reset } = useLoadPerPage<VideoType.VideoInfo>({
-		loadData,
-		pageSize: 30,
-	});
+	const { data, getData, reset, updateData } =
+		useLoadPerPage<VideoType.VideoInfo>({
+			loadData,
+			pageSize: 30,
+		});
 
 	if (!data) return <div></div>;
 
 	return (
 		<HomePageLayout>
-			<VideoTile data={data} getData={getData} resetData={reset} />
+			<VideoTile
+				data={data}
+				getData={getData}
+				resetData={reset}
+				updateData={updateData}
+			/>
 		</HomePageLayout>
 	);
 }
