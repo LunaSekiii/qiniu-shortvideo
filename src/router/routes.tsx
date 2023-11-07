@@ -4,6 +4,7 @@ import Home from "@/pages/Home";
 import Category from "@/pages/Category";
 import User from "@/pages/User";
 import Search from "@/pages/Search";
+import Setting from "@/pages/Setting";
 
 /**
  * 路由配置
@@ -32,6 +33,11 @@ const routers: RouteObject[] = [
 	{
 		path: "/search/*",
 		element: <Search />,
+	},
+	// 设置页面
+	{
+		path: "/setting",
+		element: <Setting />,
 	},
 	{
 		path: "*",

@@ -1,7 +1,4 @@
-import useLoginStore from "@/stores/useLoginStore";
-import Avatar from "../GlobalAvatar";
-import style from "./UserInfo.module.scss";
-import SVGIcon from "../SVGIcon";
+import style from "../UserInfo.module.scss";
 import { MessageTypeEnum } from "@/types/enums";
 import {
 	useCallback,
@@ -18,26 +15,10 @@ import {
 import useLoadPerPage from "@/hooks/useLoadPerPage";
 import { NotificationType } from "@/types/notification";
 
-function UserInfo() {
-	const userInfo = useLoginStore((state) => state.userInfo);
-	return (
-		<div className={style["user-info"]}>
-			<Avatar
-				styleConfig={{
-					width: "100%",
-					height: "100%",
-				}}
-				avatarSrc={userInfo?.picture}
-			/>
-			<div className={`${style.dropdown} ${style.item}`}>
-				<SVGIcon name='notifications' />
-				<UserNotification />
-			</div>
-		</div>
-	);
-}
-
-function UserNotification() {
+/**
+ * 用户消息组件
+ */
+export function UserNotification() {
 	const [msgType, setMsgType] = useState(MessageTypeEnum.all);
 	const [MSGVO, setMSGVO] = useState<NotificationVO>();
 
@@ -64,7 +45,7 @@ function UserNotification() {
 	});
 
 	return (
-		<div className={`${style.main} ${style.notification}`}>
+		<div className={`${style.notification} ${style.main}`}>
 			<div>消息列表</div>
 			<div className={style.select}>
 				<select
@@ -96,13 +77,11 @@ function UserNotification() {
 		</div>
 	);
 }
-
 type UserNotificationProps = {
 	msg: NotificationType.Notification;
 	loadMore: () => void;
 	isLast?: boolean;
 };
-
 /**
  * 消息子组件
  */
@@ -128,5 +107,3 @@ function UserNotificationItem(props: UserNotificationProps) {
 
 	return <div ref={msgRef}>{msg.msg}</div>;
 }
-
-export default UserInfo;

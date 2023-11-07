@@ -13,6 +13,8 @@ import {
 } from "@/apis/user";
 import VideoTile from "@/components/VideoTile";
 import useLoadPerPage from "@/hooks/useLoadPerPage";
+import { UserInfoTab } from "./userInfoTab";
+import { userInfoTabMap } from "./userInfoTabMap";
 
 /**
  * 用户主页
@@ -62,8 +64,8 @@ function User() {
 			if (!isSelf && index > 1) return;
 			setActiveTab(userInfoTabMap[index].tab);
 		} else {
-			// 默认设置为 works
-			setActiveTab("works");
+			// 默认设置为 video
+			setActiveTab("video");
 		}
 		// 仅作初始化，不需要依赖
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -119,49 +121,6 @@ function User() {
 				/>
 			</div>
 		</HomePageLayout>
-	);
-}
-
-const userInfoTabMap = [
-	{
-		name: "作品",
-		tab: "works",
-	},
-	{
-		name: "喜欢",
-		tab: "like",
-	},
-	{
-		name: "收藏",
-		tab: "collection",
-	},
-	{
-		name: "历史",
-		tab: "history",
-	},
-];
-
-function UserInfoTab(props: {
-	activeTab: string;
-	setAvtiveTab: (index: string) => void;
-	isSelf: boolean;
-}) {
-	const { activeTab, setAvtiveTab, isSelf } = props;
-	return (
-		<div className={style.tabs}>
-			{(isSelf ? userInfoTabMap : userInfoTabMap.slice(0, 2)).map(
-				(tab) => (
-					<div
-						className={style.tab}
-						data-active={tab.tab === activeTab}
-						key={tab.tab}
-						onClick={() => setAvtiveTab(tab.tab)}
-					>
-						{tab.name}
-					</div>
-				)
-			)}
-		</div>
 	);
 }
 

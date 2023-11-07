@@ -1,0 +1,16 @@
+.dropdown {
+	// position: relative;
+	.main {
+		position: absolute;
+		top: 120%;
+		right: 0px;
+		width: 100%;
+		visibility: hidden;
+		transition: visibility 0.3s ease-in-out;
+	}
+	&:hover {
+		.main {
+			visibility: visible;
+		}
+	}
+}

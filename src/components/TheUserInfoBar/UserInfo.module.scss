@@ -11,10 +11,10 @@
 		height: 100%;
 		aspect-ratio: 1 / 1;
 		@extend .children-center;
-		> svg {
+		svg {
 			transform: scale(1.5);
 		}
-		> .main {
+		.main {
 			// width: fit-content;
 			padding: 10px;
 			color: #000;
@@ -24,18 +24,28 @@
 	}
 }
 
-.dropdown {
-	// position: relative;
-	.main {
-		position: absolute;
-		top: 120%;
-		right: 0px;
-		visibility: hidden;
-		transition: visibility 0.3s ease-in-out;
-	}
-	&:hover {
+.avatar {
+	position: relative;
+	.wrapper {
+		width: calc(100%);
+		padding: 0 !important;
+		background-color: #fff;
 		.main {
-			visibility: visible;
+			position: absolute;
+			top: 0;
+			left: -5px;
+			width: fit-content;
+			height: fit-content;
+			.item {
+				width: fit-content;
+				font-weight: 600;
+				white-space: nowrap;
+				cursor: pointer;
+				opacity: 0.6;
+				&:hover {
+					opacity: 1;
+				}
+			}
 		}
 	}
 }

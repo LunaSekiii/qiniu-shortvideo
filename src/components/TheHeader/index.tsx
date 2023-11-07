@@ -1,5 +1,5 @@
 import style from "./TheHeader.module.scss";
-import UserInfo from "./UserInfo";
+import UserInfo from "../TheUserInfoBar";
 import { SearchBox } from "../TheSearchBox";
 
 function TheHeader() {
