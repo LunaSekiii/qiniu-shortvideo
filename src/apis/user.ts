@@ -66,3 +66,13 @@ export function getUserInfoByIdPerPage(
 			homeSelectType
 	);
 }
+
+/**
+ * 更新用户信息
+ */
+export function postUserInfo(params: RequestType.putUserInfoParams) {
+	return fetchService.post<boolean>(
+		"/api/us/user/saveInfo",
+		JSON.stringify(params)
+	);
+}

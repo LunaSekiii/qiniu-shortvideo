@@ -1,0 +1,83 @@
+.setting {
+	width: 60%;
+	min-width: 600px;
+	max-width: 1000px;
+	margin: auto;
+  
+}
+
+.info {
+  margin-top: 20px;
+	@include flex($direction: row, $justify: center, $align: center);
+	flex-wrap: wrap-reverse;
+  // for循环从1到2
+  @for $i from 1 through 2 {
+    // 拼接到类名中
+    .info#{$i} {
+      width: 50%;
+      min-width: 400px;
+      padding: 0 20px;
+      box-sizing: border-box;
+      @include flex($direction: column, $justify: center, $align: center);
+    }
+  }
+  // 上传按钮
+  .submit{
+    // width: 200px;
+    padding: 0 20px;
+   @extend .the-btn
+  }
+}
+
+// 信息编辑框
+.input{
+  width: 100%;
+  margin-bottom: 20px;
+  > input {
+    width: 100%;
+    height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    outline: none;
+    &:focus {
+      border-color: #8b8b8b;
+    }
+  }
+
+}
+
+
+
+// 头像上传组件
+.avatar {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+  .mask{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+    visibility: hidden;
+    // 使子元素垂直居中
+    @include flex($direction: column, $justify: center, $align: center);
+  }
+  &:hover {
+    .mask {
+      visibility: visible;
+    }
+  }
+  > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}

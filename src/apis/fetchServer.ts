@@ -76,7 +76,12 @@ export class FetchService {
 			method: method,
 			...options,
 			headers: {
-				"Content-Type": "application/json",
+				// "Content-Type": "application/json",
+				// 当options中有data且为FormData时，不设置Content-Type
+				...(body instanceof FormData
+					? {}
+					: { "Content-Type": "application/json" }),
+
 				...options?.headers,
 			},
 			body,

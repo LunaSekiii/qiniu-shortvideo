@@ -92,4 +92,18 @@ declare namespace RequestType {
 		/** 页面大小 */
 		size?: number;
 	}
+
+	/**
+	 * 更新用户信息参数
+	 */
+	interface putUserInfoParams {
+		/** 用户名 */
+		userName: string;
+		/** 用户简介 */
+		profile: string;
+		/** 用户头像 */
+		picture: string;
+		/** 用户邮箱 */
+		email: string;
+	}
 }
