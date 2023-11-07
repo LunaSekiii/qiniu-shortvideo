@@ -62,7 +62,7 @@ const VideoComment = memo(function VideoComment() {
 		<div
 			className={style["comment-box"]}
 			onClick={(e) => {
-				console.log("comment-box");
+				// console.log("comment-box");
 				e.stopPropagation();
 			}}
 			data-visible={isCommentOpen}

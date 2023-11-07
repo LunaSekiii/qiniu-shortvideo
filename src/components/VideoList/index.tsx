@@ -111,7 +111,6 @@ export function VideoList(
 					"fullscreenchange",
 					fullScreenListener
 				);
-				console.log("aa");
 				setTimeout(() => {
 					middleScrollIntoView.current?.();
 				}, 0);

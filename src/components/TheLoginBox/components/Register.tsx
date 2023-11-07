@@ -1,6 +1,7 @@
 import { useState } from "react";
 import style from "../Login.module.scss";
 import { toast } from "react-toastify";
+import { postUserRegister, postUserRegisterCode } from "@/apis/user";
 
 export function Register({ submitCallback }: { submitCallback?: () => void }) {
 	// 表单信息
@@ -21,10 +22,40 @@ export function Register({ submitCallback }: { submitCallback?: () => void }) {
 			!email ||
 			!password ||
 			!confirmPassword ||
-			password != confirmPassword
+			password != confirmPassword ||
+			!verifyCode
 		) {
 			return;
 		}
+
+		const toastId = toast.loading("注册中...", {
+			toastId: "register-loading",
+		});
+
+		// 提交表单
+		postUserRegister({
+			username,
+			email,
+			password,
+			code: verifyCode,
+		})
+			.then(() =>
+				toast.update(toastId, {
+					type: "success",
+					isLoading: false,
+					autoClose: 2000,
+					render: "注册成功",
+				})
+			)
+			.catch(() =>
+				toast.update(toastId, {
+					type: "error",
+					isLoading: false,
+					autoClose: 2000,
+					render: "注册失败",
+				})
+			);
+
 		submitCallback?.();
 	};
 
@@ -38,6 +69,8 @@ export function Register({ submitCallback }: { submitCallback?: () => void }) {
 				toastId: "email-format-error",
 			});
 		}
+
+		postUserRegisterCode(email);
 
 		setVerifyCodeInputVisible(true);
 		setSendVerifyCodeCoolingTime(60);

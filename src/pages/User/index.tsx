@@ -40,7 +40,6 @@ function User() {
 			// auth(async () => {
 			if (!LoginUserInfo?.userId) {
 				getUserInfo().then((res) => {
-					console.log("asd");
 					getUserInfoById(res.userId).then((res) => {
 						updateUserHomeInfo(res);
 					});

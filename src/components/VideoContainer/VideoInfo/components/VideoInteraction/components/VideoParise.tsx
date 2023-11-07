@@ -22,7 +22,7 @@ export function VideoParise({
 	const { videoId } = useContext(VideoContainerContext);
 
 	useEffect(() => {
-		console.log(isPraised);
+		// console.log(isPraised);
 		setCount(pariseCount);
 		setIsPraised(praised);
 	}, [praised, pariseCount, isPraised]);

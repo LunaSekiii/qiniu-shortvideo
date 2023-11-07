@@ -80,3 +80,22 @@ export function postUserInfo(params: RequestType.putUserInfoParams) {
 export function postUserFollow(params: { userId: number; followed: boolean }) {
 	return fetchService.post<boolean>("/foot/follow", JSON.stringify(params));
 }
+
+/**
+ * 注册发送验证码接口
+ */
+export function postUserRegisterCode(email: string) {
+	return fetchService.post<string>(`/code?email=${email}`, null);
+}
+
+/**
+ * 注册接口
+ */
+export function postUserRegister(params: {
+	username: string;
+	password: string;
+	email: string;
+	code: string;
+}) {
+	return fetchService.post<number>("/register", JSON.stringify(params));
+}

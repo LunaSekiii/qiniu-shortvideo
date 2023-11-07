@@ -18,7 +18,6 @@ const useInteraction = () => {
 					operate: type,
 					videoId: video.videoId,
 				});
-				console.log(type);
 				return updateVideo({
 					...video,
 					praised:

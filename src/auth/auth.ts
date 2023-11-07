@@ -11,7 +11,7 @@ async function auth(fn: () => void) {
 	if (!userInfo2) {
 		// 重试
 		setTimeout(() => auth(fn), 1000);
-		return console.log("正在请求用户信息");
+		// return console.log("正在请求用户信息");
 	}
 	// 如果已经登录，直接执行
 	else if (userInfo2) fn();

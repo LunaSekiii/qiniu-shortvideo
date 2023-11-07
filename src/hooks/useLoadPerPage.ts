@@ -33,7 +33,6 @@ function useLoadPerPage<T>(props: UseLoadPerPageProps<T>) {
 	const getData = useMemo(() => {
 		// 这里的isLoading是为了防止重复加载
 		let isLoading = false;
-		console.log(initialData, "initialData");
 		console.log(`第${resetFlag}次重置，初始页码${initialPage}`);
 
 		let page = initialPage;
