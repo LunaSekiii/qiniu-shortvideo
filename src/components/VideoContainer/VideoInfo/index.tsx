@@ -25,7 +25,7 @@ export function VideoInfo(props: VideoInfoProps) {
 						<h2 className={style["user-name"]}>
 							{video.author.userName}
 						</h2>
-						<p className={style.time}>3天前</p>
+						{/* <p className={style.time}>3天前</p> */}
 					</div>
 				</div>
 				<VideoInteraction video={video} />

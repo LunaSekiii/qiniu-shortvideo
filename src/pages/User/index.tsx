@@ -14,6 +14,7 @@ import VideoTile from "@/components/VideoTile";
 import useLoadPerPage from "@/hooks/useLoadPerPage";
 import { UserInfoTab } from "./userInfoTab";
 import { userInfoTabMap } from "./userInfoTabMap";
+import Avatar from "@/components/GlobalAvatar";
 
 /**
  * 用户主页
@@ -104,7 +105,17 @@ function User() {
 	return (
 		<div className={style["user-page"]}>
 			<div className={style.head}>
-				<h1>{userHomeInfo?.userHome.userName}</h1>
+				<div className={style.info}>
+					<Avatar
+						avatarSrc={userHomeInfo?.userHome.picture}
+						userId={userHomeInfo?.userHome.userId}
+						styleConfig={{
+							width: "100px",
+							height: "100px",
+						}}
+					/>
+					<h1>{userHomeInfo?.userHome.userName}</h1>
+				</div>
 				<UserInfoTab
 					activeTab={activeTab}
 					setAvtiveTab={setActiveTab}

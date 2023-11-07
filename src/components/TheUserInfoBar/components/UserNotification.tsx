@@ -46,22 +46,24 @@ export function UserNotification() {
 
 	return (
 		<div className={`${style.notification} ${style.main}`}>
-			<div>消息列表</div>
-			<div className={style.select}>
-				<select
-					value={msgType}
-					onChange={(e) => {
-						setMsgType(e.target.value as MessageTypeEnum);
-					}}
-				>
-					<option value={MessageTypeEnum.all}>全部</option>
-					<option value={MessageTypeEnum.comment}>评论</option>
-					<option value={MessageTypeEnum.reply}>回复</option>
-					<option value={MessageTypeEnum.praise}>点赞</option>
-					<option value={MessageTypeEnum.collect}>收藏</option>
-					<option value={MessageTypeEnum.follow}>关注</option>
-					<option value={MessageTypeEnum.system}>系统</option>
-				</select>
+			<div className={style.head}>
+				<div>消息列表</div>
+				<div className={style.select}>
+					<select
+						value={msgType}
+						onChange={(e) => {
+							setMsgType(e.target.value as MessageTypeEnum);
+						}}
+					>
+						<option value={MessageTypeEnum.all}>全部</option>
+						<option value={MessageTypeEnum.comment}>评论</option>
+						<option value={MessageTypeEnum.reply}>回复</option>
+						<option value={MessageTypeEnum.praise}>点赞</option>
+						<option value={MessageTypeEnum.collect}>收藏</option>
+						<option value={MessageTypeEnum.follow}>关注</option>
+						<option value={MessageTypeEnum.system}>系统</option>
+					</select>
+				</div>
 			</div>
 			<hr />
 			<div>
@@ -105,5 +107,13 @@ function UserNotificationItem(props: UserNotificationProps) {
 		};
 	}, [isLast, loadMore]);
 
-	return <div ref={msgRef}>{msg.msg}</div>;
+	return (
+		<div ref={msgRef} className={style.msg}>
+			{msg.msg}
+			<div className={style.msg3}>
+				<div></div>
+				<div>{msg.operateUserName}</div>
+			</div>
+		</div>
+	);
 }

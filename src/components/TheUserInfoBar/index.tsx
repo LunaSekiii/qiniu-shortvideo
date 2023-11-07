@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 function UserInfo() {
 	const userInfo = useLoginStore((state) => state.userInfo);
+	const navigate = useNavigate();
 	return (
 		<div className={style["user-info"]}>
 			<div className={`${style.item} ${style.avatar}`}>
@@ -30,6 +31,16 @@ function UserInfo() {
 				<Dropdown label={<SVGIcon name='notifications' />}>
 					<UserNotification />
 				</Dropdown>
+			</div>
+
+			<div
+				className={style.item}
+				onClick={() => {
+					navigate("/upload");
+				}}
+				title='上传视频'
+			>
+				<SVGIcon name='publish' />
 			</div>
 		</div>
 	);

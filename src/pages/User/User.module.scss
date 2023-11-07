@@ -34,3 +34,8 @@
 		}
 	}
 }
+
+.info {
+	gap: 20px;
+	@include flex($direction: row, $justify: start, $align: center);
+}
