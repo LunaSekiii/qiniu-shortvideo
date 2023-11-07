@@ -1,0 +1,125 @@
+.upload {
+	width: 60%;
+	min-width: 600px;
+	max-width: 1000px;
+	margin: auto;
+}
+
+// 视频上传组件
+.video {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	max-height: 40vh;
+	overflow: hidden;
+	background: #000;
+	// border-radius: 20px;
+	> video {
+		width: 100%;
+		height: 100%;
+		max-height: 40vh;
+	}
+	.mask {
+		position: absolute;
+		top: 20px;
+		right: 0;
+		width: 150px;
+		height: 50px;
+		background-color: #666;
+		border-radius: 50px 0 0 50px;
+		transform: translateX(100%);
+		cursor: pointer;
+		opacity: 0.7;
+		transition: transform 0.2s ease-out;
+		@extend .children-center;
+		&:hover {
+			opacity: 1;
+		}
+	}
+	&:hover .mask {
+		transform: translateX(0);
+	}
+}
+
+.info {
+	gap: 10px;
+	width: 100%;
+	@include flex($direction: row, $justify: space-between, $align: start);
+}
+
+.editor {
+	gap: 10px;
+	width: 70%;
+	height: 100%;
+	@include flex($direction: column, $justify: space-between, $align: center);
+}
+
+.title {
+	width: 100%;
+	color: #fff;
+	input {
+		width: 100%;
+		color: #fff;
+		font-size: large;
+		line-height: 40px;
+		background: none;
+		// 清除默认样式
+		border: none;
+		border-bottom: #fff solid 2px;
+		outline: none;
+	}
+}
+
+.tags {
+	flex-wrap: wrap !important;
+	gap: 10px;
+	width: calc(100% - 20px);
+	max-height: 20vh;
+	padding: 9px;
+	overflow: hidden;
+	overflow-y: auto;
+	border: solid 1px #fff;
+	border-radius: 10px;
+	@extend .the-scroll-bar;
+	@include flex($direction: row, $justify: flex-start, $align: center);
+	.tag {
+		height: 30px;
+		padding: 0 20px;
+		line-height: 30px;
+		white-space: nowrap;
+		background-color: #ffffff1e;
+		border-radius: 20px;
+		cursor: pointer;
+		@include flex($direction: row, $justify: center, $align: center);
+		&[data-selected="true"] {
+			color: #000;
+			background-color: #fff;
+			fill: #000;
+		}
+	}
+}
+
+.cover {
+	width: 100%;
+	max-height: 20vh;
+	overflow: hidden;
+	border-radius: 20px;
+	> img {
+		width: 100%;
+		height: 100%;
+		max-height: 20vh;
+		object-fit: contain;
+	}
+}
+
+.sub {
+	width: 30%;
+	margin-top: 20px;
+	@include flex($direction: column, $justify: space-around, $align: center);
+	.btn {
+		width: 200px;
+		white-space: nowrap;
+		outline: solid 2px #fff;
+		@extend .the-btn;
+	}
+}

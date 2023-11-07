@@ -34,7 +34,14 @@ function Avatar({
 			}}
 		>
 			{/* User */}
-			<img src={avatarSrc} alt='avatar' />
+			<img
+				src={
+					avatarSrc.startsWith("http://")
+						? avatarSrc
+						: "http://" + avatarSrc
+				}
+				alt='avatar'
+			/>
 			{
 				// 预留插槽
 				children ? children : null
