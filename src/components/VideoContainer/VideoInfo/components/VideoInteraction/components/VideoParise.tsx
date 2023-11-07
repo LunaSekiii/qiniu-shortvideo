@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { VideoInteractionItem } from "./VideoInteractionItem";
 import useInteraction from "../useInteraction";
 import { InteractionEnum } from "@/types/enums";
@@ -9,27 +9,34 @@ import throttle from "@/utils/throttle";
  * 视频点赞组件
  */
 export function VideoParise({
-	parised,
+	praised,
 	pariseCount,
 }: {
-	parised: boolean;
+	praised: boolean;
 	pariseCount: number;
 }) {
 	const [count, setCount] = useState(pariseCount);
-	const [isParised, setIsParised] = useState(parised);
+	const [isPraised, setIsPraised] = useState(praised);
+
+	useEffect(() => {
+		console.log(isPraised);
+		setCount(pariseCount);
+		setIsPraised(praised);
+	}, [praised, pariseCount, isPraised]);
+
 	const interaction = useInteraction();
 	const onClickImpl = useEventCallback(() => {
-		if (isParised) interaction(InteractionEnum.unpraise);
+		if (isPraised) interaction(InteractionEnum.unpraise);
 		else interaction(InteractionEnum.praise);
-		setIsParised(!isParised);
-		setCount((count) => count + (isParised ? -1 : 1));
+		setIsPraised(!isPraised);
+		setCount((count) => count + (isPraised ? -1 : 1));
 	});
 	const onClick = useMemo(() => throttle(onClickImpl, 1000), [onClickImpl]);
 	return (
 		<VideoInteractionItem
 			name='favourite'
 			count={count}
-			active={isParised}
+			active={isPraised}
 			onClick={onClick}
 		/>
 	);

@@ -77,9 +77,6 @@ export function postUserInfo(params: RequestType.putUserInfoParams) {
 /**
  * 关注用户/取消关注
  */
-export function postUserFollow(params: {
-	followUserId: number;
-	followed: boolean;
-}) {
+export function postUserFollow(params: { userId: number; followed: boolean }) {
 	return fetchService.post<boolean>("/foot/follow", JSON.stringify(params));
 }

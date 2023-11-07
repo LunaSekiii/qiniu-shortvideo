@@ -41,3 +41,17 @@ export function getVideoInteraction({
 		`/foot/favor/?videoId=${videoId}&operate=${operate}`
 	);
 }
+
+/**
+ * 视频埋点
+ */
+export function postVideoInteraction(params: {
+	videoId: number;
+	type: number;
+	data: number;
+}) {
+	return fetchService.post<string>(
+		"/video/interaction",
+		JSON.stringify(params)
+	);
+}

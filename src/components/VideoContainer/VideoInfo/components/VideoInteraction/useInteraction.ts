@@ -21,12 +21,12 @@ const useInteraction = () => {
 				console.log(type);
 				return updateVideo({
 					...video,
-					parised:
+					praised:
 						type === InteractionEnum.praise
 							? true
 							: type === InteractionEnum.unpraise
 							? false
-							: video.parised,
+							: video.praised,
 					collected:
 						type === InteractionEnum.collection
 							? true

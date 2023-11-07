@@ -51,7 +51,7 @@ interface VideointeractionState {
 	/** 是否已收藏 */
 	collected: boolean;
 	/** 是否已点赞 */
-	parised: boolean;
+	praised: boolean;
 	/** 是否已关注 */
 	followed: boolean;
 }

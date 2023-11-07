@@ -16,7 +16,6 @@ import useLoadPerPage from "@/hooks/useLoadPerPage";
 import { UserInfoTab } from "./userInfoTab";
 import { userInfoTabMap } from "./userInfoTabMap";
 import Avatar from "@/components/GlobalAvatar";
-import UserInfo from "@/components/TheUserInfoBar";
 import { toast } from "react-toastify";
 
 /**
@@ -126,14 +125,14 @@ function User() {
 						/>
 						<h1>{userHomeInfo?.userHome.userName}</h1>
 					</div>
-					<div className={style.interaction}>
+					<div className={style.interaction} hidden={isSelf}>
 						<div
 							className={style.btn}
 							data-active={isFollowed}
 							onClick={async () => {
 								try {
 									await postUserFollow({
-										followUserId: userHomeInfo?.userHome
+										userId: userHomeInfo?.userHome
 											.userId as number,
 										followed: !isFollowed,
 									});

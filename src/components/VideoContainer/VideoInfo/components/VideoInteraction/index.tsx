@@ -14,7 +14,7 @@ export function VideoInteraction(props: { video: VideoType.VideoInfo }) {
 	return (
 		<div className={style.interaction}>
 			<VideoParise
-				parised={video.parised}
+				praised={video.praised}
 				pariseCount={video.count.praiseCount}
 			/>
 			<div
