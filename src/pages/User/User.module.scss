@@ -35,7 +35,23 @@
 	}
 }
 
+.user {
+	gap: 30px;
+	width: 100%;
+	@include flex($direction: row, $justify: start, $align: center);
+}
+
 .info {
 	gap: 20px;
 	@include flex($direction: row, $justify: start, $align: center);
+}
+
+.interaction {
+	// height: 100%;
+
+	.btn {
+		@extend .the-btn;
+		width: 100px;
+		border: solid 1px #ffffff;
+	}
 }

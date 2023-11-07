@@ -73,3 +73,13 @@ export function getUserInfoByIdPerPage(
 export function postUserInfo(params: RequestType.putUserInfoParams) {
 	return fetchService.post<boolean>("/user/saveInfo", JSON.stringify(params));
 }
+
+/**
+ * 关注用户/取消关注
+ */
+export function postUserFollow(params: {
+	followUserId: number;
+	followed: boolean;
+}) {
+	return fetchService.post<boolean>("/foot/follow", JSON.stringify(params));
+}

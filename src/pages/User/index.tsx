@@ -9,12 +9,15 @@ import {
 	getUserInfo,
 	getUserInfoById,
 	getUserInfoByIdPerPage,
+	postUserFollow,
 } from "@/apis/user";
 import VideoTile from "@/components/VideoTile";
 import useLoadPerPage from "@/hooks/useLoadPerPage";
 import { UserInfoTab } from "./userInfoTab";
 import { userInfoTabMap } from "./userInfoTabMap";
 import Avatar from "@/components/GlobalAvatar";
+import UserInfo from "@/components/TheUserInfoBar";
+import { toast } from "react-toastify";
 
 /**
  * 用户主页
@@ -102,19 +105,62 @@ function User() {
 
 	console.log(userHomeInfo);
 
+	const [isFollowed, setIsFollowed] = useState(false);
+
+	useEffect(() => {
+		setIsFollowed(userHomeInfo?.userHome.followed || false);
+	}, [userHomeInfo?.userHome.followed]);
+
 	return (
 		<div className={style["user-page"]}>
 			<div className={style.head}>
-				<div className={style.info}>
-					<Avatar
-						avatarSrc={userHomeInfo?.userHome.picture}
-						userId={userHomeInfo?.userHome.userId}
-						styleConfig={{
-							width: "100px",
-							height: "100px",
-						}}
-					/>
-					<h1>{userHomeInfo?.userHome.userName}</h1>
+				<div className={style.user}>
+					<div className={style.info}>
+						<Avatar
+							avatarSrc={userHomeInfo?.userHome.picture}
+							userId={userHomeInfo?.userHome.userId}
+							styleConfig={{
+								width: "100px",
+								height: "100px",
+							}}
+						/>
+						<h1>{userHomeInfo?.userHome.userName}</h1>
+					</div>
+					<div className={style.interaction}>
+						<div
+							className={style.btn}
+							data-active={isFollowed}
+							onClick={async () => {
+								try {
+									await postUserFollow({
+										followUserId: userHomeInfo?.userHome
+											.userId as number,
+										followed: !isFollowed,
+									});
+									toast.success(
+										isFollowed
+											? "取消关注成功"
+											: "关注成功",
+										{
+											toastId: "follow",
+										}
+									);
+									setIsFollowed(!isFollowed);
+								} catch (e) {
+									toast.error(
+										isFollowed
+											? "取消关注失败"
+											: "关注失败",
+										{
+											toastId: "follow",
+										}
+									);
+								}
+							}}
+						>
+							{isFollowed ? "已关注" : "关注"}
+						</div>
+					</div>
 				</div>
 				<UserInfoTab
 					activeTab={activeTab}
