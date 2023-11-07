@@ -6,6 +6,12 @@
 
 Fleeting Flow 对应的[后端仓库](https://github.com/qing-wq/FleetingFlow)
 
+[项目 demo 在线观看地址](http://s3anmft1h.hn-bkt.clouddn.com/FleetingFlowDemo.mp4)
+
+网盘链接: https://pan.baidu.com/s/1-WBUI5S3ctbFOYWPo2WuVg?pwd=w4h3 提取码: w4h3
+
+同时在项目的根目录中也存有 demo 视频
+
 ![项目截图——首页](https://s2.loli.net/2023/11/07/XnW4V1elDYtJyL2.png)
 
 ![项目截图——推荐](https://s2.loli.net/2023/11/07/6TX3PxSQfYWC5ul.png)
