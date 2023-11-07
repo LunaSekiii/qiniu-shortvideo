@@ -7,6 +7,7 @@ import Search from "@/pages/Search";
 import Setting from "@/pages/Setting";
 import Main from "@/pages/Main";
 import Upload from "@/pages/Upload";
+import Recommend from "@/pages/Recommend";
 
 /**
  * 路由配置
@@ -16,6 +17,7 @@ const routers: RouteObject[] = [
 		path: "/",
 		element: <Main />,
 		children: [
+			// 首页
 			{
 				path: "/home",
 				element: <Home />,
@@ -24,6 +26,11 @@ const routers: RouteObject[] = [
 			{
 				path: "/",
 				element: <Navigate to='/home' />,
+			},
+			// 推荐页面
+			{
+				path: "/recommend",
+				element: <Recommend />,
 			},
 			// 分类页面
 			{

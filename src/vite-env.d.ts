@@ -2,8 +2,7 @@
 
 interface ImportMetaEnv {
 	readonly VITE_BASE_URL?: string;
-	readonly VITE_USER_SERVER_URL?: string;
-	readonly VITE_VIDEO_SERVER_URL?: string;
+	readonly VITE_API_PREFIX: string;
 	// 更多环境变量...
 }
 

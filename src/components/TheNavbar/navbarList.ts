@@ -17,7 +17,7 @@ const memuList: Record<MenuType, MemuItem[]> = {
 		},
 		{
 			name: "推荐",
-			key: "favourite",
+			key: "recommend",
 			icon: "favourite",
 		},
 		{

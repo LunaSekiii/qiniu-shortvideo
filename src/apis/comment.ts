@@ -12,7 +12,7 @@ export function getVideoCommentList({
 	size = 10,
 }: RequestType.getVideoCommentListParams) {
 	return fetchService.get<CommentListType>(
-		`/api/vs/comment/api/page?videoId=${videoId}&page=${page}&pageSize=${size}`
+		`/comment/api/page?videoId=${videoId}&page=${page}&pageSize=${size}`
 	);
 }
 
@@ -26,7 +26,7 @@ export function postVideoComment({
 	topCommentId,
 }: RequestType.postVideoCommentParams) {
 	return fetchService.post<number>(
-		`/api/vs/comment/api/post`,
+		`/comment/api/post`,
 		JSON.stringify({
 			videoId,
 			commentContent,
@@ -44,6 +44,6 @@ export function getVideoCommentInteraction({
 	interactionType,
 }: RequestType.getVideoCommentInteractionParams) {
 	return fetchService.get<string>(
-		`/api/vs/comment/api/favor?commentId=${commentId}&type=${interactionType}`
+		`/comment/api/favor?commentId=${commentId}&type=${interactionType}`
 	);
 }

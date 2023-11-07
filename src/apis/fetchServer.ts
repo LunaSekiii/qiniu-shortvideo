@@ -87,6 +87,9 @@ export class FetchService {
 			body,
 		};
 
+		// 拼接url
+		url = import.meta.env.VITE_API_PREFIX + url;
+
 		this.runRequestInterceptors(url, theOptions);
 		const response = await fetch(url, theOptions);
 		this.runResponseInterceptors(response);

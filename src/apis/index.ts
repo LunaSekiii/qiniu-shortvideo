@@ -1,2 +1,2 @@
 /** 请求基础URL */
-export const baseUrl = location.origin + "/api";
+// export const baseUrl = location.origin + "/api";

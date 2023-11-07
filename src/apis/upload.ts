@@ -7,5 +7,5 @@ export function postUploadImg(file: File) {
 	// 转换为FormData
 	const formData = new FormData();
 	formData.append("file", file);
-	return fetchService.post<string>("/api/vs/video/image/upload", formData);
+	return fetchService.post<string>("/video/image/upload", formData);
 }

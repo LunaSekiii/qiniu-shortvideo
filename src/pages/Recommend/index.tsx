@@ -1,9 +1,12 @@
 import { getVideoListByCategory } from "@/apis/video";
-import VideoTile from "@/components/VideoTile";
+import { VideoList } from "@/components/VideoList";
 import useLoadPerPage from "@/hooks/useLoadPerPage";
 import { useCallback } from "react";
 
-function Home() {
+/**
+ * 推荐页面
+ */
+function Recommend() {
 	const loadData = useCallback(
 		(page: number, pageSize: number) =>
 			getVideoListByCategory({
@@ -23,7 +26,7 @@ function Home() {
 	if (!data) return <div></div>;
 
 	return (
-		<VideoTile
+		<VideoList
 			data={data}
 			getData={getData}
 			resetData={reset}
@@ -32,4 +35,4 @@ function Home() {
 	);
 }
 
-export default Home;
+export default Recommend;

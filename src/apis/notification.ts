@@ -19,7 +19,7 @@ export type NotificationVO = {
  * 获取消息首页列表接口
  */
 export function getNotifications(type: MessageTypeEnum) {
-	return fetchService.get<NotificationVO>(`/api/us/notice/${type}`);
+	return fetchService.get<NotificationVO>(`/notice/${type}`);
 }
 
 /**
@@ -31,6 +31,6 @@ export function getNotificationsPage({
 	size,
 }: RequestType.getNotificationsPageParams) {
 	return fetchService.get<NotificationList>(
-		`/api/us/notice/page/${type}?page=${page}&pageSize=${size}`
+		`/notice/page/${type}?page=${page}&pageSize=${size}`
 	);
 }

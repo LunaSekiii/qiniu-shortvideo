@@ -11,7 +11,9 @@ export function getVideoListByCategory({
 	size = 10,
 }: RequestType.getVideoListByCategoryParams) {
 	return fetchService.get<VideoListType>(
-		`/api/vs/video/recommend?category=${category}&page=${page}&size=${size}`
+		`/video/recommend?${
+			category !== -1 ? `category=${category}` : ""
+		}&page=${page}&size=${size}`
 	);
 }
 
@@ -24,7 +26,7 @@ export function getVideoListByKeyword({
 	size = 10,
 }: RequestType.getVideoListByKeywordParams) {
 	return fetchService.get<VideoListType>(
-		`/api/vs/search?key=${keyword}&page=${page}&size=${size}`
+		`/search?key=${keyword}&page=${page}&size=${size}`
 	);
 }
 
@@ -36,6 +38,6 @@ export function getVideoInteraction({
 	operate,
 }: RequestType.getVideoInteractionParams) {
 	return fetchService.get<boolean>(
-		`/api/vs/foot/favor/?videoId=${videoId}&operate=${operate}`
+		`/foot/favor/?videoId=${videoId}&operate=${operate}`
 	);
 }

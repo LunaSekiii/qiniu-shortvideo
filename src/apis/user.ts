@@ -9,7 +9,7 @@ export function postUserLogin(params: RequestType.loginParams) {
 	urlencoded.append("username", params.username);
 	urlencoded.append("password", params.password);
 	return fetchService.post<UserType.BaseUserInfoDTO>(
-		"/api/us/login" + "?" + urlencoded,
+		"/login" + "?" + urlencoded,
 		null
 	);
 }
@@ -18,14 +18,14 @@ export function postUserLogin(params: RequestType.loginParams) {
  * 用户登出
  */
 export function getUserLogout() {
-	return fetchService.get<string>("/api/us/logout");
+	return fetchService.get<string>("/logout");
 }
 
 /**
  * 获取当前用户信息
  */
 export function getUserInfo() {
-	return fetchService.get<UserType.BaseUserInfoDTO>("/api/us/user/info");
+	return fetchService.get<UserType.BaseUserInfoDTO>("/user/info");
 }
 
 export type UserHomeType = {
@@ -43,7 +43,7 @@ export type UserHomeType = {
  * 获取指定用户主页信息
  */
 export function getUserInfoById(id: number) {
-	return fetchService.get<UserHomeType>("/api/us/user/" + id);
+	return fetchService.get<UserHomeType>("/user/" + id);
 }
 
 /**
@@ -56,7 +56,7 @@ export function getUserInfoByIdPerPage(
 	homeSelectType: string
 ) {
 	return fetchService.get<UserHomeType>(
-		"/api/us/user/page?userId=" +
+		"/user/page?userId=" +
 			id +
 			"&page=" +
 			page +
@@ -71,8 +71,5 @@ export function getUserInfoByIdPerPage(
  * 更新用户信息
  */
 export function postUserInfo(params: RequestType.putUserInfoParams) {
-	return fetchService.post<boolean>(
-		"/api/us/user/saveInfo",
-		JSON.stringify(params)
-	);
+	return fetchService.post<boolean>("/user/saveInfo", JSON.stringify(params));
 }
