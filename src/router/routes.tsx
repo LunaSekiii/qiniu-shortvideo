@@ -6,6 +6,7 @@ import User from "@/pages/User";
 import Search from "@/pages/Search";
 import Setting from "@/pages/Setting";
 import Main from "@/pages/Main";
+import Upload from "@/pages/Upload";
 
 /**
  * 路由配置
@@ -43,6 +44,11 @@ const routers: RouteObject[] = [
 			{
 				path: "/setting",
 				element: <Setting />,
+			},
+			// 上传页面
+			{
+				path: "/upload",
+				element: <Upload />,
 			},
 		],
 	},

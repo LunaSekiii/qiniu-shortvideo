@@ -28,8 +28,8 @@ function Setting() {
 	}, [userInfo]);
 
 	const onSubmit = useCallback(
-		(e: React.FormEvent<HTMLFormElement>) => {
-			e.preventDefault();
+		(e?: React.FormEvent<HTMLFormElement>) => {
+			e?.preventDefault();
 			const toastId = toast.loading("正在修改", {
 				toastId: "upload-userInfo",
 			});
@@ -94,7 +94,11 @@ function Setting() {
 							data={userProfile}
 							setData={setUserProfile}
 						/>
-						<div className={style.submit} data-active={true}>
+						<div
+							className={style.submit}
+							data-active={true}
+							onClick={() => onSubmit()}
+						>
 							保存个人信息
 						</div>
 					</div>

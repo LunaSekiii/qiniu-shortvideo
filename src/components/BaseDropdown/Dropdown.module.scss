@@ -1,5 +1,6 @@
 .dropdown {
 	// position: relative;
+	@extend .children-center;
 	.main {
 		position: absolute;
 		top: 120%;

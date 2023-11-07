@@ -11,7 +11,7 @@ export function getVideoListByCategory({
 	size = 10,
 }: RequestType.getVideoListByCategoryParams) {
 	return fetchService.get<VideoListType>(
-		`/api/vs/video/category/${category}?page=${page}&size=${size}`
+		`/api/vs/video/recommend?category=${category}&page=${page}&size=${size}`
 	);
 }
 
