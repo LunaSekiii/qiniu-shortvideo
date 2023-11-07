@@ -38,6 +38,8 @@ function Avatar({
 				src={
 					avatarSrc.startsWith("http://")
 						? avatarSrc
+						: avatarSrc.startsWith("https://")
+						? avatarSrc
 						: "http://" + avatarSrc
 				}
 				alt='avatar'

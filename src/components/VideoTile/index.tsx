@@ -128,7 +128,11 @@ function VideoTileItem({
 			<div className={style.show}>
 				<img
 					draggable={false}
-					src={"http://" + video.picture}
+					src={
+						video.picture.startsWith("http://")
+							? video.picture
+							: "http://" + video.picture
+					}
 					alt='cover'
 				/>
 			</div>
