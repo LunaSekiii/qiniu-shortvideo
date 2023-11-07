@@ -1,4 +1,12 @@
-import { useMemo, useState, useCallback, useLayoutEffect } from "react";
+import { postVideoInteraction } from "@/apis/video";
+import {
+	useMemo,
+	useState,
+	useCallback,
+	useLayoutEffect,
+	useContext,
+} from "react";
+import { VideoContainerContext } from "../..";
 
 /**
  * 视频监听绑定Hook
@@ -8,6 +16,7 @@ const useVideoListened = (video: HTMLVideoElement) => {
 	const [bufferedTime, setBufferedTime] = useState(0);
 	const [duration, setDuration] = useState(video.duration);
 	const [onPaused, setOnPaused] = useState(video.paused);
+	const { videoId } = useContext(VideoContainerContext);
 	// video监听器
 	/** 视频播放时间监听 */
 	const videoTimeupdateListener = useCallback((e: Event) => {
@@ -28,12 +37,26 @@ const useVideoListened = (video: HTMLVideoElement) => {
 	}, []);
 	/** 视频暂停监听 */
 	const videoPauseListener = useCallback(() => {
+		// 视频暂停时，发送播放记录
+		if (video.currentTime / video.duration > 0.1)
+			postVideoInteraction({
+				videoId,
+				type: 2,
+				data: (video.currentTime / video.duration) * 100,
+			});
 		setOnPaused(true);
-	}, []);
+	}, [videoId]);
+
 	/** 视频播放监听 */
 	const videoPlayListener = useCallback(() => {
+		// 视频播放时，发送播放记录
+		postVideoInteraction({
+			videoId,
+			type: 1,
+			data: 1,
+		});
 		setOnPaused(false);
-	}, []);
+	}, [videoId]);
 
 	type VideoListenerMap = Partial<
 		Record<keyof HTMLVideoElementEventMap, (e: Event) => unknown>
